@@ -1,6 +1,7 @@
 package com.e01.quiz_management;
 
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -40,12 +41,23 @@ public class App extends Application {
         Test newTest = new Test();
 
         newTest.setTitle("New test from client updated");
-        RequestAPI.getInstance().postUpdateTestById(13L, newTest);
-        Test test = RequestAPI.getInstance().getUserTestById(13L);
+        // Update test request
+        BaseResponse response =  RequestAPI.getInstance().postUpdateTestById(13L, newTest);
+        System.out.println(response.getMessage());
+
+        // Mapping from response.getBody() to specific object
+        Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response, Test.class);
         System.out.println(test.getTitle());
 
+        // Get user's test by id request
+        Test test2 = RequestAPI.getInstance().getUserTestById(13L);
+        System.out.println(test2.getTitle());
+
+        // Get all user's tests request
         List<Test> tests = RequestAPI.getInstance().getAllUserTests();
         tests.forEach(t -> System.out.println(t.getTitle()));
+
+
         launch();
     }
 

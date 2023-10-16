@@ -2,6 +2,7 @@ package com.e01.quiz_management.util;
 
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.model.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -225,10 +226,25 @@ public class RequestAPI {
         return httpConnection;
     }
 
-    public <T> T getBaseResponseBodyObject(String jsonData, Class<T> clazz) throws IOException {
+    public <T> T getBaseResponseBodyObject(String jsonData, Class<T> clazz) {
         System.out.println(jsonData);
-        BaseResponse response = mapper.readValue(jsonData, BaseResponse.class);
-        String body = mapper.writeValueAsString(response.getBody());
-        return mapper.readValue(body, clazz);
+        BaseResponse response;
+        try {
+            response = mapper.readValue(jsonData, BaseResponse.class);
+            String body = mapper.writeValueAsString(response.getBody());
+            return mapper.readValue(body, clazz);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public <T> T getBaseResponseBodyObject(BaseResponse response, Class<T> clazz) {
+        String body;
+        try {
+            body = mapper.writeValueAsString(response.getBody());
+            return mapper.readValue(body, clazz);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
