@@ -162,6 +162,8 @@ public class RequestAPI {
                 try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
                     data = bf.readLine();
                     response = mapper.readValue(data, BaseResponse.class);
+                    user = mapper.readValue(response.getBody().toString(), User.class);
+                    System.out.println(user.getToken().getAccessToken());
                 } catch (Exception e) {
                     throw (new IOException(e));
                 }

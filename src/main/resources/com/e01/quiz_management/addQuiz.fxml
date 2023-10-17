@@ -8,11 +8,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.Controller.AddQuizController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.AddQuizController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutX="95.0" layoutY="136.0" prefHeight="177.0" prefWidth="422.0">
          <children>
-            <TextField onAction="#addQuizName" promptText=" Enter Quiz name">
+            <TextField fx:id="QuizName" promptText=" Enter Quiz name">
                <font>
                   <Font size="20.0" />
                </font>
@@ -20,7 +20,7 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="Enter Duration">
+            <TextField fx:id="QuizLength" promptText="Enter Duration">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
                </VBox.margin>

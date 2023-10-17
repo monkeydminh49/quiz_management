@@ -10,4 +10,6 @@ module com.e01.quiz_management {
     exports com.e01.quiz_management;
     exports com.e01.quiz_management.util;
     exports com.e01.quiz_management.model;
+    exports com.e01.quiz_management.controller;
+    opens com.e01.quiz_management.controller to javafx.fxml;
 }
