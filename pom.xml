@@ -25,6 +25,17 @@
             <artifactId>controlsfx</artifactId>
             <version>11.1.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>9.0.10</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -34,6 +45,8 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>11</release>
+                    <source>9</source>
+                    <target>9</target>
                 </configuration>
             </plugin>
             <plugin>
