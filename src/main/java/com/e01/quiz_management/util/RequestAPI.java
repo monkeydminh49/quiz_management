@@ -111,6 +111,7 @@ public class RequestAPI {
         BaseResponse response = new BaseResponse();
         try {
             HttpURLConnection httpRequest = httpRequest("PUT", "/test/" + id, mapper.writeValueAsString(test));
+            System.out.println(httpRequest.getResponseCode());
             if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 String data;
                 try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
@@ -136,8 +137,8 @@ public class RequestAPI {
                 String data;
                 try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
                     data = bf.readLine();
-                    user = getBaseResponseBodyObject(data, User.class);
-                    System.out.println(user.getToken().getAccessToken());
+                    response = mapper.readValue(data, BaseResponse.class);
+                    user = getBaseResponseBodyObject(response, User.class);
                 } catch (Exception e) {
                     throw (new IOException(e));
                 }
@@ -161,8 +162,6 @@ public class RequestAPI {
                 try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
                     data = bf.readLine();
                     response = mapper.readValue(data, BaseResponse.class);
-                    user = mapper.readValue(response.getBody().toString(), User.class);
-                    System.out.println(user.getToken().getAccessToken());
                 } catch (Exception e) {
                     throw (new IOException(e));
                 }
@@ -213,7 +212,7 @@ public class RequestAPI {
         System.out.println("Request Method: " + httpConnection.getRequestMethod());
         System.out.println("Content-Type: " + httpConnection.getRequestProperty("Content-Type"));
         System.out.println("User-Agent: " + httpConnection.getRequestProperty("User-Agent"));
-        if (user != null) {
+        if (!openEndpoints.contains(endpoint) && user != null) {
             httpConnection.setRequestProperty("Authorization", "Bearer " + user.getToken().getAccessToken());
 //            System.out.println("Authorization: " + httpConnection.getRequestProperty("Authorization"));
             System.out.println("Authorization: " + "Bearer " + user.getToken().getAccessToken());
