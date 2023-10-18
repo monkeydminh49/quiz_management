@@ -21,8 +21,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("login"), 700, 540);
+        scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.sizeToScene();
         stage.show();
     }
 
@@ -31,32 +34,33 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
+        System.out.println(App.class.getResource(fxml + ".fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
     public static void main(String[] args) {
-        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
-        RequestAPI.getInstance().getHello();
-        Test newTest = new Test();
-
-        newTest.setTitle("New test from client updated");
-        // Update test request
-        BaseResponse response =  RequestAPI.getInstance().postUpdateTestById(13L, newTest);
-        System.out.println(response.getMessage());
-
-        // Mapping from response.getBody() to specific object
-        Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response, Test.class);
-        System.out.println(test.getTitle());
-
-        // Get user's test by id request
-        Test test2 = RequestAPI.getInstance().getUserTestById(13L);
-        System.out.println(test2.getTitle());
-
-        // Get all user's tests request
-        List<Test> tests = RequestAPI.getInstance().getAllUserTests();
-        tests.forEach(t -> System.out.println(t.getTitle()));
-
+//        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
+//        RequestAPI.getInstance().getHello();
+//        Test newTest = new Test();
+//
+//        newTest.setTitle("New test from client updated");
+//        // Update test request
+//        BaseResponse response =  RequestAPI.getInstance().postUpdateTestById(13L, newTest);
+//        System.out.println(response.getMessage());
+//
+//        // Mapping from response.getBody() to specific object
+//        Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response, Test.class);
+//        System.out.println(test.getTitle());
+//
+//        // Get user's test by id request
+//        Test test2 = RequestAPI.getInstance().getUserTestById(13L);
+//        System.out.println(test2.getTitle());
+//
+//        // Get all user's tests request
+//        List<Test> tests = RequestAPI.getInstance().getAllUserTests();
+//        tests.forEach(t -> System.out.println(t.getTitle()));
+//
 
         launch();
     }
