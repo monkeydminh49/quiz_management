@@ -1,6 +1,7 @@
 package com.e01.quiz_management;
 
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.test_form.TestForm;
 import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.application.Application;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * JavaFX App
@@ -21,8 +23,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("login"), 700, 540);
-        scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
+        scene = new Scene(loadFXML("layout_test_form"), 600, 470);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("app.css")).toExternalForm());
         stage.setScene(scene);
         stage.setResizable(false);
         stage.sizeToScene();
@@ -61,7 +63,6 @@ public class App extends Application {
 //        List<Test> tests = RequestAPI.getInstance().getAllUserTests();
 //        tests.forEach(t -> System.out.println(t.getTitle()));
 //
-
         launch();
     }
 
