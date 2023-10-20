@@ -1,8 +1,11 @@
 package com.e01.quiz_management.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Choice {
     private Long id;
     private String content;
+    @JsonProperty("isCorrect")
     private Boolean isCorrect;
     private Long questionId;
 
@@ -32,13 +35,6 @@ public class Choice {
         this.content = content;
     }
 
-    public Boolean getCorrect() {
-        return isCorrect;
-    }
-
-    public void setCorrect(Boolean correct) {
-        isCorrect = correct;
-    }
 
     public Long getQuestionId() {
         return questionId;
@@ -46,5 +42,13 @@ public class Choice {
 
     public void setQuestionId(Long questionId) {
         this.questionId = questionId;
+    }
+
+    public Boolean getCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(Boolean isCorrect) {
+        this.isCorrect = isCorrect;
     }
 }
