@@ -7,15 +7,16 @@ public class Test {
     private Long userId;
     private String title;
     private List<Question> questions;
-
+    private long duration;
     public Test() {
     }
 
-    public Test(Long id, Long userId, String title, List<Question> questions) {
+    public Test(Long id, Long userId, String title, List<Question> questions, long duration) {
         this.id = id;
         this.userId = userId;
         this.title = title;
         this.questions = questions;
+        this.duration = duration;
     }
 
     public Long getId() {
@@ -56,5 +57,13 @@ public class Test {
 
     public void addAllQuestion(List<Question> questions){
         this.questions.addAll(questions);
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 }
