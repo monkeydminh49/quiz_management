@@ -20,12 +20,28 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
+//    public void start(Stage stage) throws IOException {
+//        scene = new Scene(loadFXML("login"), 700, 540);
+//        scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
+//        stage.setScene(scene);
+//        stage.setResizable(false);
+//        stage.sizeToScene();
+//        stage.show();
+//
+//    }
+//
+//    static void setRoot(String fxml) throws IOException {
+//        scene.setRoot(loadFXML(fxml));
+//    }
+//
+//    private static Parent loadFXML(String fxml) throws IOException {
+//        System.out.println(App.class.getResource(fxml + ".fxml"));
+//        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+//        return fxmlLoader.load();
+//    }
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("login"), 700, 540);
-        scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
+        scene = new Scene(loadFXML("login"), 640, 480);
         stage.setScene(scene);
-        stage.setResizable(false);
-        stage.sizeToScene();
         stage.show();
     }
 
@@ -34,13 +50,12 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        System.out.println(App.class.getResource(fxml + ".fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
     public static void main(String[] args) {
-//        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
+        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
 //        RequestAPI.getInstance().getHello();
 //        Test newTest = new Test();
 //
