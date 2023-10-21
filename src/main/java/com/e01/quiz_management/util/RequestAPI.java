@@ -92,6 +92,7 @@ public class RequestAPI {
         BaseResponse response = new BaseResponse();
         try {
             HttpURLConnection httpRequest = httpRequest("POST", "/test", mapper.writeValueAsString(test));
+            System.out.println(httpRequest.getResponseCode());
             if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 String data;
                 try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
