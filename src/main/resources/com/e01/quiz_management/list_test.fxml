@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="540.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.ListTestController">
+   <children>
+      <TableView id="myTable" fx:id="myTable" layoutX="95.0" layoutY="73.0" prefHeight="540.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="orderColumn" prefWidth="39.2000732421875" text="STT" />
+          <TableColumn fx:id="titleColumn" prefWidth="375.199951171875" text="Title" />
+            <TableColumn fx:id="codeColumn" minWidth="0.0" prefWidth="116.00003051757812" text="Code" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
