@@ -32,146 +32,68 @@ public class RequestAPI {
         return instance;
     }
 
-    public Object getHello(){
+    public Object getHello() {
         HttpURLConnection httpRequest = httpRequest("GET", "/hello");
-        Object object = new Object();
-        try {
-            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                String data;
-                try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
-                    data = bf.readLine();
-                    object = mapper.readValue(data, Object.class);
-                } catch (Exception e) {
-                    throw (new IOException(e));
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return object;
+        return mappingResponse(httpRequest, Object.class);
     }
 
-    public Test getUserTestById(Long id){
+    public Test getUserTestById(Long id) {
         HttpURLConnection httpRequest = httpRequest("GET", "/test/" + id);
-        Test test = new Test();
-        try {
-            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                String data;
-                try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
-                    data = bf.readLine();
-                    test = mapper.readValue(data, Test.class);
-                } catch (Exception e) {
-                    throw (new IOException(e));
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return test;
+        return mappingResponse(httpRequest, Test.class);
     }
 
-    public List<Test> getAllUserTests(){
+    public Test getTestByCode(String code) {
+        HttpURLConnection httpRequest = httpRequest("GET", "/test/code/" + code);
+        return mappingResponse(httpRequest, Test.class);
+    }
+
+    public List<Test> getAllUserTests() {
         HttpURLConnection httpRequest = httpRequest("GET", "/test");
-        List<Test> tests = List.of();
-        try {
-            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                String data;
-                try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
-                    data = bf.readLine();
-                    tests = mapper.readValue(data,new TypeReference<List<Test>>(){});
-                } catch (Exception e) {
-                    throw (new IOException(e));
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return tests;
-    }
-    public BaseResponse postCreateTest(Test test){
-        BaseResponse response = new BaseResponse();
-        try {
-            HttpURLConnection httpRequest = httpRequest("POST", "/test", mapper.writeValueAsString(test));
-            System.out.println(httpRequest.getResponseCode());
-            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                String data;
-                try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
-                    data = bf.readLine();
-                    response = mapper.readValue(data, BaseResponse.class);
-                } catch (Exception e) {
-                    throw (new IOException(e));
-                }
-            }
-        } catch (IOException e) {
-            throw (new RuntimeException(e));
-        }
-        return response;
+        return mappingResponse(httpRequest, new TypeReference<List<Test>>() {
+        });
     }
 
-    public BaseResponse postUpdateTestById(Long id, Test test){
+    public BaseResponse postCreateTest(Test test) {
         BaseResponse response = new BaseResponse();
+        String payload = "";
         try {
-            HttpURLConnection httpRequest = httpRequest("PUT", "/test/" + id, mapper.writeValueAsString(test));
-            System.out.println(httpRequest.getResponseCode());
-            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                String data;
-                try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
-                    data = bf.readLine();
-                    response = mapper.readValue(data, BaseResponse.class);
-                } catch (Exception e) {
-                    throw (new IOException(e));
-                }
-            }
-        } catch (IOException e) {
-            throw (new RuntimeException(e));
+            payload = mapper.writeValueAsString(test);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
-        return response;
+        HttpURLConnection httpRequest = httpRequest("POST", "/test", payload);
+        return mappingResponse(httpRequest, BaseResponse.class);
+    }
+
+    public BaseResponse putUpdateTestById(Long id, Test test) {
+        BaseResponse response = new BaseResponse();
+        String payload = "";
+        try {
+            payload = mapper.writeValueAsString(test);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        HttpURLConnection httpRequest = httpRequest("PUT", "/test/" + id, payload);
+        return mappingResponse(httpRequest, BaseResponse.class);
     }
 
     public BaseResponse postLogin(String username, String password) {
-        BaseResponse response = new BaseResponse();
+        BaseResponse response = null;
         String payload = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
         System.out.println(payload);
+
         HttpURLConnection httpRequest = httpRequest("POST", "/login", payload);
-        try {
-            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                String data;
-                try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
-                    data = bf.readLine();
-                    response = mapper.readValue(data, BaseResponse.class);
-                    user = getBaseResponseBodyObject(response, User.class);
-                } catch (Exception e) {
-                    throw (new IOException(e));
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        response = mappingResponse(httpRequest, BaseResponse.class);
+        user = getBaseResponseBodyObject(response, User.class);
         return response;
     }
 
-    public BaseResponse postRegister(String name, String username, String password){
-        BaseResponse response = new BaseResponse();
+    public BaseResponse postRegister(String name, String username, String password) {
         String payload = "{\"name\": \"" + name + "\", \"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
         System.out.println(payload);
         HttpURLConnection httpRequest = httpRequest("POST", "/register", payload);
 
-        try {
-            System.out.println(httpRequest.getResponseCode());
-            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
-
-                String data;
-                try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
-                    data = bf.readLine();
-                    response = mapper.readValue(data, BaseResponse.class);
-                } catch (Exception e) {
-                    throw (new IOException(e));
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return response;
+        return mappingResponse(httpRequest, BaseResponse.class);
     }
 
     private HttpURLConnection httpRequest(String method, String endpoint, String payload) {
@@ -182,11 +104,11 @@ public class RequestAPI {
 
         // try-with-resources: used to declare resources to be used in a "try" block.
         // Resources will be removed after the block
-            try (DataOutputStream dos = new DataOutputStream(httpConnection.getOutputStream())) {
-                dos.writeBytes(payload);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        try (DataOutputStream dos = new DataOutputStream(httpConnection.getOutputStream())) {
+            dos.writeBytes(payload);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return httpConnection;
     }
@@ -197,13 +119,12 @@ public class RequestAPI {
         // The connection is opened after the following construction
         HttpURLConnection httpConnection;
         try {
-            URL url = new URL(baseURL+endpoint);
+            URL url = new URL(baseURL + endpoint);
             httpConnection = (HttpURLConnection) url.openConnection();
             httpConnection.setRequestMethod(method);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
 
         // these are used to set Headers to requests
@@ -221,7 +142,6 @@ public class RequestAPI {
 
         }
         System.out.println();
-
 
 
         return httpConnection;
@@ -247,5 +167,38 @@ public class RequestAPI {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public <T> T mappingResponse(HttpURLConnection httpRequest, Class<T> clazz) {
+        try {
+            System.out.println("Status code: " + httpRequest.getResponseCode());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
+            String data = bf.readLine();
+            System.out.println("Response body: " + data);
+            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                return mapper.readValue(data, clazz);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public <T> T mappingResponse(HttpURLConnection httpRequest, TypeReference<T> valueTypeRef) {
+        try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
+            System.out.println("Status code: " + httpRequest.getResponseCode());
+            String data = bf.readLine();
+            System.out.println("Response body: " + data);
+            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                return mapper.readValue(data, valueTypeRef);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }
