@@ -60,6 +60,7 @@ public class Question {
     }
 
     public void setmAns(Choice mAns) {
+        System.out.println("Set answer");
         this.mAns = mAns;
     }
 
