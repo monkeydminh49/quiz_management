@@ -7,6 +7,7 @@ public class Question {
     private Long testId;
     private String question;
     private List<Choice> choices;
+    private Choice mAns = null;
 
     public Question() {
     }
@@ -56,5 +57,14 @@ public class Question {
 
     public void addAllChoices(List<Choice> choices) {
         this.choices.addAll(choices);
+    }
+
+    public void setmAns(Choice mAns) {
+        System.out.println("Set answer");
+        this.mAns = mAns;
+    }
+
+    public Choice getmAns() {
+        return mAns;
     }
 }

@@ -1,16 +1,13 @@
 package com.e01.quiz_management;
 
-import com.e01.quiz_management.model.Test;
-import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * JavaFX App
@@ -20,32 +17,15 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-//    public void start(Stage stage) throws IOException {
-//        scene = new Scene(loadFXML("login"), 700, 540);
-//        scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
-//        stage.setScene(scene);
-//        stage.setResizable(false);
-//        stage.sizeToScene();
-//        stage.show();
-//
-//    }
-//
-//    static void setRoot(String fxml) throws IOException {
-//        scene.setRoot(loadFXML(fxml));
-//    }
-//
-//    private static Parent loadFXML(String fxml) throws IOException {
-//        System.out.println(App.class.getResource(fxml + ".fxml"));
-//        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-//        return fxmlLoader.load();
-//    }
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("login"), 700, 540);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.sizeToScene();
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
@@ -76,7 +56,6 @@ public class App extends Application {
 //        List<Test> tests = RequestAPI.getInstance().getAllUserTests();
 //        tests.forEach(t -> System.out.println(t.getTitle()));
 //
-
         launch();
     }
 
