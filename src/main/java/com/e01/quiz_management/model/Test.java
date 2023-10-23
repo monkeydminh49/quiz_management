@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Test {
     private Long id;
+    private String code;
     private Long userId;
     private String title;
     private List<Question> questions;
@@ -11,8 +12,9 @@ public class Test {
     public Test() {
     }
 
-    public Test(Long id, Long userId, String title, List<Question> questions, long duration) {
+    public Test(Long id, String code, Long userId, String title, List<Question> questions, long duration) {
         this.id = id;
+        this.code = code;
         this.userId = userId;
         this.title = title;
         this.questions = questions;
@@ -65,5 +67,13 @@ public class Test {
 
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
