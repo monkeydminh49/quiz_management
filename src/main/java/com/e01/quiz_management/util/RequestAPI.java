@@ -151,12 +151,13 @@ public class RequestAPI {
     }
 
     public BaseResponse postRegister(String name, String username, String password){
-        BaseResponse response = null;
-        String payload = "{\"name\": \"" + name + ", username\": \"" + username + "\", \"password\": \"" + password + "\"}";
-
-        HttpURLConnection httpRequest = httpRequest("POST", "register", payload);
+        BaseResponse response = new BaseResponse();
+        String payload = "{\"name\": \"" + name + "\", \"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
+        System.out.println(payload);
+        HttpURLConnection httpRequest = httpRequest("POST", "/register", payload);
 
         try {
+            System.out.println(httpRequest.getResponseCode());
             if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
                 String data;
