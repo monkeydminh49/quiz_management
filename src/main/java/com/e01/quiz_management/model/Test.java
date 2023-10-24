@@ -1,5 +1,6 @@
 package com.e01.quiz_management.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Test {
@@ -7,16 +8,18 @@ public class Test {
     private String code;
     private Long userId;
     private String title;
+    private LocalDateTime startTime;
     private List<Question> questions;
     private long duration;
     public Test() {
     }
 
-    public Test(Long id, String code, Long userId, String title, List<Question> questions, long duration) {
+    public Test(Long id, String code, Long userId, String title,LocalDateTime startTime, List<Question> questions, long duration) {
         this.id = id;
         this.code = code;
         this.userId = userId;
         this.title = title;
+        this.startTime = startTime;
         this.questions = questions;
         this.duration = duration;
     }
@@ -75,5 +78,13 @@ public class Test {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 }

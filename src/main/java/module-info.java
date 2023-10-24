@@ -2,6 +2,7 @@ module com.e01.quiz_management {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
 
     opens com.e01.quiz_management.controller to javafx.fxml;
     opens com.e01.quiz_management to javafx.fxml;
