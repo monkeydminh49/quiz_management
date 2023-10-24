@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,7 +29,8 @@ public class ListTestController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<Test> tests = RequestAPI.getInstance().getAllUserTests();
+        List<Test> tests = new ArrayList<>();
+        tests = RequestAPI.getInstance().getAllUserTests();
         ObservableList<Test> observableArrayList =
                 FXCollections.observableArrayList(tests);
         orderColumn.setCellFactory(column -> {
