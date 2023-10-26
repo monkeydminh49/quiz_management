@@ -118,30 +118,53 @@
                 <HBox prefHeight="54.0" prefWidth="600.0">
                     <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Correct answer">
-                            <HBox.margin>
-                                <Insets left="20.0" top="20.0" />
-                            </HBox.margin>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
                         </Text>
-                        <Button fx:id="Previous" mnemonicParsing="false" onAction="#backToprevious" style="-fx-background-color: #FFA400;" text="Previous question" textAlignment="CENTER">
-                            <HBox.margin>
-                                <Insets bottom="20.0" right="10.0" top="50.0" />
-                            </HBox.margin>
-                        </Button>
-                        <Button fx:id="addNextQuestion" mnemonicParsing="false" onAction="#addNextQuestion" style="-fx-background-color: #19B5FE;" text="Add next question" textAlignment="CENTER">
-                            <HBox.margin>
-                                <Insets bottom="20.0" left="20.0" right="20.0" top="50.0" />
-                            </HBox.margin>
-                        </Button>
-                        <Button fx:id="deleteAll" mnemonicParsing="false" onAction="#deleteAll" style="-fx-background-color: #E68364;" text="Delete all" textAlignment="CENTER">
-                            <HBox.margin>
-                                <Insets left="20.0" right="20.0" top="50.0" />
-                            </HBox.margin>
-                        </Button>
-                        <Button fx:id="submitQuiz" mnemonicParsing="false" onAction="#submitQuiz" style="-fx-background-color: #87D37C;" text="Submit Quiz" textAlignment="CENTER">
-                            <HBox.margin>
-                                <Insets bottom="20.0" left="10.0" right="10.0" top="50.0" />
-                            </HBox.margin>
-                        </Button>
+                  <VBox prefHeight="54.0" prefWidth="431.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                                    <Button fx:id="previous" mnemonicParsing="false" onAction="#previous" prefHeight="25.0" prefWidth="43.0" style="-fx-background-color: #FFA400;" text="&lt;" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="90.0" />
+                                 </HBox.margin>
+                                    </Button>
+                              <Button fx:id="next" mnemonicParsing="false" onAction="#next" prefHeight="25.0" prefWidth="43.0" style="-fx-background-color: #FFA400;" text="&gt;" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="50.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="35.0" prefWidth="442.0">
+                           <children>
+                                    <Button fx:id="save" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="81.0" style="-fx-background-color: #E68364;" text="Save" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="addNextQuestion" mnemonicParsing="false" onAction="#addNextQuestion" style="-fx-background-color: #19B5FE;" text="Add next question" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="submitQuiz" mnemonicParsing="false" onAction="#submitQuiz" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #87D37C;" text="Submit Quiz" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                    </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="50.0" top="10.0" />
+                     </padding>
+                  </VBox>
                     </children>
                 </HBox>
             </children>
