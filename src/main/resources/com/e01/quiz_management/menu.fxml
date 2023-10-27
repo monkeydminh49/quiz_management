@@ -7,15 +7,15 @@
 
 <AnchorPane prefHeight="489.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.menu.MenuView">
    <children>
-      <Button layoutX="164.0" layoutY="138.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" text="Join Test">
+      <Button layoutX="164.0" layoutY="134.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" text="Join Test">
          <font>
             <Font name="Fira Sans Bold" size="15.0" />
          </font></Button>
-      <Button layoutX="164.0" layoutY="246.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" text="Create Test">
+      <Button layoutX="164.0" layoutY="214.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" text="History">
          <font>
             <Font name="Fira Sans Bold" size="15.0" />
          </font></Button>
-      <Button layoutX="164.0" layoutY="348.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" text="View History">
+      <Button layoutX="164.0" layoutY="294.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" text="Test Management">
          <font>
             <Font name="Fira Sans Bold" size="15.0" />
          </font></Button>
@@ -23,5 +23,10 @@
          <font>
             <Font name="Fira Sans Bold" size="24.0" />
          </font></Label>
+      <Button layoutX="164.0" layoutY="374.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" text="Log out">
+         <font>
+            <Font name="Fira Sans Bold" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
