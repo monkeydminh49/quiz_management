@@ -23,7 +23,10 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AddQuizController implements Initializable {
-
+    @FXML
+    public ToggleButton practice;
+    @FXML
+    public ToggleButton kiemtra;
     @FXML
     private DatePicker selectedDate;
     @FXML
@@ -35,6 +38,8 @@ public class AddQuizController implements Initializable {
     @FXML
     private TextField QuizLength;
     private static int indexOfQuestion=0;
+    @FXML
+    private Label signupMessage;
     @FXML
     private TextArea questionContent;
     @FXML
@@ -79,7 +84,12 @@ public class AddQuizController implements Initializable {
         startedTime=LocalDateTime.of(selectedDate.getValue().getYear(),selectedDate.getValue().getMonth(),selectedDate.getValue().getDayOfMonth(), hours, minutes);
         quiz.setStartTime(startedTime);
     }
-
+    public void change() {
+        //change button color when click
+        if (practice.isSelected()) {
+            quiz.setStartTime(null);
+        }
+    }
     @FXML
     public void createQuiz(ActionEvent event) {
         try{
@@ -107,6 +117,7 @@ public class AddQuizController implements Initializable {
     @FXML
     public void addNextQuestion(ActionEvent event) {
         try {
+            save();
             Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root1);
@@ -122,8 +133,7 @@ public class AddQuizController implements Initializable {
         }
     }
 
-    @FXML
-    private void save() throws IOException {
+    private void save() throws IOException, InterruptedException {
         if (!questionContent.getText().isEmpty() && !option1.getText().isEmpty() && !option2.getText().isEmpty() && !option3.getText().isEmpty() && !option4.getText().isEmpty()) {
             //save 1 time for 1 question
             question.setQuestion(questionContent.getText());
@@ -131,37 +141,47 @@ public class AddQuizController implements Initializable {
             choice2.setContent(option2.getText());
             choice3.setContent(option3.getText());
             choice4.setContent(option4.getText());
+            if (answer1.isSelected()) {
+                choice1.setCorrect(true);
+                choice2.setCorrect(false);
+                choice3.setCorrect(false);
+                choice4.setCorrect(false);
+            }
+            if (answer2.isSelected()) {
+                choice2.setCorrect(true);
+                choice1.setCorrect(false);
+                choice3.setCorrect(false);
+                choice4.setCorrect(false);
+            }
+            if (answer3.isSelected()) {
+                choice3.setCorrect(true);
+                choice1.setCorrect(false);
+                choice2.setCorrect(false);
+                choice4.setCorrect(false);
+            }
+            if (answer4.isSelected()) {
+                choice4.setCorrect(true);
+                choice1.setCorrect(false);
+                choice2.setCorrect(false);
+                choice3.setCorrect(false);
+            }
             listAnswer.add(choice1);
             listAnswer.add(choice2);
             listAnswer.add(choice3);
             listAnswer.add(choice4);
             question.setChoices(listAnswer);
-            if (answer1.isSelected()) {
-                choice1.setCorrect(true);
-            }
-            if (answer2.isSelected()) {
-                choice2.setCorrect(true);
-            }
-            if (answer3.isSelected()) {
-                choice3.setCorrect(true);
-            }
-            if (answer4.isSelected()) {
-                choice4.setCorrect(true);
-            }
+            System.out.println(question.getChoices().get(0).getCorrect());
             listQuestion.add(question);
             quiz.setQuestions(listQuestion);
             indexOfQuestion++;
-//            System.out.println(indexOfQuestion);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Save");
-            alert.setHeaderText("Save");
-            alert.setContentText("Save question successfully");
-            alert.showAndWait();
-
             //remove duplicate question
             for (int i = 0; i < quiz.getQuestions().size(); i++) {
                 for (int j = i + 1; j < quiz.getQuestions().size(); j++) {
-                    if (quiz.getQuestions().get(i).getQuestion().equals(quiz.getQuestions().get(j).getQuestion())) {
+                    if (quiz.getQuestions().get(i).getQuestion().equals(quiz.getQuestions().get(j).getQuestion())
+                            && quiz.getQuestions().get(i).getChoices().get(0).getContent().equals(quiz.getQuestions().get(j).getChoices().get(0).getContent())
+                            && quiz.getQuestions().get(i).getChoices().get(1).getContent().equals(quiz.getQuestions().get(j).getChoices().get(1).getContent())
+                            && quiz.getQuestions().get(i).getChoices().get(2).getContent().equals(quiz.getQuestions().get(j).getChoices().get(2).getContent())
+                            && quiz.getQuestions().get(i).getChoices().get(3).getContent().equals(quiz.getQuestions().get(j).getChoices().get(3).getContent())){
                         quiz.getQuestions().remove(j);
                         j--;
                         indexOfQuestion--;
@@ -179,16 +199,8 @@ public class AddQuizController implements Initializable {
     }
 
     @FXML
-    private void submitQuiz(ActionEvent event) throws IOException {
-        //remove duplicate question
-            for (int i = 0; i < quiz.getQuestions().size(); i++) {
-                for (int j = i + 1; j < quiz.getQuestions().size(); j++) {
-                    if (quiz.getQuestions().get(i).getQuestion().equals(quiz.getQuestions().get(j).getQuestion())) {
-                        quiz.getQuestions().remove(j);
-                        j--;
-                    }
-                }
-            }
+    private void submitQuiz(ActionEvent event) throws IOException, InterruptedException {
+            save();
             Parent root2 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("QuizInfo.fxml")));
             Stage stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene1 = new Scene(root2);
@@ -204,7 +216,7 @@ public class AddQuizController implements Initializable {
 
     @FXML
     private void previous(ActionEvent event) throws IOException {
-        if(indexOfQuestion>0){
+        if (indexOfQuestion > 0) {
             //move to previous screen using indexOfQuestion
             Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -226,19 +238,32 @@ public class AddQuizController implements Initializable {
             option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
             option3.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getContent());
             option4.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getContent());
+            if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getCorrect()) {
+                answer1.setSelected(true);
+            }
+            if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getCorrect()) {
+                answer2.setSelected(true);
+            }
+            if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getCorrect()) {
+                answer4.setSelected(true);
+            }
+            if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getCorrect()) {
+                answer3.setSelected(true);
+            }
         }
-        else{
-            //popup notification if there is no previous question
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("There is no previous question");
-            alert.showAndWait();
-        }
+            else {
+                //popup notification if there is no previous question
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText("There is no previous question");
+                alert.showAndWait();
+            }
+
     }
     @FXML
     private void next(ActionEvent event) throws IOException {
-        if(indexOfQuestion<=quiz.getQuestions().size()-1){
+        if(indexOfQuestion+1<=quiz.getQuestions().size()){
             Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root1);
@@ -260,18 +285,36 @@ public class AddQuizController implements Initializable {
             option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
             option3.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getContent());
             option4.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getContent());
+            //fill up radio button
+            if(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getCorrect()){
+                answer1.setSelected(true);
+            }
+            if(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getCorrect()){
+                answer2.setSelected(true);
+            }
+            if(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getCorrect()){
+                answer3.setSelected(true);
+            }
+            if(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getCorrect()){
+                answer4.setSelected(true);
+            }
         }
         else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("There is no next question");
-                alert.showAndWait();
+                try{
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("There is no next question");
+                    alert.showAndWait();
+                }catch (Exception e){
+                    System.out.println(e);
+                }
         }
     }
     @FXML
     public void completeAndSend() {
         try {
+            change();
             //send test to api
             BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
             Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
@@ -279,7 +322,7 @@ public class AddQuizController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Test ID");
             alert.setHeaderText("Test ID");
-            alert.setContentText("Your test ID is: " + test.getId());
+            alert.setContentText("Your test Code is: " + test.getCode());
             alert.showAndWait();
         } catch (Exception e) {
             //popup notification if there is no test created

@@ -10,6 +10,7 @@ public class Choice {
     private Long questionId;
 
     public Choice() {
+        this.isCorrect = false;
     }
 
     public Choice(Long id, String content, Boolean isCorrect, Long questionId) {
@@ -45,7 +46,7 @@ public class Choice {
     }
 
     public Boolean getCorrect() {
-        return isCorrect;
+        return this.isCorrect;
     }
 
     public void setCorrect(Boolean isCorrect) {
