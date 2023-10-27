@@ -1,5 +1,6 @@
 package com.e01.quiz_management;
 
+import com.e01.quiz_management.model.TestHistory;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class AppListTestHistory extends Application {
