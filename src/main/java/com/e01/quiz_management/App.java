@@ -62,7 +62,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-//        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
+        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
 //        RequestAPI.getInstance().getHello();
 //        Test newTest = new Test();
 //
