@@ -46,12 +46,12 @@ public class RequestAPI {
     }
 
     public Test getTestByCode(String code) {
-        HttpURLConnection httpRequest = httpRequest("GET", "/test/code/" + code);
+        HttpURLConnection httpRequest = httpRequest("GET", "/test?code=" + code);
         return mappingResponse(httpRequest, Test.class);
     }
 
     public List<Test> getAllUserTests() {
-        HttpURLConnection httpRequest = httpRequest("GET", "/test");
+        HttpURLConnection httpRequest = httpRequest("GET", "/test/all");
         return mappingResponse(httpRequest, new TypeReference<List<Test>>() {
         });
     }
@@ -123,9 +123,9 @@ public class RequestAPI {
         return mappingResponse(httpRequest, BaseResponse.class);
     }
 
-    public BaseResponse deleteTest(Long id) {
+    public void deleteTest(Long id) {
         HttpURLConnection httpRequest = httpRequest("DELETE", "/test/" + id);
-        return mappingResponse(httpRequest, BaseResponse.class);
+        mappingResponse(httpRequest, BaseResponse.class);
     }
 
     private HttpURLConnection httpRequest(String method, String endpoint, String payload) {

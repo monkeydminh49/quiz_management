@@ -2,8 +2,6 @@ package com.e01.quiz_management.list_test;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
-import com.e01.quiz_management.model.Choice;
-import com.e01.quiz_management.model.Question;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.collections.FXCollections;
@@ -17,12 +15,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +45,11 @@ public class ListTestView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        orderColumn.setPrefWidth(orderColumn.getMinWidth());
-        codeColumn.setPrefWidth(codeColumn.getMinWidth());
-        titleColumn.setPrefWidth(titleColumn.getMinWidth());
-        startColumn.setPrefWidth(startColumn.getMinWidth());
-        durationColumn.setPrefWidth(durationColumn.getMinWidth());
+//        orderColumn.setPrefWidth(orderColumn.getMinWidth());
+//        codeColumn.setPrefWidth(codeColumn.getMinWidth());
+//        titleColumn.setPrefWidth(titleColumn.getMinWidth());
+//        startColumn.setPrefWidth(startColumn.getMinWidth());
+//        durationColumn.setPrefWidth(durationColumn.getMinWidth());
         updateTable();
     }
 
@@ -87,10 +83,25 @@ public class ListTestView implements Initializable {
                         });
                     }
 
-                    private final HBox pane = new HBox(btn, btn2);
+                    private final Button btn3 = new Button("Detail");
+
+                    {
+                        btn3.setOnAction((ActionEvent event) -> {
+//                            Test data = getTableView().getItems().get(getIndex());
+//                            try {
+//                                App.setRoot("QuizInfo");
+//                                ShareAppData.getInstance().setTest(data);
+//                            } catch (IOException e) {
+//                                throw new RuntimeException(e);
+//                            }
+                        });
+                    }
+
+                    private final HBox pane = new HBox(btn, btn2, btn3);
+
                     {
                         pane.setSpacing(10);
-                        pane.setAlignment(javafx.geometry.Pos.CENTER);
+                        pane.setStyle("-fx-alignment: CENTER");
                     }
 
                     @Override
@@ -129,12 +140,12 @@ public class ListTestView implements Initializable {
                 }
             };
         });
-        titleColumn.setCellValueFactory(new PropertyValueFactory<Test, String>("title"));
-        codeColumn.setCellValueFactory(new PropertyValueFactory<Test, String>("code"));
-        startColumn.setCellValueFactory(new PropertyValueFactory<Test, LocalDateTime>("startTime"));
-        durationColumn.setCellValueFactory(new PropertyValueFactory<Test, Long>("duration"));
+//        neu data null thi ghi la <empty>
+        codeColumn.setCellValueFactory(new PropertyValueFactory<>("code"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
         tableView.setItems(observableArrayList);
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         addButtonToTable();
     }
 }
