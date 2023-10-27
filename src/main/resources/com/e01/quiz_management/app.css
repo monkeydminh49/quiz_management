@@ -2,3 +2,13 @@
     -fx-background-insets: 0, 0 0 1 0;
     -fx-background-radius: 0;
 }
+
+#joinButton{
+    -fx-background-radius: 10;
+    -fx-background-color: #AC703A;
+    transition: background 0.5s ease-in-out;
+}
+
+#joinButton:hover{
+    -fx-background-color: #F0D4AA
+}
