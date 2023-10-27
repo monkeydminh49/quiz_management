@@ -1,6 +1,8 @@
 package com.e01.quiz_management.authentication;
 
 import com.e01.quiz_management.App;
+import com.e01.quiz_management.menu.MenuView;
+import com.e01.quiz_management.model.User;
 import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.event.ActionEvent;
@@ -36,11 +38,20 @@ public class LoginView {
             BaseResponse response = RequestAPI.getInstance().postLogin(username, password);
             System.out.println(response.getBody());
             if (response.getCode() == 1){
-                Parent root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("menu.fxml"))));
+                User user = RequestAPI.getInstance().getBaseResponseBodyObject(response, User.class);
+                String name = user.getName();
+
+                FXMLLoader loader = new FXMLLoader((Objects.requireNonNull(App.class.getResource("menu.fxml"))));
+                Parent root = (Parent) loader.load();
+
+                MenuView menuView = (MenuView) loader.getController();
+                menuView.greeting(name);
+
                 Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
+                System.out.println(user.getName());
             }else{
                 loginMessage.setText("Incorrect username or password");
                 loginMessage.setStyle("-fx-text-fill: red");

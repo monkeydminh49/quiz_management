@@ -80,13 +80,32 @@ public class RequestAPI {
     }
 
     public BaseResponse postLogin(String username, String password) {
-        BaseResponse response = null;
+//        BaseResponse response = null;
+//        String payload = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
+//        System.out.println(payload);
+//
+//        HttpURLConnection httpRequest = httpRequest("POST", "/login", payload);
+//        response = mappingResponse(httpRequest, BaseResponse.class);
+//        user = getBaseResponseBodyObject(response, User.class);
+//        return response;
+        BaseResponse response = new BaseResponse();
         String payload = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
         System.out.println(payload);
-
         HttpURLConnection httpRequest = httpRequest("POST", "/login", payload);
-        response = mappingResponse(httpRequest, BaseResponse.class);
-        user = getBaseResponseBodyObject(response, User.class);
+        try {
+            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                String data;
+                try (BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()))) {
+                    data = bf.readLine();
+                    response = mapper.readValue(data, BaseResponse.class);
+                    user = getBaseResponseBodyObject(response, User.class);
+                } catch (Exception e) {
+                    throw (new IOException(e));
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return response;
     }
 
