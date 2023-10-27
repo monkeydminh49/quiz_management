@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="540.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.ListTestController">
+<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.ListTestHistoryController">
    <children>
       <TableView fx:id="myTable" layoutX="25.0" layoutY="83.0" prefHeight="277.0" prefWidth="658.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="83.0">
         <columns>
-          <TableColumn fx:id="orderColumn" minWidth="-1.0" prefWidth="75.0" text="STT" />
-          <TableColumn fx:id="titleColumn" minWidth="0.0" prefWidth="488.0" text="Title" />
-            <TableColumn fx:id="codeColumn" prefWidth="69.0" text="Code" />
+          <TableColumn fx:id="orderColumn" minWidth="-1.0" prefWidth="40.0" text="No." />
+            <TableColumn fx:id="codeColumn" prefWidth="130.0" text="Code" />
+          <TableColumn fx:id="titleColumn" minWidth="0.0" prefWidth="255.0" text="Title" />
+            <TableColumn fx:id="submitTimeColumn" minWidth="0.0" prefWidth="200.0" text="Submit Time" />
+            <TableColumn fx:id="scoreColumn" text="Score" />
         </columns>
       </TableView>
+      <Label layoutX="417.0" layoutY="14.0" prefHeight="55.0" prefWidth="127.0" text="History">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

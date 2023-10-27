@@ -10,12 +10,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-public class AppListTest extends Application {
+public class AppListTestHistory extends Application {
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("list_test"), 700, 540);
+        scene = new Scene(loadFXML("list_test"), 960, 600);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.sizeToScene();
@@ -31,7 +31,7 @@ public class AppListTest extends Application {
         return fxmlLoader.load();
     }
     public static void main(String[] args) {
-        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
+        RequestAPI.getInstance().postLogin("xyz123", "xyz123");
         launch();
     }
 }
