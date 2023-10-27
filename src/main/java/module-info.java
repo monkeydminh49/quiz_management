@@ -17,4 +17,6 @@ module com.e01.quiz_management {
     opens com.e01.quiz_management.test_form to javafx.fxml;
     exports com.e01.quiz_management.menu;
     opens com.e01.quiz_management.menu to javafx.fxml;
+    exports com.e01.quiz_management.list_test;
+    opens com.e01.quiz_management.list_test to javafx.fxml;
 }

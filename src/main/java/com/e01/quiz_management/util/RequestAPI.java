@@ -117,6 +117,11 @@ public class RequestAPI {
         return mappingResponse(httpRequest, BaseResponse.class);
     }
 
+    public BaseResponse deleteTest(Long id) {
+        HttpURLConnection httpRequest = httpRequest("DELETE", "/test/" + id);
+        return mappingResponse(httpRequest, BaseResponse.class);
+    }
+
     private HttpURLConnection httpRequest(String method, String endpoint, String payload) {
         HttpURLConnection httpConnection = httpRequest(method, endpoint);
 

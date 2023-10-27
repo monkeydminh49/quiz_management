@@ -129,7 +129,6 @@ public class TestFormView {
         );
         xButton.setOnAction(event -> {
             try {
-//                App.openNewWindow("layout_result");
                 App.setRoot("layout_result");
             } catch (IOException e) {
                 e.printStackTrace();

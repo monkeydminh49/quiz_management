@@ -8,7 +8,6 @@ public class SharedData {
     private static SharedData instance;
     private Double score = 0.0;
     private Boolean isReview = false;
-
     private List<Question> questions;
 
     private SharedData() {

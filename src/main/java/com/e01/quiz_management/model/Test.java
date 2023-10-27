@@ -1,5 +1,7 @@
 package com.e01.quiz_management.model;
 
+import javafx.beans.binding.BooleanExpression;
+
 import java.time.LocalDateTime;
 import java.util.List;
 

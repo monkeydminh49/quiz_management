@@ -39,7 +39,7 @@ public class App extends Application {
 //        return fxmlLoader.load();
 //    }
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("login"), 700, 540);
+        scene = new Scene(loadFXML("layout_list_test"));
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
@@ -64,7 +64,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-//        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
+        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
 //        RequestAPI.getInstance().getHello();
 //        Test newTest = new Test();
 //
