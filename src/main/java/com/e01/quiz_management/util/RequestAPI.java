@@ -5,6 +5,7 @@ import com.e01.quiz_management.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -23,6 +24,7 @@ public class RequestAPI {
 
     private RequestAPI() {
         mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
     }
 
     public static RequestAPI getInstance() {
