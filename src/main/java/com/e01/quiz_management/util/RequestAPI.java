@@ -1,6 +1,7 @@
 package com.e01.quiz_management.util;
 
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.model.TestHistory;
 import com.e01.quiz_management.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -52,6 +53,11 @@ public class RequestAPI {
     public List<Test> getAllUserTests() {
         HttpURLConnection httpRequest = httpRequest("GET", "/test");
         return mappingResponse(httpRequest, new TypeReference<List<Test>>() {
+        });
+    }
+    public List<TestHistory> getTestHistories() {
+        HttpURLConnection httpRequest = httpRequest("GET", "/test-history");
+        return mappingResponse(httpRequest, new TypeReference<List<TestHistory>>() {
         });
     }
 
