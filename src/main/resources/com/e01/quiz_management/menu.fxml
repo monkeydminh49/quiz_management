@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="489.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.menu.MenuView">
    <children>
-      <Button layoutX="164.0" layoutY="138.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" text="Join Test">
+      <Button layoutX="164.0" layoutY="138.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" text="Join Test" AnchorPane.topAnchor="138.0">
          <font>
             <Font name="Fira Sans Bold" size="15.0" />
          </font></Button>
