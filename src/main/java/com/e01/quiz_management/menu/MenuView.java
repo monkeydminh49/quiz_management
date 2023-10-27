@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 public class MenuView {
     @FXML
     Label greetingName;
-//    static public greeting(){
-//
-//    }
+    public void greeting(String s){
+        this.greetingName.setText("Hello " + s);
+    }
 }
