@@ -41,16 +41,20 @@ public class ListTestView implements Initializable {
     TableColumn<Test, Long> durationColumn;
     @FXML
     TableColumn<Test, Void> actionColumn;
+    @FXML
+    Button createTestButton;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        orderColumn.setPrefWidth(orderColumn.getMinWidth());
-//        codeColumn.setPrefWidth(codeColumn.getMinWidth());
-//        titleColumn.setPrefWidth(titleColumn.getMinWidth());
-//        startColumn.setPrefWidth(startColumn.getMinWidth());
-//        durationColumn.setPrefWidth(durationColumn.getMinWidth());
         updateTable();
+        createTestButton.setOnAction(actionEvent -> {
+            try {
+                App.setRoot("addQuiz");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void addButtonToTable() {
@@ -87,13 +91,13 @@ public class ListTestView implements Initializable {
 
                     {
                         btn3.setOnAction((ActionEvent event) -> {
-//                            Test data = getTableView().getItems().get(getIndex());
-//                            try {
-//                                App.setRoot("QuizInfo");
-//                                ShareAppData.getInstance().setTest(data);
-//                            } catch (IOException e) {
-//                                throw new RuntimeException(e);
-//                            }
+                            Test data = getTableView().getItems().get(getIndex());
+                            try {
+                                App.setRoot("layout_list_submit");
+                                ShareAppData.getInstance().setTest(data);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         });
                     }
 

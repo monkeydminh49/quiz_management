@@ -27,4 +27,5 @@ public class ShareAppData {
     public void clearTest() {
         this.test = null;
     }
+
 }

@@ -55,6 +55,7 @@ public class RequestAPI {
         return mappingResponse(httpRequest, new TypeReference<List<Test>>() {
         });
     }
+
     public List<TestHistory> getTestHistories() {
         HttpURLConnection httpRequest = httpRequest("GET", "/test-history");
         return mappingResponse(httpRequest, new TypeReference<List<TestHistory>>() {
@@ -63,6 +64,7 @@ public class RequestAPI {
 
     public List<TestHistory> getTestHistoriesByTestId(Long id) {
         HttpURLConnection httpRequest = httpRequest("GET", "/test-history/" + id);
+        System.out.println(id);
         return mappingResponse(httpRequest, new TypeReference<List<TestHistory>>() {
         });
     }

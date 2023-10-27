@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -18,5 +19,6 @@
                 <TableColumn fx:id="actionColumn" editable="false" minWidth="200.0" prefWidth="200.0" />
             </columns>
         </TableView>
+      <Button fx:id="createTestButton" layoutX="884.0" layoutY="29.0" mnemonicParsing="false" text="New" />
     </children>
 </AnchorPane>
