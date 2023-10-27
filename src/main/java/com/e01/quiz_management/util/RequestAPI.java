@@ -61,6 +61,12 @@ public class RequestAPI {
         });
     }
 
+    public List<TestHistory> getTestHistoriesByTestId(Long id) {
+        HttpURLConnection httpRequest = httpRequest("GET", "/test-history/" + id);
+        return mappingResponse(httpRequest, new TypeReference<List<TestHistory>>() {
+        });
+    }
+
     public BaseResponse postCreateTest(Test test) {
         BaseResponse response = new BaseResponse();
         String payload = "";
