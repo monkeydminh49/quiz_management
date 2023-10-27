@@ -129,6 +129,7 @@ public class TestFormView {
         );
         xButton.setOnAction(event -> {
             try {
+//                App.openNewWindow("layout_result");
                 App.setRoot("layout_result");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -160,16 +161,16 @@ public class TestFormView {
 
     }
 
-    private void submitTest(QuestionController questionController) {
-        SharedData sharedData = SharedData.getInstance();
-        sharedData.setScore(questionController.getCal());
-        sharedData.setQuestions(questionController.getQuestions());
-        try {
-            App.setRoot("layout_result");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void submitTest(QuestionController questionController) {
+//        SharedData sharedData = SharedData.getInstance();
+//        sharedData.setScore(questionController.getCal());
+//        sharedData.setQuestions(questionController.getQuestions());
+//        try {
+//            App.openNewWindow("layout_result");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private List<Question> dummyQuestions() {
         List<Question> questions = new ArrayList<>();

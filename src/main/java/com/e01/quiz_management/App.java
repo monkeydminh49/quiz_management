@@ -2,10 +2,12 @@ package com.e01.quiz_management;
 
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -37,14 +39,24 @@ public class App extends Application {
 //        return fxmlLoader.load();
 //    }
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("logingi"), 640, 480);
+        scene = new Scene(loadFXML("layout_test_form"));
         stage.setScene(scene);
+        stage.sizeToScene();
         stage.show();
     }
 
     public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        Platform.runLater(() -> {
+            try {
+                scene.setRoot(loadFXML(fxml));
+                Stage stage = (Stage) scene.getWindow();
+                stage.sizeToScene();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
+
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
