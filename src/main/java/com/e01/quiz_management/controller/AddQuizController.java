@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.EventObject;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -27,6 +28,7 @@ public class AddQuizController implements Initializable {
     public ToggleButton practice;
     @FXML
     public ToggleButton kiemtra;
+
     @FXML
     private DatePicker selectedDate;
     @FXML
@@ -334,4 +336,40 @@ public class AddQuizController implements Initializable {
         }
     }
 
+    @FXML
+    public void backToFirst(ActionEvent event) throws IOException {
+        //back to 1st question
+        indexOfQuestion=0;
+        Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root1);
+        stage.setScene(scene);
+        stage.show();
+        TextArea questionContent = (TextArea) scene.lookup("#questionContent");
+        TextField option1 = (TextField) scene.lookup("#option1");
+        TextField option2 = (TextField) scene.lookup("#option2");
+        TextField option3 = (TextField) scene.lookup("#option3");
+        TextField option4 = (TextField) scene.lookup("#option4");
+        RadioButton answer1 = (RadioButton) scene.lookup("#answer1");
+        RadioButton answer2 = (RadioButton) scene.lookup("#answer2");
+        RadioButton answer3 = (RadioButton) scene.lookup("#answer3");
+        RadioButton answer4 = (RadioButton) scene.lookup("#answer4");
+        questionContent.setText(quiz.getQuestions().get(indexOfQuestion).getQuestion());
+        option1.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getContent());
+        option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
+        option3.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getContent());
+        option4.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getContent());
+        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getCorrect()) {
+            answer1.setSelected(true);
+        }
+        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getCorrect()) {
+            answer2.setSelected(true);
+        }
+        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getCorrect()) {
+            answer4.setSelected(true);
+        }
+        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getCorrect()) {
+            answer3.setSelected(true);
+        }
+    }
 }
