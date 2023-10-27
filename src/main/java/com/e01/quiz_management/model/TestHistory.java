@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 
 public class TestHistory {
     private Long id;
+    private Long testId;
     private String code;
     private String title;
-    private Long userId;
+    private Long candidateId;
+    private String candidateName;
     private Long duration;
     private int score;
     private LocalDateTime submitTime;
@@ -14,15 +16,17 @@ public class TestHistory {
     public TestHistory() {
     }
 
-    public TestHistory(Long id, String code, String title, Long userId, Long duration, int score, LocalDateTime startTime, LocalDateTime submitTime) {
+    public TestHistory(Long id, Long testId,  String code, String title, Long candidateId, String candidateName, Long duration, int score, LocalDateTime startTime, LocalDateTime submitTime) {
         this.id = id;
         this.code = code;
+        this.testId = testId;
         this.title = title;
-        this.userId = userId;
+        this.candidateId = candidateId;
         this.duration = duration;
         this.score = score;
         this.submitTime = submitTime;
         this.startTime = startTime;
+        this.candidateName = candidateName;
     }
 
     public Long getId() {
@@ -37,8 +41,8 @@ public class TestHistory {
         return title;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getCandidateId() {
+        return candidateId;
     }
 
     public Long getDuration() {
@@ -65,8 +69,8 @@ public class TestHistory {
         this.title = title;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setCandidateId(Long candidateId) {
+        this.candidateId = candidateId;
     }
 
     public void setDuration(Long duration) {
@@ -87,5 +91,21 @@ public class TestHistory {
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
+
+    public String getCandidateName() {
+        return candidateName;
+    }
+
+    public void setCandidateName(String candidateName) {
+        this.candidateName = candidateName;
     }
 }
