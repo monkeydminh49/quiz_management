@@ -202,6 +202,12 @@ public class AddQuizController implements Initializable {
 
     @FXML
     private void submitQuiz(ActionEvent event) throws IOException, InterruptedException {
+        //check if user save question before submit
+        if (!questionContent.getText().isEmpty() &&
+                !option1.getText().isEmpty() &&
+                !option2.getText().isEmpty() &&
+                !option3.getText().isEmpty() &&
+                !option4.getText().isEmpty()) {
             save();
             Parent root2 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("QuizInfo.fxml")));
             Stage stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -214,8 +220,16 @@ public class AddQuizController implements Initializable {
             quiztitle.setText(quiz.getTitle());
             quizlength.setText(String.valueOf(quiz.getDuration()));
             noquestion.setText(String.valueOf(quiz.getQuestions().size()));
+        }
+        else {
+            //popup notification if there is insufficient information
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please enter question and answer");
+            alert.showAndWait();
+        }
     }
-
     @FXML
     private void previous(ActionEvent event) throws IOException {
         if (indexOfQuestion > 0) {
@@ -338,7 +352,6 @@ public class AddQuizController implements Initializable {
 
     @FXML
     public void backToFirst(ActionEvent event) throws IOException {
-        //back to 1st question
         indexOfQuestion=0;
         Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

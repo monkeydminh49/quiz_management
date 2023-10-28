@@ -38,7 +38,7 @@ public class App extends Application {
 //        return fxmlLoader.load();
 //    }
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("login"), 700, 540);
+        scene = new Scene(loadFXML("addQuiz"), 700, 540);
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
@@ -46,7 +46,7 @@ public class App extends Application {
 
     public static void setRoot(String fxml) throws IOException {
         Platform.runLater(() -> {
-            try {
+            try{
                 scene.setRoot(loadFXML(fxml));
                 Stage stage = (Stage) scene.getWindow();
                 stage.sizeToScene();
