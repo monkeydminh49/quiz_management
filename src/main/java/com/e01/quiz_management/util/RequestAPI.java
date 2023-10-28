@@ -69,6 +69,13 @@ public class RequestAPI {
         });
     }
 
+    public TestHistory postSubmitTestScore(Long testId, int score){
+        String payload = "{\"id\": " + testId + ", \"score\": " + score + "}";
+        System.out.println(payload);
+        HttpURLConnection httpRequest = httpRequest("POST", "/test-history", payload);
+        return mappingResponse(httpRequest, TestHistory.class);
+    }
+
     public BaseResponse postCreateTest(Test test) {
         BaseResponse response = new BaseResponse();
         String payload = "";
@@ -92,6 +99,8 @@ public class RequestAPI {
         HttpURLConnection httpRequest = httpRequest("PUT", "/test/" + id, payload);
         return mappingResponse(httpRequest, BaseResponse.class);
     }
+
+
 
     public BaseResponse postLogin(String username, String password) {
         BaseResponse response = new BaseResponse();
