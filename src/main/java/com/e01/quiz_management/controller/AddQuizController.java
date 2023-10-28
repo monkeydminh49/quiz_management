@@ -28,11 +28,6 @@ import java.util.ResourceBundle;
 
 public class AddQuizController implements Initializable {
     @FXML
-    public ToggleButton practice;
-    @FXML
-    public ToggleButton kiemtra;
-
-    @FXML
     private DatePicker selectedDate;
     @FXML
     private ComboBox<Integer> selectedHour = new ComboBox<>();
@@ -63,15 +58,6 @@ public class AddQuizController implements Initializable {
     private RadioButton answer3;
     @FXML
     private RadioButton answer4;
-
-    @FXML
-    private TextField quiztitle;
-
-    @FXML
-    private TextField quizlength;
-
-    @FXML
-    private TextField noquestion;
     private final Question question = new Question();
     private final Choice choice1 = new Choice();
     private final Choice choice2 = new Choice();
@@ -93,19 +79,19 @@ public class AddQuizController implements Initializable {
         }
 
         ShareAppData.getInstance().getTest();
-        Platform.runLater(() -> {
-                    if (ShareAppData.getInstance().getTest() != null) {
-                        quiz = ShareAppData.getInstance().getTest();
-                        try {
-                            quiztitle.setText(quiz.getTitle());
-                            quizlength.setText(String.valueOf(quiz.getDuration()));
-                            noquestion.setText(String.valueOf(quiz.getQuestions().size()));
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
-                    }
-                }
-        );
+//        Platform.runLater(() -> {
+//                    if (ShareAppData.getInstance().getTest() != null) {
+//                        quiz = ShareAppData.getInstance().getTest();
+//                        try {
+//                            quiztitle.setText(quiz.getTitle());
+//                            quizlength.setText(String.valueOf(quiz.getDuration()));
+//                            noquestion.setText(String.valueOf(quiz.getQuestions().size()));
+//                        } catch (Exception e) {
+//                            System.out.println(e);
+//                        }
+//                    }
+//                }
+//        );
     }
 
     public void convertToTime() {
@@ -115,28 +101,18 @@ public class AddQuizController implements Initializable {
         quiz.setStartTime(startedTime);
     }
 
-    public void change() {
-        //change button color when click
-        if (practice.isSelected()) {
-            quiz.setStartTime(null);
-        }
-    }
-
     @FXML
     public void createQuiz(ActionEvent event) {
         try {
             convertToTime();
-            quiz.setStartTime(startedTime);
             String quizName = String.valueOf(this.QuizName.getText());
             long duration = Long.parseLong(this.QuizLength.getText());
+            quiz.setStartTime(startedTime);
             quiz.setTitle(quizName);
             quiz.setDuration(duration);
+            System.out.println(quiz.getTitle());
             // move to scene add question
-            Parent root0 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root0);
-            stage.setScene(scene);
-            stage.show();
+            App.setRoot("AddQuestion");
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -150,11 +126,7 @@ public class AddQuizController implements Initializable {
     public void addNextQuestion(ActionEvent event) {
         try {
             save();
-            Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root1);
-            stage.setScene(scene);
-            stage.show();
+            App.setRoot("AddQuestion");
         } catch (Exception e) {
             //popup if user does not save question
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -202,7 +174,6 @@ public class AddQuizController implements Initializable {
             listAnswer.add(choice3);
             listAnswer.add(choice4);
             question.setChoices(listAnswer);
-            System.out.println(question.getChoices().get(0).getCorrect());
             listQuestion.add(question);
             quiz.setQuestions(listQuestion);
             indexOfQuestion++;
@@ -225,27 +196,31 @@ public class AddQuizController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
-            alert.setContentText("Please enter question and answer");
+            alert.setContentText("Please enter question and answexyz123r");
             alert.showAndWait();
         }
     }
 
     @FXML
     private void submitQuiz(ActionEvent event) throws IOException, InterruptedException {
-        save();
-        quiz = ShareAppData.getInstance().getTest();
-        Parent root2 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("QuizInfo.fxml")));
-        Stage stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene1 = new Scene(root2);
-        stage1.setScene(scene1);
-        stage1.show();
-        TextField quiztitle = (TextField) scene1.lookup("#quiztitle");
-        TextField quizlength = (TextField) scene1.lookup("#quizlength");
-        TextField noquestion = (TextField) scene1.lookup("#noquestion");
-        quiztitle.setText("hello");
-        quizlength.setText(String.valueOf(quiz.getDuration()));
-        noquestion.setText(String.valueOf(quiz.getQuestions().size()));
+        if (!questionContent.getText().isEmpty() &&
+                !option1.getText().isEmpty() &&
+                !option2.getText().isEmpty() &&
+                !option3.getText().isEmpty() &&
+                !option4.getText().isEmpty()) {
+            save();
+            ShareAppData.getInstance().setTest(quiz);
+            App.setRoot("QuizInfo");
+        } else {
+            //popup notification if there is insufficient information
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please enter question and answer");
+            alert.showAndWait();
+        }
     }
+
 
     @FXML
     private void previous(ActionEvent event) throws IOException {
@@ -341,29 +316,6 @@ public class AddQuizController implements Initializable {
             } catch (Exception e) {
                 System.out.println(e);
             }
-        }
-    }
-
-    @FXML
-    public void completeAndSend() {
-        try {
-            change();
-            //send test to api
-            BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
-            Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
-            //popup dialog to show test id on button complete and send
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Test ID");
-            alert.setHeaderText("Test ID");
-            alert.setContentText("Your test Code is: " + test.getCode());
-            alert.showAndWait();
-        } catch (Exception e) {
-            //popup notification if there is no test created
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("There is no test created");
-            alert.showAndWait();
         }
     }
 

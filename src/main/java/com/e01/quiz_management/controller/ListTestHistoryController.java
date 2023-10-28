@@ -1,5 +1,6 @@
 package com.e01.quiz_management.controller;
 
+import com.e01.quiz_management.App;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.model.TestHistory;
 import com.e01.quiz_management.util.RequestAPI;
@@ -8,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -33,6 +35,8 @@ public class ListTestHistoryController implements Initializable {
     private TableColumn<TestHistory, Integer> scoreColumn;
     @FXML
     private TableColumn<TestHistory, String> submitTimeColumn;
+    @FXML
+    private Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,5 +67,13 @@ public class ListTestHistoryController implements Initializable {
         });
         scoreColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, Integer>("score"));
         myTable.setItems(observableArrayList);
+
+        backButton.setOnAction(actionEvent -> {
+            try {
+                App.setRoot("menu");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

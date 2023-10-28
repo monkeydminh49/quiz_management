@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+
 public class ResultView {
 
     @FXML
@@ -25,7 +27,12 @@ public class ResultView {
             exitButton.requestFocus();
 
             exitButton.setOnAction(event -> {
-                System.exit(0);
+                try {
+                    App.setRoot("menu");
+                    sharedData.clearScore();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
 
             reviewButton.setOnAction(event -> {

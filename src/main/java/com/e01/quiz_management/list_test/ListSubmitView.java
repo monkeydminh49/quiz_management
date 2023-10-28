@@ -41,7 +41,6 @@ public class ListSubmitView implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<TestHistory> tests = new ArrayList<>();
         tests = RequestAPI.getInstance().getTestHistoriesByTestId(ShareAppData.getInstance().getTest().getId());
-        System.out.println(ShareAppData.getInstance().getTest().getId());
         testDescription.setText(ShareAppData.getInstance().getTest().getTestDescription() + "\nNumber of submissions: " + tests.size());
         ObservableList<TestHistory> observableArrayList =
                 FXCollections.observableArrayList(tests);

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class SharedData {
     private static SharedData instance;
-    private Double score = 0.0;
+    private Long score = null;
     private Boolean isReview = false;
     private List<Question> questions;
 
@@ -37,11 +37,14 @@ public class SharedData {
         this.isReview = isReview;
     }
 
-    public Double getScore() {
+    public Long getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public void setScore(long score) {
         this.score = score;
+    }
+    public void clearScore() {
+        this.score = null;
     }
 }

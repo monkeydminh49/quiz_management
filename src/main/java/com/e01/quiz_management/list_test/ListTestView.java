@@ -43,7 +43,8 @@ public class ListTestView implements Initializable {
     TableColumn<Test, Void> actionColumn;
     @FXML
     Button createTestButton;
-
+    @FXML
+    Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,6 +52,13 @@ public class ListTestView implements Initializable {
         createTestButton.setOnAction(actionEvent -> {
             try {
                 App.setRoot("addQuiz");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        backButton.setOnAction(actionEvent -> {
+            try {
+                App.setRoot("menu");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

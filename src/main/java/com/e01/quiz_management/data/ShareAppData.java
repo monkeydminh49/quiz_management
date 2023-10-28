@@ -1,10 +1,13 @@
 package com.e01.quiz_management.data;
 
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.model.User;
 
 public class ShareAppData {
     private static ShareAppData instance;
     private Test test;
+
+    private User user;
 
     private ShareAppData() {
     }
@@ -28,4 +31,11 @@ public class ShareAppData {
         this.test = null;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
 }

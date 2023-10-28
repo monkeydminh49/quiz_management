@@ -1,18 +1,14 @@
 package com.e01.quiz_management.test_form;
 
-import com.e01.quiz_management.App;
 import com.e01.quiz_management.model.Choice;
 import com.e01.quiz_management.model.Question;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionController {
-
-    private Double score = 0.0;
     private List<Question> questions;
     private int currentQuestionIndex;
     private final List<Integer> notAnsweredQuestions = new ArrayList<>();
@@ -23,15 +19,6 @@ public class QuestionController {
 
     public int getQuestionSize() {
         return questions.size();
-    }
-
-
-    public void setScore(Double score) {
-        this.score = score;
-    }
-
-    public Double getScore() {
-        return score;
     }
 
     public List<Question> getQuestions() {
@@ -149,7 +136,7 @@ public class QuestionController {
         this.currentQuestionIndex = index;
     }
 
-    public Double getCal() {
+    public long getCal() {
         int score = 0;
         for (Question question : questions) {
             if (question.getmAns() != null) {
@@ -158,8 +145,7 @@ public class QuestionController {
                 }
             }
         }
-        System.out.println("Score: " + score);
-        return (double) score / questions.size() * 10;
+        return (Long) (long) (score / (double) questions.size() * 10);
     }
 
 }

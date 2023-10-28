@@ -1,5 +1,7 @@
 package com.e01.quiz_management.menu;
 
+import com.e01.quiz_management.App;
+import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
@@ -20,6 +22,22 @@ public class JoinTestView {
     private Label joinMessage;
     @FXML
     private TextField testCodeTextField;
+    @FXML
+    private Button backButton;
+
+    @FXML
+    public void initialize(){
+        joinButton.setOnAction(actionEvent -> {
+            getTest();
+        });
+        backButton.setOnAction(actionEvent -> {
+            try {
+                App.setRoot("menu");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
     public void getTest(){
         String testCode = testCodeTextField.getText();
@@ -29,9 +47,11 @@ public class JoinTestView {
         }else{
             try {
                 Test test = RequestAPI.getInstance().getTestByCode(testCode);
+                ShareAppData.getInstance().setTest(test);
                 if (test.getStartTime() == null){
                     joinMessage.setText("This is a practice test");
                     joinMessage.setStyle("-fx-text-fill: green");
+                    App.setRoot("layout_test_form");
                 }else{
                     long current_millis = LocalDateTime.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
                     long start_millis = test.getStartTime().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
@@ -45,6 +65,7 @@ public class JoinTestView {
                     } else {
                         joinMessage.setText("Test is available");
                         joinMessage.setStyle("-fx-text-fill: green");
+                        App.setRoot("layout_test_form");
                     }
                 }
             } catch (Exception e) {

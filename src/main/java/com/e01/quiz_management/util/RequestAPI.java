@@ -94,14 +94,6 @@ public class RequestAPI {
     }
 
     public BaseResponse postLogin(String username, String password) {
-//        BaseResponse response = null;
-//        String payload = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
-//        System.out.println(payload);
-//
-//        HttpURLConnection httpRequest = httpRequest("POST", "/login", payload);
-//        response = mappingResponse(httpRequest, BaseResponse.class);
-//        user = getBaseResponseBodyObject(response, User.class);
-//        return response;
         BaseResponse response = new BaseResponse();
         String payload = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
         System.out.println(payload);
@@ -241,4 +233,5 @@ public class RequestAPI {
         }
         return null;
     }
+
 }
