@@ -23,13 +23,13 @@ public class ResultView {
         try {
             resultTextField.setText(" ");
             SharedData sharedData = SharedData.getInstance();
-            resultTextField.setText(sharedData.getScore().toString());
+            resultTextField.setText(String.valueOf(sharedData.getTestHistory().getScore()));
             exitButton.requestFocus();
 
             exitButton.setOnAction(event -> {
                 try {
                     App.setRoot("menu");
-                    sharedData.clearScore();
+                    sharedData.clearTestHistory();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

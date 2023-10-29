@@ -5,6 +5,7 @@ import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Choice;
 import com.e01.quiz_management.model.Question;
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.model.TestHistory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -67,7 +68,9 @@ public class TestFormView {
         checkButton.setVisible(true);
         xButton.setVisible(false);
         Test test = ShareAppData.getInstance().getTest();
-        QuestionController questionController = new QuestionController(test.getQuestions());
+        SharedData sharedData = SharedData.getInstance();
+        sharedData.setTest(test);
+        QuestionController questionController = new QuestionController(test);
         TimeController timeController = new TimeController();
         if (test.getStartTime() == null) {
             timeTextField.setText("Practice Test");
@@ -99,7 +102,7 @@ public class TestFormView {
         checkButton.setVisible(false);
         xButton.setVisible(true);
         SharedData sharedData = SharedData.getInstance();
-        QuestionController questionController = new QuestionController(sharedData.getQuestions());
+        QuestionController questionController = new QuestionController(sharedData.getTest());
         questionController.showResult(questionTextField, buttons);
         previousButton.setDisable(questionController.getCurrentQuestionIndex() == 0);
         setOnClick(questionController, buttons, null);

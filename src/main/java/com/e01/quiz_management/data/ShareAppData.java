@@ -6,7 +6,6 @@ import com.e01.quiz_management.model.User;
 public class ShareAppData {
     private static ShareAppData instance;
     private Test test;
-
     private User user;
 
     private ShareAppData() {

@@ -1,6 +1,9 @@
 package com.e01.quiz_management.test_form;
 
 import com.e01.quiz_management.App;
+import com.e01.quiz_management.data.ShareAppData;
+import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.model.TestHistory;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.scene.control.TextField;
 
@@ -40,16 +43,18 @@ public class TimeController {
     public void stopTest(QuestionController questionController) {
         this.time = 0;
         SharedData sharedData = SharedData.getInstance();
-        Long score = sharedData.getScore();
-        if (score == null) {
-            RequestAPI requestAPI = RequestAPI.getInstance();
-            try {
-                requestAPI.postScore(questionController.getCal());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        TestHistory testHistory = sharedData.getTestHistory();
+        Test test = sharedData.getTest();
+        Integer score = questionController.getCal();
+        if (testHistory == null) {
+            testHistory = new TestHistory();
+            testHistory.setTestId(test.getId());
+            testHistory.setScore(score);
+            sharedData.setTestHistory(testHistory);
+            RequestAPI.getInstance().postSubmitTestScore(testHistory.getTestId(), testHistory.getScore());
+        } else {
+            testHistory.setScore(score);
         }
-        sharedData.setScore(questionController.getCal());
         try {
             App.setRoot("layout_result");
         } catch (IOException e) {

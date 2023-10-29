@@ -5,45 +5,27 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0"
-      prefWidth="600.0" style="-fx-background-color: FFEDDF;" xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.test_form.TestFormView">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0" style="-fx-background-color: FFEDDF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.test_form.TestFormView">
 
 
     <Pane layoutX="1.0" prefHeight="246.0" prefWidth="598.0" style="-fx-background-position: center;">
         <children>
-            <Button fx:id="checkButton" layoutX="267.0" layoutY="203.0" mnemonicParsing="false" prefWidth="70.0"
-                    style="-fx-background-color: #e5383b;"/>
-            <Button fx:id="nextButton" layoutX="357.0" layoutY="203.0" mnemonicParsing="false" prefWidth="70.0"
-                    style="-fx-background-color: #80ed99;" text="Next"/>
-            <Button fx:id="previousButton" layoutX="175.0" layoutY="203.0" mnemonicParsing="false" prefWidth="70.0"
-                    style="-fx-background-color: #80ed99;" text="Previous"/>
-            <Button fx:id="submitButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false"
-                    style="-fx-background-color: #80ed99; -fx-text-fill: #ffffff; -fx-border-color: #80ed99;"
-                    text="Submit"/>
-            <TextField fx:id="questionTextField" editable="false" layoutX="52.0" layoutY="52.0" prefHeight="140.0"
-                       prefWidth="500.0"
-                       style="-fx-background-color: #000000; -fx-background-radius: 20; -fx-border-color: transparent; -fx-text-fill: #ffffff; -fx-alignment: center;"/>
-            <TextField fx:id="timeTextField" editable="false" layoutX="251.0" layoutY="12.0" mouseTransparent="true"
-                       prefHeight="26.0" prefWidth="102.0" promptText="time"
-                       style="-fx-background-color: transparent; -fx-text-fill: #d00000; -fx-alignment: center; -fx-font-size: 16; -fx-border-color: transparent;"
-                       text="00:00:00"/>
-            <Button fx:id="xButton" layoutX="530.0" layoutY="12.0" minWidth="27.0" mnemonicParsing="false" prefHeight="30.0"
-                    prefWidth="20.0" style="-fx-background-color: #e5383b;" text="X"/>
+            <Button fx:id="checkButton" layoutX="267.0" layoutY="203.0" mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: #e5383b;" />
+            <Button fx:id="nextButton" layoutX="357.0" layoutY="203.0" mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: #80ed99;" text="Next" />
+            <Button fx:id="previousButton" layoutX="175.0" layoutY="203.0" mnemonicParsing="false" prefWidth="70.0" style="-fx-background-color: #80ed99;" text="Previous" />
+            <Button fx:id="submitButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: #80ed99; -fx-text-fill: #ffffff; -fx-border-color: #80ed99;" text="Submit" />
+            <TextField fx:id="questionTextField" editable="false" layoutX="52.0" layoutY="52.0" prefHeight="140.0" prefWidth="500.0" style="-fx-background-color: #000000; -fx-background-radius: 20; -fx-border-color: transparent; -fx-text-fill: #ffffff; -fx-alignment: center;" />
+            <TextField fx:id="timeTextField" editable="false" layoutX="221.0" layoutY="12.0" mouseTransparent="true" prefHeight="30.0" prefWidth="163.0" promptText="time" style="-fx-background-color: transparent; -fx-text-fill: #d00000; -fx-alignment: center; -fx-font-size: 16; -fx-border-color: transparent;" text="00:00:00" />
+            <Button layoutX="530.0" layoutY="12.0" minWidth="27.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="20.0" style="-fx-background-color: #e5383b;" text="X" fx:id="xButton" />
         </children>
     </Pane>
 
-    <Pane layoutX="24.0" layoutY="246.0" prefHeight="203.0" prefWidth="553.0"
-          style="-fx-background-color: #ffee93; -fx-border-color: #000000; -fx-border-width: 2; -fx-background-position: center;">
+    <Pane layoutX="24.0" layoutY="246.0" prefHeight="203.0" prefWidth="553.0" style="-fx-background-color: #ffee93; -fx-border-color: #000000; -fx-border-width: 2; -fx-background-position: center;">
         <children>
-            <RadioButton fx:id="answer1RadioButton" layoutX="27.0" layoutY="122.0" mnemonicParsing="false"
-                         prefHeight="50.0" prefWidth="500.0" text="RadioButton"/>
-            <RadioButton fx:id="answer2RadioButton" layoutX="27.0" layoutY="92.0" mnemonicParsing="false"
-                         prefHeight="50.0" prefWidth="500.0" text="RadioButton"/>
-            <RadioButton fx:id="answer3RadioButton" layoutX="27.0" layoutY="62.0" mnemonicParsing="false"
-                         prefHeight="50.0" prefWidth="500.0" text="RadioButton"/>
-            <RadioButton fx:id="answer4RadioButton" layoutX="27.0" layoutY="32.0" mnemonicParsing="false"
-                         prefHeight="50.0" prefWidth="500.0" text="RadioButton"/>
+            <RadioButton fx:id="answer1RadioButton" layoutX="27.0" layoutY="122.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="500.0" text="RadioButton" />
+            <RadioButton fx:id="answer2RadioButton" layoutX="27.0" layoutY="92.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="500.0" text="RadioButton" />
+            <RadioButton fx:id="answer3RadioButton" layoutX="27.0" layoutY="62.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="500.0" text="RadioButton" />
+            <RadioButton fx:id="answer4RadioButton" layoutX="27.0" layoutY="32.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="500.0" text="RadioButton" />
         </children>
     </Pane>
 
