@@ -25,12 +25,13 @@ public class MenuView {
         Scene scene;
         Parent root;
         try{
-            root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("jointest.fxml"))));
-            stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-//            scene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("app.css")).toExternalForm());
-            stage.setScene(scene);
-            stage.show();
+//            root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("jointest.fxml"))));
+//            stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+//            scene = new Scene(root);
+////            scene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("app.css")).toExternalForm());
+//            stage.setScene(scene);
+//            stage.show();
+            App.setRoot("jointest");
         }catch(Exception ie){
             System.out.println(ie);
         }
