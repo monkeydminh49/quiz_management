@@ -20,6 +20,11 @@ public class Choice {
         this.questionId = questionId;
     }
 
+    public Choice(String text, boolean selected) {
+        this.content = text;
+        this.isCorrect = selected;
+    }
+
     public Long getId() {
         return id;
     }

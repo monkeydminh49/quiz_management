@@ -8,6 +8,7 @@ import com.e01.quiz_management.util.RequestAPI;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class TimeController {
     private int time;
@@ -50,8 +51,9 @@ public class TimeController {
             testHistory = new TestHistory();
             testHistory.setTestId(test.getId());
             testHistory.setScore(score);
+            testHistory.setSubmitTime(LocalDateTime.now());
             sharedData.setTestHistory(testHistory);
-            RequestAPI.getInstance().postSubmitTestScore(testHistory.getTestId(), testHistory.getScore());
+            RequestAPI.getInstance().postSubmitTestScore(testHistory.getTestId(), testHistory.getScore(), testHistory.getSubmitTime());
         } else {
             testHistory.setScore(score);
         }

@@ -3,6 +3,7 @@ package com.e01.quiz_management.model;
 import javafx.beans.binding.BooleanExpression;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Test {
@@ -15,6 +16,7 @@ public class Test {
     private long duration;
 
     public Test() {
+        questions = new ArrayList<>();
     }
 
     public Test(Long id, String code, Long userId, String title, LocalDateTime startTime, List<Question> questions, long duration) {

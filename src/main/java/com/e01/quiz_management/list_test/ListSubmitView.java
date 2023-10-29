@@ -1,5 +1,6 @@
 package com.e01.quiz_management.list_test;
 
+import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.TestHistory;
 import com.e01.quiz_management.util.RequestAPI;
@@ -8,10 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -36,6 +34,8 @@ public class ListSubmitView implements Initializable {
     private TableColumn<TestHistory, String> submitTimeColumn;
     @FXML
     private TextArea testDescription;
+    @FXML
+    private Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,6 +67,15 @@ public class ListSubmitView implements Initializable {
         });
         scoreColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, Integer>("score"));
         myTable.setItems(observableArrayList);
+
+        backButton.setOnAction(actionEvent -> {
+            try {
+                ShareAppData.getInstance().setTest(null);
+                App.setRoot("layout_list_test");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }
 

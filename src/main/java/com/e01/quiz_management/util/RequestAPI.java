@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RequestAPI {
@@ -69,8 +70,8 @@ public class RequestAPI {
         });
     }
 
-    public TestHistory postSubmitTestScore(Long testId, int score){
-        String payload = "{\"id\": " + testId + ", \"score\": " + score + "}";
+    public TestHistory postSubmitTestScore(Long testId, int score, LocalDateTime submitTime) {
+        String payload = "{\"id\": " + testId + ", \"score\": " + score + ", \"submitTime\": \"" + submitTime + "\"}";
         System.out.println(payload);
         HttpURLConnection httpRequest = httpRequest("POST", "/test-history", payload);
         return mappingResponse(httpRequest, TestHistory.class);
@@ -99,7 +100,6 @@ public class RequestAPI {
         HttpURLConnection httpRequest = httpRequest("PUT", "/test/" + id, payload);
         return mappingResponse(httpRequest, BaseResponse.class);
     }
-
 
 
     public BaseResponse postLogin(String username, String password) {
