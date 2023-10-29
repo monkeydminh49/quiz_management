@@ -51,15 +51,8 @@ public class SignUpView {
         }
     }
     public void switchToLogin(ActionEvent e) throws IOException {
-        Stage stage;
-        Scene scene;
-        Parent root;
         try{
-            root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("login.fxml"))));
-            stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            App.setRoot("login");
         }catch(Exception ie){
             System.out.println(ie);
         }

@@ -3,6 +3,7 @@ package com.e01.quiz_management.menu;
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.test_form.SharedData;
 import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.fxml.FXML;
@@ -33,6 +34,7 @@ public class JoinTestView {
         backButton.setOnAction(actionEvent -> {
             try {
                 App.setRoot("menu");
+                SharedData.getInstance().setIsReview(false);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

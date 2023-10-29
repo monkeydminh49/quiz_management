@@ -59,9 +59,7 @@ public class AddQuizController implements Initializable {
     private RadioButton answer4;
     @FXML
     private Button importButton;
-
-    private static Test quiz = null;
-    private LocalDateTime startedTime;
+    private static Test quiz;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,21 +70,6 @@ public class AddQuizController implements Initializable {
         for (int i = 0; i < 60; i++) {
             selectedMin.getItems().add(i);
         }
-
-        Test test = ShareAppData.getInstance().getTest();
-        if (test != null) {
-            quiz = test;
-            QuizName.setText(quiz.getTitle());
-            QuizLength.setText(String.valueOf(quiz.getDuration()));
-            startedTime = quiz.getStartTime();
-            selectedDate.setValue(startedTime.toLocalDate());
-            selectedHour.setValue(startedTime.getHour());
-            selectedMin.setValue(startedTime.getMinute());
-            indexOfQuestion = quiz.getQuestions().size();
-        } else {
-            quiz = new Test();
-        }
-        ShareAppData.getInstance().clearTest();
 
         if (importButton != null) {
             importButton.setOnAction(actionEvent -> {
@@ -113,24 +96,39 @@ public class AddQuizController implements Initializable {
                 }
             });
         }
+        quiz = ShareAppData.getInstance().getTest();
+        if (quiz != null) {
+            try {
+                if (quiz.getStartTime() != null) {
+                    selectedDate.setValue(quiz.getStartTime().toLocalDate());
+                    selectedHour.setValue(quiz.getStartTime().getHour());
+                    selectedMin.setValue(quiz.getStartTime().getMinute());
+                }
+                QuizName.setText(quiz.getTitle());
+                QuizLength.setText(String.valueOf(quiz.getDuration()));
+                indexOfQuestion = quiz.getQuestions().size();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
 
     public void convertToTime() {
         Integer hours = selectedHour.getValue();
         Integer minutes = selectedMin.getValue();
-        startedTime = LocalDateTime.of(selectedDate.getValue().getYear(), selectedDate.getValue().getMonth(), selectedDate.getValue().getDayOfMonth(), hours, minutes);
+        LocalDateTime startedTime = LocalDateTime.of(selectedDate.getValue().getYear(), selectedDate.getValue().getMonth(), selectedDate.getValue().getDayOfMonth(), hours, minutes);
         quiz.setStartTime(startedTime);
     }
 
     @FXML
     public void createQuiz(ActionEvent event) {
+        convertToTime();
+        String quizName = QuizName.getText();
+        long duration = Long.parseLong(QuizLength.getText());
+        quiz.setTitle(quizName);
+        quiz.setDuration(duration);
+        ShareAppData.getInstance().setTest(quiz);
         try {
-            convertToTime();
-            String quizName = QuizName.getText();
-            long duration = Long.parseLong(QuizLength.getText());
-//            quiz.setStartTime(startedTime);
-            quiz.setTitle(quizName);
-            quiz.setDuration(duration);
             App.setRoot("addQuestion");
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -227,7 +225,8 @@ public class AddQuizController implements Initializable {
         System.out.println("current question: " + indexOfQuestion);
     }
 
-    private void getAndSetQuestion(TextArea questionContent, TextField option1, TextField option2, TextField option3, TextField option4, RadioButton answer1, RadioButton answer2, RadioButton answer4, RadioButton answer3) {
+    private void getAndSetQuestion(TextArea questionContent, TextField option1, TextField option2, TextField
+            option3, TextField option4, RadioButton answer1, RadioButton answer2, RadioButton answer4, RadioButton answer3) {
         questionContent.setText(quiz.getQuestions().get(indexOfQuestion).getQuestion());
         option1.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getContent());
         option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
