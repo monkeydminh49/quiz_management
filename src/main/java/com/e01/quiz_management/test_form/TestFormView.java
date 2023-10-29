@@ -1,14 +1,19 @@
 package com.e01.quiz_management.test_form;
 
 import com.e01.quiz_management.App;
+import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Choice;
 import com.e01.quiz_management.model.Question;
+import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.model.TestHistory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +40,6 @@ public class TestFormView {
     private Button checkButton;
     @FXML
     private Button xButton;
-
     private int index = -1;
 
     @FXML
@@ -63,9 +67,25 @@ public class TestFormView {
         submitButton.setVisible(true);
         checkButton.setVisible(true);
         xButton.setVisible(false);
-        QuestionController questionController = new QuestionController(dummyQuestions());
-        TimeController timeController = new TimeController(10);
-        timeController.startTest(timeTextField, questionController);
+        Test test = ShareAppData.getInstance().getTest();
+        SharedData sharedData = SharedData.getInstance();
+        sharedData.setTest(test);
+        QuestionController questionController = new QuestionController(test);
+        TimeController timeController = new TimeController();
+        if (test.getStartTime() == null) {
+            timeTextField.setText("Practice Test");
+        } else {
+            long current_millis = LocalDateTime.now().atZone(java.time.ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
+            long start_millis = test.getStartTime().atZone(java.time.ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
+            long duration = test.getDuration() * 60 * 1000;
+            long remaining = duration - (current_millis - start_millis);
+            if (remaining > 0) {
+                timeController.setTime((int) (remaining / 1000));
+            } else {
+                timeController.setTime(0);
+            }
+            timeController.startTest(timeTextField, questionController);
+        }
         questionController.showQuestion(questionTextField, buttons);
         previousButton.setDisable(questionController.getCurrentQuestionIndex() == 0);
         setOnClick(questionController, buttons, timeController);
@@ -82,7 +102,7 @@ public class TestFormView {
         checkButton.setVisible(false);
         xButton.setVisible(true);
         SharedData sharedData = SharedData.getInstance();
-        QuestionController questionController = new QuestionController(sharedData.getQuestions());
+        QuestionController questionController = new QuestionController(sharedData.getTest());
         questionController.showResult(questionTextField, buttons);
         previousButton.setDisable(questionController.getCurrentQuestionIndex() == 0);
         setOnClick(questionController, buttons, null);
@@ -90,7 +110,6 @@ public class TestFormView {
 
     private void setOnClick(QuestionController questionController, List<RadioButton> buttons, TimeController timeController) {
         checkButton.setOnAction(event -> {
-            System.out.println("Check button clicked");
             if (questionController.getNotAnsweredQuestionSize() > 0) {
                 index = questionController.goToNextUnansweredQuestion(questionTextField, buttons, index);
             }
@@ -129,7 +148,6 @@ public class TestFormView {
         );
         xButton.setOnAction(event -> {
             try {
-//                App.openNewWindow("layout_result");
                 App.setRoot("layout_result");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -160,35 +178,4 @@ public class TestFormView {
         questionController.getCurrentQuestion().setmAns(questionController.getCurrentQuestion().getChoices().get(buttons.indexOf(button)));
 
     }
-
-//    private void submitTest(QuestionController questionController) {
-//        SharedData sharedData = SharedData.getInstance();
-//        sharedData.setScore(questionController.getCal());
-//        sharedData.setQuestions(questionController.getQuestions());
-//        try {
-//            App.openNewWindow("layout_result");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    private List<Question> dummyQuestions() {
-        List<Question> questions = new ArrayList<>();
-        questions.add(new Question(1L, 1L, "Question 1", dummyChoices()));
-        questions.add(new Question(2L, 1L, "Question 2", dummyChoices()));
-        questions.add(new Question(3L, 1L, "Question 3", dummyChoices()));
-        questions.add(new Question(4L, 1L, "Question 4", dummyChoices()));
-        return questions;
-    }
-
-    private List<Choice> dummyChoices() {
-        List<Choice> choices = new ArrayList<>();
-        choices.add(new Choice(1L, "Choice 1", false, 1L));
-        choices.add(new Choice(2L, "Choice 2", false, 1L));
-        choices.add(new Choice(3L, "Choice 3", false, 1L));
-        choices.add(new Choice(4L, "Choice 4", true, 1L));
-        return choices;
-    }
-
-
 }

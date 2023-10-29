@@ -1,6 +1,7 @@
 package com.e01.quiz_management.util;
 
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.model.TestHistory;
 import com.e01.quiz_management.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RequestAPI {
@@ -55,6 +57,26 @@ public class RequestAPI {
         });
     }
 
+    public List<TestHistory> getTestHistories() {
+        HttpURLConnection httpRequest = httpRequest("GET", "/test-history");
+        return mappingResponse(httpRequest, new TypeReference<List<TestHistory>>() {
+        });
+    }
+
+    public List<TestHistory> getTestHistoriesByTestId(Long id) {
+        HttpURLConnection httpRequest = httpRequest("GET", "/test-history/" + id);
+        System.out.println(id);
+        return mappingResponse(httpRequest, new TypeReference<List<TestHistory>>() {
+        });
+    }
+
+    public TestHistory postSubmitTestScore(Long testId, int score, LocalDateTime submitTime) {
+        String payload = "{\"id\": " + testId + ", \"score\": " + score + ", \"submitTime\": \"" + submitTime + "\"}";
+        System.out.println(payload);
+        HttpURLConnection httpRequest = httpRequest("POST", "/test-history", payload);
+        return mappingResponse(httpRequest, TestHistory.class);
+    }
+
     public BaseResponse postCreateTest(Test test) {
         BaseResponse response = new BaseResponse();
         String payload = "";
@@ -79,15 +101,8 @@ public class RequestAPI {
         return mappingResponse(httpRequest, BaseResponse.class);
     }
 
+
     public BaseResponse postLogin(String username, String password) {
-//        BaseResponse response = null;
-//        String payload = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
-//        System.out.println(payload);
-//
-//        HttpURLConnection httpRequest = httpRequest("POST", "/login", payload);
-//        response = mappingResponse(httpRequest, BaseResponse.class);
-//        user = getBaseResponseBodyObject(response, User.class);
-//        return response;
         BaseResponse response = new BaseResponse();
         String payload = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
         System.out.println(payload);
@@ -115,6 +130,11 @@ public class RequestAPI {
         HttpURLConnection httpRequest = httpRequest("POST", "/register", payload);
 
         return mappingResponse(httpRequest, BaseResponse.class);
+    }
+
+    public void deleteTest(Long id) {
+        HttpURLConnection httpRequest = httpRequest("DELETE", "/test/" + id);
+        mappingResponse(httpRequest, BaseResponse.class);
     }
 
     private HttpURLConnection httpRequest(String method, String endpoint, String payload) {
@@ -222,4 +242,5 @@ public class RequestAPI {
         }
         return null;
     }
+
 }

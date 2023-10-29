@@ -11,114 +11,116 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.AddQuizController">
-   <children>
-      <VBox layoutX="12.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="377.0" prefWidth="585.0">
-         <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="INSIDE" strokeWidth="0.0" text="Quiz Title:" textAlignment="CENTER">
-                     <font>
-                        <Font size="31.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="30.0" top="15.0" />
-                     </HBox.margin>
-                  </Text>
-                  <TextField fx:id="quiztitle" prefHeight="52.0" prefWidth="296.0">
-                     <HBox.margin>
-                        <Insets left="60.0" top="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </TextField>
-               </children>
-            </HBox>
-            <Separator prefWidth="200.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="INSIDE" strokeWidth="0.0" text="Duration:" textAlignment="CENTER">
-                     <font>
-                        <Font size="31.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="30.0" top="15.0" />
-                     </HBox.margin>
-                  </Text>
-                  <TextField fx:id="quizlength" prefHeight="52.0" prefWidth="300.0">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="67.0" top="10.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="INSIDE" strokeWidth="0.0" text="No. Question:" textAlignment="CENTER">
-                     <font>
-                        <Font size="31.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="30.0" top="15.0" />
-                     </HBox.margin>
-                  </Text>
-                  <TextField fx:id="noquestion" prefHeight="52.0" prefWidth="300.0">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="8.0" top="10.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type :">
-                     <HBox.margin>
-                        <Insets left="30.0" top="15.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="31.0" />
-                     </font>
-                  </Text>
-                  <ToggleButton fx:id="practice" mnemonicParsing="false" prefHeight="38.0" prefWidth="89.0" text="Practice">
-                     <HBox.margin>
-                        <Insets left="115.0" top="15.0" />
-                     </HBox.margin>
-                  </ToggleButton>
-                  <ToggleButton fx:id="kiemtra" mnemonicParsing="false" prefHeight="38.0" prefWidth="89.0" text="Test">
-                     <HBox.margin>
-                        <Insets left="90.0" top="15.0" />
-                     </HBox.margin>
-                  </ToggleButton>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="619.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#previous" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #F58F84;" text="Back" textAlignment="CENTER">
-                     <HBox.margin>
-                        <Insets bottom="20.0" left="70.0" right="20.0" top="20.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="19.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="send" mnemonicParsing="false" onAction="#completeAndSend" prefHeight="40.0" prefWidth="193.0" style="-fx-background-color: #19B5FE;" text="Complete and send" textAlignment="CENTER">
-                     <HBox.margin>
-                        <Insets bottom="20.0" left="80.0" right="20.0" top="20.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="19.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.e01.quiz_management.controller.SubmitQuizController">
+    <children>
+        <VBox layoutX="12.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="377.0"
+              prefWidth="585.0">
+            <children>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Text strokeType="INSIDE" strokeWidth="0.0" text="Quiz Title:" textAlignment="CENTER">
+                            <font>
+                                <Font size="31.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets left="30.0" top="15.0"/>
+                            </HBox.margin>
+                        </Text>
+                        <TextField fx:id="quiztitle" prefHeight="52.0" prefWidth="296.0">
+                            <HBox.margin>
+                                <Insets left="60.0" top="10.0"/>
+                            </HBox.margin>
+                            <font>
+                                <Font size="25.0"/>
+                            </font>
+                        </TextField>
+                    </children>
+                </HBox>
+                <Separator prefWidth="200.0"/>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Text strokeType="INSIDE" strokeWidth="0.0" text="Duration:" textAlignment="CENTER">
+                            <font>
+                                <Font size="31.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets left="30.0" top="15.0"/>
+                            </HBox.margin>
+                        </Text>
+                        <TextField fx:id="quizlength" prefHeight="52.0" prefWidth="300.0">
+                            <font>
+                                <Font size="25.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets left="67.0" top="10.0"/>
+                            </HBox.margin>
+                        </TextField>
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Text strokeType="INSIDE" strokeWidth="0.0" text="No. Question:" textAlignment="CENTER">
+                            <font>
+                                <Font size="31.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets left="30.0" top="15.0"/>
+                            </HBox.margin>
+                        </Text>
+                        <TextField fx:id="noquestion" prefHeight="52.0" prefWidth="300.0">
+                            <font>
+                                <Font size="25.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets left="8.0" top="10.0"/>
+                            </HBox.margin>
+                        </TextField>
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type :">
+                            <HBox.margin>
+                                <Insets left="30.0" top="15.0"/>
+                            </HBox.margin>
+                            <font>
+                                <Font size="31.0"/>
+                            </font>
+                        </Text>
+                        <ToggleButton fx:id="practice" mnemonicParsing="false" prefHeight="38.0" prefWidth="89.0"
+                                      text="Practice">
+                            <HBox.margin>
+                                <Insets left="115.0" top="15.0"/>
+                            </HBox.margin>
+                        </ToggleButton>
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="619.0">
+                    <children>
+                        <Button fx:id="backToFirst" mnemonicParsing="false" prefHeight="40.0"
+                                prefWidth="180.0" style="-fx-background-color: #F58F84;" text="Back"
+                                textAlignment="CENTER">
+                            <HBox.margin>
+                                <Insets bottom="20.0" left="70.0" right="20.0" top="20.0"/>
+                            </HBox.margin>
+                            <font>
+                                <Font size="19.0"/>
+                            </font>
+                        </Button>
+                        <Button fx:id="send" mnemonicParsing="false" onAction="#completeAndSend" prefHeight="40.0"
+                                prefWidth="193.0" style="-fx-background-color: #19B5FE;" text="Complete and send"
+                                textAlignment="CENTER">
+                            <HBox.margin>
+                                <Insets bottom="20.0" left="80.0" right="20.0" top="20.0"/>
+                            </HBox.margin>
+                            <font>
+                                <Font size="19.0"/>
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>
