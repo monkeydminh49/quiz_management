@@ -21,10 +21,10 @@ public class UploadController {
     }
     public UploadController () {
     }
-    public List<Question> createQuestionsFromFile(String pathToFile) {
+    public List<Question> createQuestionsFromFile(File file) {
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(new File(pathToFile));
+            workbook = WorkbookFactory.create(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
