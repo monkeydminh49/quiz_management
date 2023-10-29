@@ -16,8 +16,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -55,6 +57,9 @@ public class AddQuizController implements Initializable {
     private RadioButton answer3;
     @FXML
     private RadioButton answer4;
+    @FXML
+    private Button importButton;
+
     private static Test quiz = null;
     private LocalDateTime startedTime;
 
@@ -82,6 +87,32 @@ public class AddQuizController implements Initializable {
             quiz = new Test();
         }
         ShareAppData.getInstance().clearTest();
+
+        if (importButton != null) {
+            importButton.setOnAction(actionEvent -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Open Resource File");
+                File file = fileChooser.showOpenDialog(importButton.getScene().getWindow());
+                if (file != null) {
+                    try {
+                        List<Question> questions = UploadController.getInstance().createQuestionsFromFile(file);
+                        quiz.addAllQuestion(questions);
+                        indexOfQuestion = quiz.getQuestions().size();
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Success");
+                        alert.setHeaderText("Success");
+                        alert.setContentText("Import successfully");
+                        alert.showAndWait();
+                    } catch (Exception e) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("Error");
+                        alert.setContentText("Import failed");
+                        alert.showAndWait();
+                    }
+                }
+            });
+        }
     }
 
     public void convertToTime() {
