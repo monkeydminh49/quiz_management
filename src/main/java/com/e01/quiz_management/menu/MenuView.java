@@ -1,6 +1,7 @@
 package com.e01.quiz_management.menu;
 
 import com.e01.quiz_management.App;
+import com.e01.quiz_management.data.ShareAppData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,22 +17,32 @@ import java.util.Objects;
 public class MenuView {
     @FXML
     Label greetingName;
-    public void greeting(String s){
-        this.greetingName.setText("Hello " + s);
+
+    @FXML
+    private void initialize() {
+        greetingName.setText("Hello, " + ShareAppData.getInstance().getUser().getName());
     }
 
     public void switchToJoinTest(ActionEvent e) throws IOException {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        try{
-            root = FXMLLoader.load((Objects.requireNonNull(App.class.getResource("jointest.fxml"))));
-            stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-//            scene.getStylesheets().add(Objects.requireNonNull(App.class.getResource("app.css")).toExternalForm());
-            stage.setScene(scene);
-            stage.show();
-        }catch(Exception ie){
+        try {
+            App.setRoot("jointest");
+        } catch (Exception ie) {
+            System.out.println(ie);
+        }
+    }
+
+    public void switchToHistory(ActionEvent e) throws IOException {
+        try {
+            App.setRoot("list_test");
+        } catch (Exception ie) {
+            System.out.println(ie);
+        }
+    }
+
+    public void switchToManagement(ActionEvent e) throws IOException {
+        try {
+            App.setRoot("layout_list_test");
+        } catch (Exception ie) {
             System.out.println(ie);
         }
     }
