@@ -48,6 +48,7 @@ public class ListTestView implements Initializable {
         updateTable();
         createTestButton.setOnAction(actionEvent -> {
             try {
+                ShareAppData.getInstance().setTest(new Test());
                 App.setRoot("addQuiz");
                 ShareAppData.getInstance().setIsEdit(false);
             } catch (IOException e) {

@@ -12,3 +12,57 @@
 #joinButton:hover{
     -fx-background-color: #F0D4AA
 }
+
+#usernameTextField{
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #D4D4D4;
+    -fx-border-radius: 5
+}
+
+#usernameTextField:hover{
+    -fx-border-color: #999999;
+}
+
+#usernameTextField:focused{
+    -fx-border-color: #F68E01;
+}
+
+#passwordTextField{
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #D4D4D4;
+    -fx-border-radius: 5
+}
+
+#passwordTextField:hover{
+    -fx-border-color: #999999;
+}
+
+#passwordTextField:focused{
+    -fx-border-color: #F68E01;
+}
+
+#nameTextField{
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #D4D4D4;
+    -fx-border-radius: 5
+}
+
+#nameTextField:hover{
+    -fx-border-color: #999999;
+}
+
+#nameTextField:focused{
+    -fx-border-color: #F68E01;
+}
+
+#signupButton:hover{
+    -fx-background-color: #DFA98F !important;
+}
+
+#loginButton {
+    -fx-background-color: #E9C8BC;
+}
+
+#loginButton:hover{
+    -fx-background-color: #DFA98F !important;
+}

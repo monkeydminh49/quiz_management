@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.authentication.LoginView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="700.0" stylesheets="@app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.authentication.LoginView">
     <right>
         <AnchorPane prefHeight="400.0" prefWidth="332.0" BorderPane.alignment="CENTER">
             <children>
@@ -28,9 +28,18 @@
                   </DropShadow>
                </effect>
             </Rectangle>
-                <TextField fx:id="usernameTextField" layoutX="-22.0" layoutY="272.0" prefHeight="26.0" prefWidth="280.0" promptText="Enter username" />
-                <PasswordField fx:id="passwordTextField" layoutX="-22.0" layoutY="340.0" prefHeight="26.0" prefWidth="280.0" promptText="Enter password" />
-                <Button fx:id="loginButton" layoutX="-20.0" layoutY="397.0" mnemonicParsing="false" onAction="#login" prefHeight="36.0" prefWidth="280.0" text="Login" />
+                <TextField fx:id="usernameTextField" layoutX="-22.0" layoutY="272.0" onInputMethodTextChanged="#username_field_onFocused" onMouseEntered="#username_field_onMouseEntered" onMouseExited="#username_field_onMouseExited" prefHeight="35.0" prefWidth="280.0" promptText="Enter username">
+               <font>
+                  <Font name="Fira Sans Book" size="12.0" />
+               </font></TextField>
+                <PasswordField fx:id="passwordTextField" layoutX="-22.0" layoutY="340.0" onInputMethodTextChanged="#password_field_onFocused" onMouseEntered="#password_field_onMouseEntered" onMouseExited="#password_field_onMouseExited" prefHeight="35.0" prefWidth="280.0" promptText="Enter password">
+               <font>
+                  <Font name="Fira Sans Book" size="12.0" />
+               </font></PasswordField>
+                <Button fx:id="loginButton" layoutX="-20.0" layoutY="397.0" mnemonicParsing="false" onAction="#login" prefHeight="36.0" prefWidth="280.0" stylesheets="@app.css" text="Login">
+               <font>
+                  <Font name="Fira Sans ExtraBold" size="13.0" />
+               </font></Button>
             <Circle fill="#ffe7d4" layoutX="120.0" layoutY="99.0" radius="48.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
             <Label layoutX="-22.0" layoutY="320.0" text="Password">
                <font>
