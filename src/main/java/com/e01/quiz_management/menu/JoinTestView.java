@@ -3,6 +3,7 @@ package com.e01.quiz_management.menu;
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.test_form.SharedData;
 import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.fxml.FXML;
@@ -26,7 +27,7 @@ public class JoinTestView {
     private Button backButton;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         joinButton.setOnAction(actionEvent -> {
             getTest();
         });
@@ -39,20 +40,21 @@ public class JoinTestView {
         });
     }
 
-    public void getTest(){
+    public void getTest() {
         String testCode = testCodeTextField.getText();
-        if (testCode.isBlank()){
+        if (testCode.isBlank()) {
             joinMessage.setText("Blank test code found");
             joinMessage.setTextFill(Color.RED);
-        }else{
+        } else {
             try {
                 Test test = RequestAPI.getInstance().getTestByCode(testCode);
                 ShareAppData.getInstance().setTest(test);
-                if (test.getStartTime() == null){
+                SharedData.getInstance().setIsReview(false);
+                if (test.getStartTime() == null) {
                     joinMessage.setText("This is a practice test");
                     joinMessage.setStyle("-fx-text-fill: green");
                     App.setRoot("layout_test_form");
-                }else{
+                } else {
                     long current_millis = LocalDateTime.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
                     long start_millis = test.getStartTime().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
                     long duration = test.getDuration() * 60 * 1000;
