@@ -1,8 +1,10 @@
 package com.e01.quiz_management.test_form;
 
 import com.e01.quiz_management.model.Choice;
+import com.e01.quiz_management.model.MultipleChoice;
 import com.e01.quiz_management.model.Question;
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.util.EQuestionType;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
@@ -72,63 +74,65 @@ public class QuestionController {
         notAnsweredQuestions.forEach(System.out::println);
     }
 
-    public void showQuestion(TextField questionTextField, List<RadioButton> answerRadioButtons) {
+    public void showQuestion(TextField questionTextField, List<RadioButton> answerRadioButtons, TextField answerTextField) {
         Question question = getCurrentQuestion();
         questionTextField.setText(question.getQuestion());
-        for (int i = 0; i < question.getChoices().size(); i++) {
-            answerRadioButtons.get(i).setText(question.getChoices().get(i).getContent());
-            answerRadioButtons.get(i).setSelected(false);
-        }
-        if (question.getmAns() != null) {
-            for (int i = 0; i < question.getChoices().size(); i++) {
-                int ansId = question.getmAns().getId().intValue();
-                if (question.getChoices().get(i).getId().intValue() == ansId) {
-                    answerRadioButtons.get(i).setSelected(true);
-                }
+        if (question.getType().equals(EQuestionType.MULTIPLE_CHOICE)) {
+            answerTextField.setVisible(false);
+            List<Choice> choices = question.getChoices();
+            for (int i = 0; i < choices.size(); i++) {
+                answerRadioButtons.get(i).setText(choices.get(i).getContent());
+                answerRadioButtons.get(i).setDisable(false);
+                answerRadioButtons.get(i).setSelected(false);
+                answerRadioButtons.get(i).setStyle("-fx-text-fill: black");
             }
+        } else {
+            answerTextField.setVisible(true);
+            answerTextField.setText("");
+            answerRadioButtons.forEach(radioButton -> {
+                radioButton.setVisible(false);
+                radioButton.setDisable(true);
+            });
         }
     }
 
-    public void showResult(TextField questionTextField, List<RadioButton> answerRadioButtons) {
+    public void showResult(TextField questionTextField, List<RadioButton> answerRadioButtons, TextField answerTextField) {
         Question question = getCurrentQuestion();
         questionTextField.setText(question.getQuestion());
         Choice mAns = question.getmAns();
-        for (int i = 0; i < question.getChoices().size(); i++) {
-            answerRadioButtons.get(i).setText(question.getChoices().get(i).getContent());
-            answerRadioButtons.get(i).setStyle("-fx-text-fill: black");
-            if (question.getChoices().get(i).getCorrect()) {
-                answerRadioButtons.get(i).setStyle("-fx-text-fill: green");
-            }
-            answerRadioButtons.get(i).setDisable(true);
-            answerRadioButtons.get(i).setSelected(false);
-        }
-        if (mAns != null) {
-            System.out.println("mAns: " + mAns.getContent());
-            for (int i = 0; i < question.getChoices().size(); i++) {
-                int ansId = mAns.getId().intValue();
-                if (question.getChoices().get(i).getId().intValue() == ansId) {
-                    answerRadioButtons.get(i).setSelected(true);
-                    if (question.getChoices().get(i).getCorrect()) {
-                        answerRadioButtons.get(i).setStyle("-fx-text-fill: green");
-                    } else {
-                        answerRadioButtons.get(i).setStyle("-fx-text-fill: red");
-                    }
+        if (question.getType().equals(EQuestionType.MULTIPLE_CHOICE)) {
+            answerTextField.setVisible(false);
+            List<Choice> choices = question.getChoices();
+            for (int i = 0; i < choices.size(); i++) {
+                answerRadioButtons.get(i).setText(choices.get(i).getContent());
+                answerRadioButtons.get(i).setDisable(true);
+                if (choices.get(i).getId().equals(mAns.getId())) {
+                    answerRadioButtons.get(i).setStyle("-fx-text-fill: green");
+                } else {
+                    answerRadioButtons.get(i).setStyle("-fx-text-fill: red");
                 }
             }
+        } else {
+            answerTextField.setVisible(true);
+            answerTextField.setText(mAns.getContent());
+            answerRadioButtons.forEach(radioButton -> {
+                radioButton.setVisible(false);
+                radioButton.setDisable(true);
+            });
         }
     }
 
-    public Integer goToNextUnansweredQuestion(TextField questionTextField, List<RadioButton> answerRadioButtons, int index) {
+    public Integer goToNextUnansweredQuestion(TextField questionTextField, List<RadioButton> answerRadioButtons, TextField ansTextField, int index) {
         System.out.println("currentQuestionIndex: " + notAnsweredQuestions.size());
         for (int i = index + 1; i < questions.size(); i++) {
             if (notAnsweredQuestions.contains(i)) {
                 currentQuestionIndex = i;
-                showQuestion(questionTextField, answerRadioButtons);
+                showQuestion(questionTextField, answerRadioButtons, ansTextField);
                 return i;
             }
         }
         currentQuestionIndex = notAnsweredQuestions.get(0);
-        showQuestion(questionTextField, answerRadioButtons);
+        showQuestion(questionTextField, answerRadioButtons, ansTextField);
         return currentQuestionIndex;
     }
 
@@ -143,13 +147,10 @@ public class QuestionController {
     public Integer getCal() {
         int score = 0;
         for (Question question : questions) {
-            if (question.getmAns() != null) {
-                if (question.getmAns().getCorrect()) {
-                    score++;
-                }
+            if (question.getScore() != null) {
+                score += question.getScore();
             }
         }
         return score * 100 / questions.size();
     }
-
 }

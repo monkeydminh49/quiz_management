@@ -3,9 +3,12 @@ package com.e01.quiz_management.list_test;
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
+import com.e01.quiz_management.util.Response;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,6 +45,27 @@ public class ListTestView implements Initializable {
     Button createTestButton;
     @FXML
     Button backButton;
+    private static ListTestView instance;
+
+    public ListTestView() {
+        orderColumn = new TableColumn<>();
+        codeColumn = new TableColumn<>();
+        titleColumn = new TableColumn<>();
+        startColumn = new TableColumn<>();
+        durationColumn = new TableColumn<>();
+        actionColumn = new TableColumn<>();
+        tableView = new TableView<>();
+        createTestButton = new Button();
+        backButton = new Button();
+
+    }
+
+    public static ListTestView getInstance() {
+        if (instance == null) {
+            instance = new ListTestView();
+        }
+        return instance;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,11 +114,65 @@ public class ListTestView implements Initializable {
                     {
                         btn2.setOnAction((ActionEvent event) -> {
                             Test data = getTableView().getItems().get(getIndex());
-                            tableView.getItems().remove(data);
-                            RequestAPI.getInstance().deleteTest(data.getId());
+//                            Task<Boolean> task = new Task<>() {
+//                                @Override
+//                                protected Boolean call() throws Exception {
+//                                    return RequestAPI.getInstance().deleteTest(data.getId());
+//                                }
+//                            };
+//
+//                            task.setOnSucceeded(event1 -> {
+//                                if (task.getValue()) {
+//                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                                    alert.setTitle("Delete Test");
+//                                    alert.setHeaderText("Delete Test");
+//                                    alert.setContentText("Delete Test successfully!");
+//                                    ShareAppData.getInstance().getTests().remove(data);
+//                                    alert.showAndWait();
+//                                } else {
+//                                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                                    alert.setTitle("Delete Test");
+//                                    alert.setHeaderText("Delete Test");
+//                                    alert.setContentText("Delete Test failed!");
+//                                    alert.showAndWait();
+//                                }
+//                            });
+//                            new Thread(task).start();
+//                            showAlert with button
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Delete Test");
+                            alert.setHeaderText("Delete Test");
+                            alert.setContentText("Are you sure?");
+                            ButtonType buttonTypeYes = new ButtonType("Yes");
+                            ButtonType buttonTypeNo = new ButtonType("No");
+                            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                            alert.showAndWait().ifPresent(type -> {
+                                if (type == buttonTypeYes) {
+                                    tableView.getItems().remove(data);
+                                    Task<Boolean> task = new Task<>() {
+                                        @Override
+                                        protected Boolean call() throws Exception {
+                                            return RequestAPI.getInstance().deleteTest(data.getId());
+                                        }
+                                    };
+
+                                    task.setOnSucceeded(event1 -> {
+                                        if (task.getValue()) {
+                                            ShareAppData.getInstance().getTests().remove(data);
+                                        } else {
+                                            updateTable();
+                                            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                                            alert1.setTitle("Delete Test");
+                                            alert1.setHeaderText("Delete Test");
+                                            alert1.setContentText("Delete Test failed!");
+                                            alert1.showAndWait();
+                                        }
+                                    });
+                                    new Thread(task).start();
+                                }
+                            });
                         });
                     }
-
                     private final Button btn3 = new Button("Detail");
 
                     {
@@ -138,9 +216,11 @@ public class ListTestView implements Initializable {
         actionColumn.setCellFactory(cellFactory);
     }
 
-    private void updateTable() {
+    public void updateTable() {
+//        Response<List<Test>> listTestResponse = ShareAppData.getInstance().getListTestResponse();
         List<Test> tests = new ArrayList<>();
-        tests = RequestAPI.getInstance().getAllUserTests();
+        tests = ShareAppData.getInstance().getTests();
+        System.out.println("update");
         ObservableList<Test> observableArrayList =
                 FXCollections.observableArrayList(tests);
         orderColumn.setCellFactory(column -> {

@@ -47,7 +47,7 @@ public class UploadController {
                 choices.add(choice);
             }
             choices.get((int)sheet.getRow(i).getCell(5).getNumericCellValue() - 1).setCorrect(true);
-            question.setChoices(choices);
+            question.setChoices();
             questions.add(question);
         }
         return questions;

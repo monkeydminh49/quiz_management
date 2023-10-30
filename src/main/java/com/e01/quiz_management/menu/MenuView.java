@@ -2,6 +2,7 @@ package com.e01.quiz_management.menu;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
+import com.e01.quiz_management.list_test.ListTestView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +42,7 @@ public class MenuView {
 
     public void switchToManagement(ActionEvent e) throws IOException {
         try {
-            App.setRoot("layout_list_test");
+            App.setRoot("layout_list_test", ListTestView.getInstance());
         } catch (Exception ie) {
             System.out.println(ie);
         }

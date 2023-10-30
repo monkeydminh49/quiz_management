@@ -156,7 +156,7 @@ public class AddQuizController implements Initializable {
                     new Choice(option4.getText(), answer4.isSelected())
             );
 //            thêm câu hỏi vào quiz
-            question.setChoices(choices);
+            question.setChoices();
             boolean isExist = false;
             for (Question q : quiz.getQuestions()) {
                 if (q.getQuestion().equals(question.getQuestion())) {

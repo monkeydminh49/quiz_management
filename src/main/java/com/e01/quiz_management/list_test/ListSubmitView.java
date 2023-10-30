@@ -71,7 +71,7 @@ public class ListSubmitView implements Initializable {
         backButton.setOnAction(actionEvent -> {
             try {
                 ShareAppData.getInstance().setTest(null);
-                App.setRoot("layout_list_test");
+                App.setRoot("layout_list_test", ListTestView.getInstance());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

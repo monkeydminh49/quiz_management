@@ -2,6 +2,7 @@ package com.e01.quiz_management.controller;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
+import com.e01.quiz_management.list_test.ListTestView;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
@@ -27,7 +28,6 @@ public class SubmitQuizController implements Initializable {
 
     @FXML
     public ToggleButton practice;
-
     @FXML
     public Button backToFirst;
 
@@ -68,6 +68,7 @@ public class SubmitQuizController implements Initializable {
         if (isEdit) {
             try {
                 RequestAPI.getInstance().putUpdateTestById(quiz.getId(), quiz);
+                ShareAppData.getInstance().updateTest(quiz);
             } catch (Exception e) {
                 //popup notification if there is no test created
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -80,6 +81,7 @@ public class SubmitQuizController implements Initializable {
             try {
                 BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
                 Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
+                ShareAppData.getInstance().addTest(test);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Test ID");
                 alert.setHeaderText("Test ID");
@@ -96,7 +98,7 @@ public class SubmitQuizController implements Initializable {
         }
         ShareAppData.getInstance().clearTest();
         try {
-            App.setRoot("layout_list_test");
+            App.setRoot("layout_list_test", ListTestView.getInstance());
         } catch (Exception e) {
             e.printStackTrace();
         }
