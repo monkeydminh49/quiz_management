@@ -1,13 +1,17 @@
 package com.e01.quiz_management;
 
+import com.e01.quiz_management.data.ShareAppData;
+import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,6 +23,24 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
+        Task<List<Test>> task = new Task<>() {
+            @Override
+            protected List<Test> call() throws Exception {
+                List<Test> test =  RequestAPI.getInstance().getAllUserTests();
+                System.out.println(test.size());
+                return test;
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            System.out.println("success");
+            System.out.println(task.getValue().get(0).getTitle());
+//            Response<List<Test>> data = new Response.Success<List<Test>>(task.getValue());
+//            ShareAppData.getInstance().setListTestResponse(data);
+//            ListTestView.getInstance().updateTable();
+        });
+        new Thread(task).start();
         scene = new Scene(loadFXML("login"));
         stage.setScene(scene);
         stage.sizeToScene();

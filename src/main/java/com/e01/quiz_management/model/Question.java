@@ -1,5 +1,7 @@
 package com.e01.quiz_management.model;
 
+import com.e01.quiz_management.util.EQuestionType;
+
 import java.util.List;
 
 public class Question {
@@ -8,6 +10,7 @@ public class Question {
     private String question;
     private List<Choice> choices;
     private Choice mAns = null;
+    private EQuestionType type;
 
     public Question() {
     }
@@ -66,5 +69,13 @@ public class Question {
 
     public Choice getmAns() {
         return mAns;
+    }
+
+    public EQuestionType getType() {
+        return type;
+    }
+
+    public void setType(EQuestionType type) {
+        this.type = type;
     }
 }
