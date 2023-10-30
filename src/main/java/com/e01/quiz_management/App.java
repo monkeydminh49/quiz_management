@@ -25,20 +25,21 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-//        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
-//        Task<List<Test>> task = new Task<List<Test>>() {
-//            @Override
-//            protected List<Test> call() throws Exception {
-//                return RequestAPI.getInstance().getAllUserTests();
-//            }
-//        };
-//
-//        task.setOnSucceeded(event -> {
-//            Response<List<Test>> data = new Response.Success<List<Test>>(task.getValue());
-//            ShareAppData.getInstance().setListTestResponse(data);
-//            ListTestView.getInstance().updateTable();
-//        });
-//        new Thread(task).start();
+        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
+        Task<List<Test>> task = new Task<List<Test>>() {
+            @Override
+            protected List<Test> call() throws Exception {
+                return RequestAPI.getInstance().getAllUserTests();
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            System.out.println("success");
+            Response<List<Test>> data = new Response.Success<List<Test>>(task.getValue());
+            ShareAppData.getInstance().setListTestResponse(data);
+            ListTestView.getInstance().updateTable();
+        });
+        new Thread(task).start();
         scene = new Scene(loadFXML("login"));
         stage.setScene(scene);
         stage.sizeToScene();
