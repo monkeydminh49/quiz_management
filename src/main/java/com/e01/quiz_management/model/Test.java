@@ -1,6 +1,9 @@
 package com.e01.quiz_management.model;
 
+import javafx.beans.binding.BooleanExpression;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Test {
@@ -11,10 +14,12 @@ public class Test {
     private LocalDateTime startTime;
     private List<Question> questions;
     private long duration;
+
     public Test() {
+        questions = new ArrayList<>();
     }
 
-    public Test(Long id, String code, Long userId, String title,LocalDateTime startTime, List<Question> questions, long duration) {
+    public Test(Long id, String code, Long userId, String title, LocalDateTime startTime, List<Question> questions, long duration) {
         this.id = id;
         this.code = code;
         this.userId = userId;
@@ -56,11 +61,11 @@ public class Test {
         this.questions = questions;
     }
 
-    public void addQuestion(Question question){
+    public void addQuestion(Question question) {
         this.questions.add(question);
     }
 
-    public void addAllQuestion(List<Question> questions){
+    public void addAllQuestion(List<Question> questions) {
         this.questions.addAll(questions);
     }
 
@@ -86,5 +91,13 @@ public class Test {
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+
+    public String getTestDescription() {
+        return "Test description:\n" +
+                "Title: " + title + "\n" +
+                "Code: " + code + "\n" +
+                "Start time: " + startTime + "\n" +
+                "Duration: " + duration;
     }
 }

@@ -10,13 +10,14 @@ public class TestHistory {
     private Long candidateId;
     private String candidateName;
     private Long duration;
-    private int score;
+    private Integer score = null;
     private LocalDateTime submitTime;
     private LocalDateTime startTime;
+
     public TestHistory() {
     }
 
-    public TestHistory(Long id, Long testId,  String code, String title, Long candidateId, String candidateName, Long duration, int score, LocalDateTime startTime, LocalDateTime submitTime) {
+    public TestHistory(Long id, Long testId, String code, String title, Long candidateId, String candidateName, Long duration, int score, LocalDateTime startTime, LocalDateTime submitTime) {
         this.id = id;
         this.code = code;
         this.testId = testId;

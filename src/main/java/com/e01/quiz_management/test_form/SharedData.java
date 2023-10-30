@@ -1,15 +1,16 @@
 package com.e01.quiz_management.test_form;
 
 import com.e01.quiz_management.model.Question;
+import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.model.TestHistory;
 
 import java.util.List;
 
 public class SharedData {
     private static SharedData instance;
-    private Double score = 0.0;
+    private TestHistory testHistory = null;
     private Boolean isReview = false;
-
-    private List<Question> questions;
+    private Test test;
 
     private SharedData() {
 
@@ -22,12 +23,12 @@ public class SharedData {
         return instance;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
+    public Test getTest() {
+        return test;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+    public void setTest(Test test) {
+        this.test = test;
     }
 
     public Boolean getIsReview() {
@@ -38,11 +39,15 @@ public class SharedData {
         this.isReview = isReview;
     }
 
-    public Double getScore() {
-        return score;
+    public TestHistory getTestHistory() {
+        return testHistory;
     }
 
-    public void setScore(Double score) {
-        this.score = score;
+    public void setTestHistory(TestHistory testHistory) {
+        this.testHistory = testHistory;
+    }
+
+    public void clearTestHistory() {
+        this.testHistory = null;
     }
 }

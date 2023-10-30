@@ -1,11 +1,13 @@
 package com.e01.quiz_management.controller;
 
 import com.e01.quiz_management.App;
+import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Choice;
 import com.e01.quiz_management.model.Question;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,32 +16,27 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AddQuizController implements Initializable {
     @FXML
-    public ToggleButton practice;
-    @FXML
-    public ToggleButton kiemtra;
-
-    @FXML
     private DatePicker selectedDate;
     @FXML
-    private ComboBox<Integer> selectedHour=new ComboBox<>();
+    private ComboBox<Integer> selectedHour = new ComboBox<>();
     @FXML
     private ComboBox<Integer> selectedMin = new ComboBox<>();
     @FXML
-    private TextField  QuizName;
+    private TextField QuizName;
     @FXML
     private TextField QuizLength;
-    private static int indexOfQuestion=0;
+    private static int indexOfQuestion = 0;
     @FXML
     private Label signupMessage;
     @FXML
@@ -60,14 +57,10 @@ public class AddQuizController implements Initializable {
     private RadioButton answer3;
     @FXML
     private RadioButton answer4;
-    private final Question question =new Question();
-    private final Choice choice1=new Choice();
-    private final Choice choice2=new Choice();
-    private final Choice choice3=new Choice();
-    private final Choice choice4=new Choice();
-    private  static final ArrayList<Question> listQuestion = new ArrayList<>();
-    private final ArrayList<Choice> listAnswer = new ArrayList<>();
-    private static final Test quiz = new Test();
+    @FXML
+    private Button importButton;
+
+    private static Test quiz = null;
     private LocalDateTime startedTime;
 
     @Override
@@ -79,35 +72,67 @@ public class AddQuizController implements Initializable {
         for (int i = 0; i < 60; i++) {
             selectedMin.getItems().add(i);
         }
-    }
-    public void convertToTime(){
-        Integer hours = selectedHour.getValue();
-        Integer minutes = selectedMin.getValue();
-        startedTime=LocalDateTime.of(selectedDate.getValue().getYear(),selectedDate.getValue().getMonth(),selectedDate.getValue().getDayOfMonth(), hours, minutes);
-        quiz.setStartTime(startedTime);
-    }
-    public void change() {
-        //change button color when click
-        if (practice.isSelected()) {
-            quiz.setStartTime(null);
+
+        Test test = ShareAppData.getInstance().getTest();
+        if (test != null) {
+            quiz = test;
+            QuizName.setText(quiz.getTitle());
+            QuizLength.setText(String.valueOf(quiz.getDuration()));
+            startedTime = quiz.getStartTime();
+            selectedDate.setValue(startedTime.toLocalDate());
+            selectedHour.setValue(startedTime.getHour());
+            selectedMin.setValue(startedTime.getMinute());
+            indexOfQuestion = quiz.getQuestions().size();
+        } else {
+            quiz = new Test();
+        }
+        ShareAppData.getInstance().clearTest();
+
+        if (importButton != null) {
+            importButton.setOnAction(actionEvent -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Open Resource File");
+                File file = fileChooser.showOpenDialog(importButton.getScene().getWindow());
+                if (file != null) {
+                    try {
+                        List<Question> questions = UploadController.getInstance().createQuestionsFromFile(file);
+                        quiz.addAllQuestion(questions);
+                        indexOfQuestion = quiz.getQuestions().size();
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Success");
+                        alert.setHeaderText("Success");
+                        alert.setContentText("Import successfully");
+                        alert.showAndWait();
+                    } catch (Exception e) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("Error");
+                        alert.setContentText("Import failed");
+                        alert.showAndWait();
+                    }
+                }
+            });
         }
     }
+
+    public void convertToTime() {
+        Integer hours = selectedHour.getValue();
+        Integer minutes = selectedMin.getValue();
+        startedTime = LocalDateTime.of(selectedDate.getValue().getYear(), selectedDate.getValue().getMonth(), selectedDate.getValue().getDayOfMonth(), hours, minutes);
+        quiz.setStartTime(startedTime);
+    }
+
     @FXML
     public void createQuiz(ActionEvent event) {
-        try{
+        try {
             convertToTime();
-            quiz.setStartTime(startedTime);
-            String quizName = String.valueOf(this.QuizName.getText());
-            long duration = Long.parseLong(this.QuizLength.getText());
+            String quizName = QuizName.getText();
+            long duration = Long.parseLong(QuizLength.getText());
+//            quiz.setStartTime(startedTime);
             quiz.setTitle(quizName);
             quiz.setDuration(duration);
-            // move to scene add question
-            Parent root0= FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root0);
-            stage.setScene(scene);
-            stage.show();
-        } catch(Exception e){
+            App.setRoot("addQuestion");
+        } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
@@ -118,80 +143,45 @@ public class AddQuizController implements Initializable {
 
     @FXML
     public void addNextQuestion(ActionEvent event) {
-        try {
-            save();
-            Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root1);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            //popup if user does not save question
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("Please save question before add next question");
-            alert.showAndWait();
-        }
+        indexOfQuestion = quiz.getQuestions().size();
+        save();
     }
 
-    private void save() throws IOException, InterruptedException {
+    private void save() {
         if (!questionContent.getText().isEmpty() && !option1.getText().isEmpty() && !option2.getText().isEmpty() && !option3.getText().isEmpty() && !option4.getText().isEmpty()) {
-            //save 1 time for 1 question
+            Question question = new Question();
             question.setQuestion(questionContent.getText());
-            choice1.setContent(option1.getText());
-            choice2.setContent(option2.getText());
-            choice3.setContent(option3.getText());
-            choice4.setContent(option4.getText());
-            if (answer1.isSelected()) {
-                choice1.setCorrect(true);
-                choice2.setCorrect(false);
-                choice3.setCorrect(false);
-                choice4.setCorrect(false);
-            }
-            if (answer2.isSelected()) {
-                choice2.setCorrect(true);
-                choice1.setCorrect(false);
-                choice3.setCorrect(false);
-                choice4.setCorrect(false);
-            }
-            if (answer3.isSelected()) {
-                choice3.setCorrect(true);
-                choice1.setCorrect(false);
-                choice2.setCorrect(false);
-                choice4.setCorrect(false);
-            }
-            if (answer4.isSelected()) {
-                choice4.setCorrect(true);
-                choice1.setCorrect(false);
-                choice2.setCorrect(false);
-                choice3.setCorrect(false);
-            }
-            listAnswer.add(choice1);
-            listAnswer.add(choice2);
-            listAnswer.add(choice3);
-            listAnswer.add(choice4);
-            question.setChoices(listAnswer);
-            System.out.println(question.getChoices().get(0).getCorrect());
-            listQuestion.add(question);
-            quiz.setQuestions(listQuestion);
-            indexOfQuestion++;
-            //remove duplicate question
-            for (int i = 0; i < quiz.getQuestions().size(); i++) {
-                for (int j = i + 1; j < quiz.getQuestions().size(); j++) {
-                    if (quiz.getQuestions().get(i).getQuestion().equals(quiz.getQuestions().get(j).getQuestion())
-                            && quiz.getQuestions().get(i).getChoices().get(0).getContent().equals(quiz.getQuestions().get(j).getChoices().get(0).getContent())
-                            && quiz.getQuestions().get(i).getChoices().get(1).getContent().equals(quiz.getQuestions().get(j).getChoices().get(1).getContent())
-                            && quiz.getQuestions().get(i).getChoices().get(2).getContent().equals(quiz.getQuestions().get(j).getChoices().get(2).getContent())
-                            && quiz.getQuestions().get(i).getChoices().get(3).getContent().equals(quiz.getQuestions().get(j).getChoices().get(3).getContent())){
-                        quiz.getQuestions().remove(j);
-                        j--;
-                        indexOfQuestion--;
-                    }
+            List<Choice> choices = List.of(
+                    new Choice(option1.getText(), answer1.isSelected()),
+                    new Choice(option2.getText(), answer2.isSelected()),
+                    new Choice(option3.getText(), answer3.isSelected()),
+                    new Choice(option4.getText(), answer4.isSelected())
+            );
+//            thêm câu hỏi vào quiz
+            question.setChoices(choices);
+            boolean isExist = false;
+            for (Question q : quiz.getQuestions()) {
+                if (q.getQuestion().equals(question.getQuestion())) {
+                    isExist = true;
+                    break;
                 }
             }
-        }else{
-            //popup notification if there is insufficient information
+            if (!isExist) {
+                quiz.addQuestion(question);
+            }
+//            reset ui
+            indexOfQuestion++;
+            questionContent.clear();
+            option1.clear();
+            option2.clear();
+            option3.clear();
+            option4.clear();
+            answer1.setSelected(false);
+            answer2.setSelected(false);
+            answer3.setSelected(false);
+            answer4.setSelected(false);
+            System.out.println("current question: " + indexOfQuestion);
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
@@ -202,26 +192,15 @@ public class AddQuizController implements Initializable {
 
     @FXML
     private void submitQuiz(ActionEvent event) throws IOException, InterruptedException {
-        //check if user save question before submit
         if (!questionContent.getText().isEmpty() &&
                 !option1.getText().isEmpty() &&
                 !option2.getText().isEmpty() &&
                 !option3.getText().isEmpty() &&
                 !option4.getText().isEmpty()) {
             save();
-            Parent root2 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("QuizInfo.fxml")));
-            Stage stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene1 = new Scene(root2);
-            stage1.setScene(scene1);
-            stage1.show();
-            TextField quiztitle = (TextField) scene1.lookup("#quiztitle");
-            TextField quizlength = (TextField) scene1.lookup("#quizlength");
-            TextField noquestion = (TextField) scene1.lookup("#noquestion");
-            quiztitle.setText(quiz.getTitle());
-            quizlength.setText(String.valueOf(quiz.getDuration()));
-            noquestion.setText(String.valueOf(quiz.getQuestions().size()));
-        }
-        else {
+            ShareAppData.getInstance().setTest(quiz);
+            App.setRoot("QuizInfo");
+        } else {
             //popup notification if there is insufficient information
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -230,129 +209,71 @@ public class AddQuizController implements Initializable {
             alert.showAndWait();
         }
     }
+
+
     @FXML
     private void previous(ActionEvent event) throws IOException {
-        if (indexOfQuestion > 0) {
-            //move to previous screen using indexOfQuestion
-            Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root1);
-            stage.setScene(scene);
-            stage.show();
-            TextArea questionContent = (TextArea) scene.lookup("#questionContent");
-            TextField option1 = (TextField) scene.lookup("#option1");
-            TextField option2 = (TextField) scene.lookup("#option2");
-            TextField option3 = (TextField) scene.lookup("#option3");
-            TextField option4 = (TextField) scene.lookup("#option4");
-            RadioButton answer1 = (RadioButton) scene.lookup("#answer1");
-            RadioButton answer2 = (RadioButton) scene.lookup("#answer2");
-            RadioButton answer3 = (RadioButton) scene.lookup("#answer3");
-            RadioButton answer4 = (RadioButton) scene.lookup("#answer4");
-            indexOfQuestion--;
-            questionContent.setText(quiz.getQuestions().get(indexOfQuestion).getQuestion());
-            option1.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getContent());
-            option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
-            option3.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getContent());
-            option4.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getContent());
-            if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getCorrect()) {
-                answer1.setSelected(true);
-            }
-            if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getCorrect()) {
-                answer2.setSelected(true);
-            }
-            if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getCorrect()) {
-                answer4.setSelected(true);
-            }
-            if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getCorrect()) {
-                answer3.setSelected(true);
-            }
-        }
-            else {
-                //popup notification if there is no previous question
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("There is no previous question");
-                alert.showAndWait();
-            }
-
-    }
-    @FXML
-    private void next(ActionEvent event) throws IOException {
-        if(indexOfQuestion+1<=quiz.getQuestions().size()){
-            Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root1);
-            stage.setScene(scene);
-            stage.show();
-            TextArea  questionContent = (TextArea ) scene.lookup("#questionContent");
-            TextField option1 = (TextField) scene.lookup("#option1");
-            TextField option2 = (TextField) scene.lookup("#option2");
-            TextField option3 = (TextField) scene.lookup("#option3");
-            TextField option4 = (TextField) scene.lookup("#option4");
-            RadioButton answer1 = (RadioButton) scene.lookup("#answer1");
-            RadioButton answer2 = (RadioButton) scene.lookup("#answer2");
-            RadioButton answer3 = (RadioButton) scene.lookup("#answer3");
-            RadioButton answer4 = (RadioButton) scene.lookup("#answer4");
-            //move to next question using indexOfQuestion
-            indexOfQuestion++;
-            questionContent.setText(quiz.getQuestions().get(indexOfQuestion).getQuestion());
-            option1.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getContent());
-            option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
-            option3.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getContent());
-            option4.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getContent());
-            //fill up radio button
-            if(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getCorrect()){
-                answer1.setSelected(true);
-            }
-            if(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getCorrect()){
-                answer2.setSelected(true);
-            }
-            if(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getCorrect()){
-                answer3.setSelected(true);
-            }
-            if(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getCorrect()){
-                answer4.setSelected(true);
-            }
-        }
-        else {
-                try{
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Error");
-                    alert.setContentText("There is no next question");
-                    alert.showAndWait();
-                }catch (Exception e){
-                    System.out.println(e);
-                }
-        }
-    }
-    @FXML
-    public void completeAndSend() {
-        try {
-            change();
-            //send test to api
-            BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
-            Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
-            //popup dialog to show test id on button complete and send
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Test ID");
-            alert.setHeaderText("Test ID");
-            alert.setContentText("Your test Code is: " + test.getCode());
-            alert.showAndWait();
-        } catch (Exception e) {
-            //popup notification if there is no test created
+        indexOfQuestion--;
+        if (indexOfQuestion >= 0) {
+            getAndSetQuestion(questionContent, option1, option2, option3, option4, answer1, answer2, answer4, answer3);
+        } else {
+            //popup notification if there is no previous question
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
-            alert.setContentText("There is no test created");
+            alert.setContentText("There is no previous question");
             alert.showAndWait();
         }
+        System.out.println("current question: " + indexOfQuestion);
+    }
+
+    private void getAndSetQuestion(TextArea questionContent, TextField option1, TextField option2, TextField option3, TextField option4, RadioButton answer1, RadioButton answer2, RadioButton answer4, RadioButton answer3) {
+        questionContent.setText(quiz.getQuestions().get(indexOfQuestion).getQuestion());
+        option1.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getContent());
+        option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
+        option3.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getContent());
+        option4.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getContent());
+        answer1.setSelected(false);
+        answer2.setSelected(false);
+        answer3.setSelected(false);
+        answer4.setSelected(false);
+        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getCorrect()) {
+            answer1.setSelected(true);
+        }
+        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getCorrect()) {
+            answer2.setSelected(true);
+        }
+        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getCorrect()) {
+            answer4.setSelected(true);
+        }
+        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getCorrect()) {
+            answer3.setSelected(true);
+        }
+    }
+
+    @FXML
+    private void next(ActionEvent event) throws IOException {
+        indexOfQuestion++;
+        if (indexOfQuestion < quiz.getQuestions().size()) {//move to next question using indexOfQuestion
+            getAndSetQuestion(questionContent, option1, option2, option3, option4, answer1, answer2, answer4, answer3);
+        } else {
+            try {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText("There is no next question");
+                alert.showAndWait();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        System.out.println("current question: " + indexOfQuestion);
     }
 
     @FXML
     public void backToFirst(ActionEvent event) throws IOException {
-        indexOfQuestion=0;
+        //back to 1st question
+        indexOfQuestion = 0;
         Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root1);
@@ -367,22 +288,6 @@ public class AddQuizController implements Initializable {
         RadioButton answer2 = (RadioButton) scene.lookup("#answer2");
         RadioButton answer3 = (RadioButton) scene.lookup("#answer3");
         RadioButton answer4 = (RadioButton) scene.lookup("#answer4");
-        questionContent.setText(quiz.getQuestions().get(indexOfQuestion).getQuestion());
-        option1.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getContent());
-        option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
-        option3.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getContent());
-        option4.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getContent());
-        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getCorrect()) {
-            answer1.setSelected(true);
-        }
-        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getCorrect()) {
-            answer2.setSelected(true);
-        }
-        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getCorrect()) {
-            answer4.setSelected(true);
-        }
-        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getCorrect()) {
-            answer3.setSelected(true);
-        }
+        getAndSetQuestion(questionContent, option1, option2, option3, option4, answer1, answer2, answer4, answer3);
     }
 }

@@ -1,7 +1,7 @@
-package com.e01.quiz_management.controller;
+package com.e01.quiz_management.list_test;
 
 import com.e01.quiz_management.App;
-import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.TestHistory;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.beans.property.SimpleStringProperty;
@@ -9,10 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -21,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ListTestHistoryController implements Initializable {
+public class ListSubmitView implements Initializable {
 
     @FXML
     private TableView<TestHistory> myTable;
@@ -36,12 +33,15 @@ public class ListTestHistoryController implements Initializable {
     @FXML
     private TableColumn<TestHistory, String> submitTimeColumn;
     @FXML
+    private TextArea testDescription;
+    @FXML
     private Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<TestHistory> tests = new ArrayList<>();
-        tests = RequestAPI.getInstance().getTestHistories();
+        tests = RequestAPI.getInstance().getTestHistoriesByTestId(ShareAppData.getInstance().getTest().getId());
+        testDescription.setText(ShareAppData.getInstance().getTest().getTestDescription() + "\nNumber of submissions: " + tests.size());
         ObservableList<TestHistory> observableArrayList =
                 FXCollections.observableArrayList(tests);
         orderColumn.setCellFactory(column -> {
@@ -54,7 +54,7 @@ public class ListTestHistoryController implements Initializable {
             };
         });
         titleColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, String>("title"));
-        codeColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, String>("code"));
+        codeColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, String>("candidateName"));
         submitTimeColumn.setCellValueFactory(cellData -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
             if (cellData.getValue().getSubmitTime() != null) {
@@ -70,10 +70,12 @@ public class ListTestHistoryController implements Initializable {
 
         backButton.setOnAction(actionEvent -> {
             try {
-                App.setRoot("menu");
+                ShareAppData.getInstance().setTest(null);
+                App.setRoot("layout_list_test");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
     }
 }
+
