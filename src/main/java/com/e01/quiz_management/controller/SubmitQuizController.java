@@ -34,8 +34,8 @@ public class SubmitQuizController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         quiztitle.setText(ShareAppData.getInstance().getTest().getTitle());
-        quizlength.setText(String.valueOf(ShareAppData.getInstance().getTest().getDuration()) + " minutes");
-        noquestion.setText(ShareAppData.getInstance().getTest().getQuestions().size() + "");
+        quizlength.setText(String.valueOf(ShareAppData.getInstance().getTest().getDuration()));
+        noquestion.setText(String.valueOf(ShareAppData.getInstance().getTest().getQuestions().size()));
         practice.setText("Contest");
         practice.setOnAction(event -> {
             if (practice.isSelected()) {
@@ -60,13 +60,24 @@ public class SubmitQuizController implements Initializable {
     public void completeAndSend() {
         Boolean isEdit = ShareAppData.getInstance().getIsEdit();
         Test quiz = ShareAppData.getInstance().getTest();
+        quiz.setTitle(quiztitle.getText());
+        quiz.setDuration(Integer.parseInt(quizlength.getText()));
+        if (practice.getText().equals("Practice")) {
+            quiz.setStartTime(null);
+        }
         if (isEdit) {
-            RequestAPI.getInstance().putUpdateTestById(quiz.getId(), quiz);
+            try {
+                RequestAPI.getInstance().putUpdateTestById(quiz.getId(), quiz);
+            } catch (Exception e) {
+                //popup notification if there is no test created
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText("There is no test created");
+                alert.showAndWait();
+            }
         } else {
             try {
-                if (practice.getText().equals("Practice")) {
-                    quiz.setStartTime(null);
-                }
                 BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
                 Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -83,6 +94,7 @@ public class SubmitQuizController implements Initializable {
                 alert.showAndWait();
             }
         }
+        ShareAppData.getInstance().clearTest();
         try {
             App.setRoot("layout_list_test");
         } catch (Exception e) {
