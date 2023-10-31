@@ -1,14 +1,58 @@
+/* For general scenes */
 .text-field{
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-background-radius: 0;
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #D4D4D4;
+    -fx-border-radius: 5
 }
 
-#joinButton{
+.text-field:hover{
+    -fx-border-color: #999999;
+}
+
+.text-field:focused{
+    -fx-border-color: #F68E01;
+}
+
+/* Login and Signup scenes */
+#signupButton:hover{
+    -fx-background-color: #DFA98F !important;
+}
+
+#loginButton {
+    -fx-background-color: #E9C8BC;
+}
+
+#loginButton:hover{
+    -fx-background-color: #DFA98F !important;
+}
+
+/* Menu UI */
+#menuButton:hover{
+    -fx-background-color: #D69D70 !important;
+}
+
+#historyButton:hover{
+    -fx-background-color: #D69D70 !important;
+}
+
+#testManagementButton:hover{
+    -fx-background-color: #D69D70 !important;
+}
+
+#logoutButton:hover{
+    -fx-background-color: #D69D70 !important;
+}
+
+#line{
+    -fx-background-color: #88583B;
+}
+
+/* Join Test */
+#testCodeTextField{
+    -fx-border-radius: 8;
+}
+
+#joinMessage{
+    -fx-background-color: #EC0B43;
     -fx-background-radius: 10;
-    -fx-background-color: #AC703A;
-    transition: background 0.5s ease-in-out;
-}
-
-#joinButton:hover{
-    -fx-background-color: #F0D4AA
 }
