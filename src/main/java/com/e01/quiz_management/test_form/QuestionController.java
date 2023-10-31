@@ -2,6 +2,7 @@ package com.e01.quiz_management.test_form;
 
 import com.e01.quiz_management.model.*;
 import com.e01.quiz_management.util.EQuestionType;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
@@ -72,23 +73,27 @@ public class QuestionController {
         notAnsweredQuestions.forEach(System.out::println);
     }
 
-    public void showQuestion(TextField questionTextField, List<RadioButton> answerRadioButtons, TextField answerTextField) {
+    public void showQuestion(TextField questionTextField, List<RadioButton> answerRadioButtons, TextField answerTextField, Button saveButton) {
         Question question = getCurrentQuestion();
         questionTextField.setText(question.getQuestion());
         if (question.getType().equals(EQuestionType.MULTIPLE_CHOICE)) {
             answerTextField.setVisible(false);
+            saveButton.setVisible(false);
             answerRadioButtons.forEach(radioButton -> {
                 radioButton.setVisible(true);
                 radioButton.setDisable(false);
             });
-//            question.getMultipleChoice().showQuestion(questionTextField, answerRadioButtons);
+            MultipleChoice multipleChoice = new MultipleChoice(question);
+            multipleChoice.showQuestion(questionTextField, answerRadioButtons);
         } else {
             answerTextField.setVisible(true);
+            saveButton.setVisible(true);
             answerRadioButtons.forEach(radioButton -> {
                 radioButton.setVisible(false);
                 radioButton.setDisable(true);
             });
-//            question.getFillQuestion().showQuestion(questionTextField, answerTextField);
+            FillQuestion fillQuestion = new FillQuestion(question);
+            fillQuestion.showQuestion(questionTextField, answerTextField);
         }
     }
 
@@ -101,27 +106,29 @@ public class QuestionController {
                 radioButton.setVisible(true);
                 radioButton.setDisable(true);
             });
-//            question.getMultipleChoice().showAnswer(questionTextField, answerRadioButtons);
+            MultipleChoice multipleChoice = new MultipleChoice(question);
+            multipleChoice.showAnswer(questionTextField, answerRadioButtons);
         } else {
             answerTextField.setVisible(true);
             answerRadioButtons.forEach(radioButton -> {
                 radioButton.setVisible(false);
                 radioButton.setDisable(true);
             });
-//            question.getFillQuestion().showAnswer(questionTextField, answerTextField);
+            FillQuestion fillQuestion = new FillQuestion(question);
+            fillQuestion.showAnswer(questionTextField, answerTextField);
         }
     }
 
-    public Integer goToNextUnansweredQuestion(TextField questionTextField, List<RadioButton> answerRadioButtons, TextField ansTextField, int index) {
+    public Integer goToNextUnansweredQuestion(TextField questionTextField, List<RadioButton> answerRadioButtons, TextField ansTextField, Button saveButton, int index) {
         for (int i = index + 1; i < questions.size(); i++) {
             if (notAnsweredQuestions.contains(i)) {
                 currentQuestionIndex = i;
-                showQuestion(questionTextField, answerRadioButtons, ansTextField);
+                showQuestion(questionTextField, answerRadioButtons, ansTextField, saveButton);
                 return i;
             }
         }
         currentQuestionIndex = notAnsweredQuestions.get(0);
-        showQuestion(questionTextField, answerRadioButtons, ansTextField);
+        showQuestion(questionTextField, answerRadioButtons, ansTextField, saveButton);
         return currentQuestionIndex;
     }
 

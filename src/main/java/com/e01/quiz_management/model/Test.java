@@ -28,7 +28,18 @@ public class Test {
         this.title = title;
         this.startTime = startTime;
         this.duration = duration;
-        this.questions = questions;
+        this.questions = new ArrayList<>();
+        questions.forEach(q -> {
+            if (q.getType() == EQuestionType.MULTIPLE_CHOICE) {
+                MultipleChoice multipleChoice = new MultipleChoice(q);
+                this.questions.add(multipleChoice);
+                System.out.println("multiple choice");
+            } else {
+                FillQuestion fillQuestion = new FillQuestion(q);
+                this.questions.add(fillQuestion);
+                System.out.println("fill question");
+            }
+        });
     }
 
     public Long getId() {

@@ -8,6 +8,14 @@ import javafx.scene.control.TextField;
 import java.util.List;
 
 public class Question {
+
+    private Long id;
+    private Long testId;
+    private String question;
+    private EQuestionType type;
+    private List<Choice> choices;
+    private Choice mAns = null;
+
     public Long getId() {
         return id;
     }
@@ -56,13 +64,6 @@ public class Question {
         this.mAns = mAns;
     }
 
-    private Long id;
-    private Long testId;
-    private String question;
-    private EQuestionType type;
-    private List<Choice> choices;
-    private Choice mAns = null;
-
     public Question() {
     }
 
@@ -75,11 +76,12 @@ public class Question {
 
 
     public Integer getScore() {
-//        if (this.type.equals(EQuestionType.MULTIPLE_CHOICE)) {
-//            return getMultipleChoice().getScore();
-//        } else {
-//            return getFillQuestion().getScore();
-//        }
-        return 0;
+        if (this.type == EQuestionType.MULTIPLE_CHOICE) {
+            MultipleChoice multipleChoice = new MultipleChoice(this);
+            return multipleChoice.getScore();
+        } else {
+            FillQuestion fillQuestion = new FillQuestion(this);
+            return fillQuestion.getScore();
+        }
     }
 }

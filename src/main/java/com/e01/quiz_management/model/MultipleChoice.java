@@ -11,6 +11,15 @@ public class MultipleChoice extends Question {
         this.setType(EQuestionType.MULTIPLE_CHOICE);
     }
 
+    public MultipleChoice(Question question) {
+        this.setId(question.getId());
+        this.setTestId(question.getTestId());
+        this.setQuestion(question.getQuestion());
+        this.setType(EQuestionType.MULTIPLE_CHOICE);
+        this.setChoices(question.getChoices());
+        this.setmAns(question.getmAns());
+    }
+
     public Integer getScore() {
         Choice mAns = getmAns();
         if (mAns == null) {

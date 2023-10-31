@@ -11,6 +11,15 @@ public class FillQuestion extends Question {
         this.setType(EQuestionType.FILL_IN_BLANK);
     }
 
+    public FillQuestion(Question question) {
+        this.setId(question.getId());
+        this.setTestId(question.getTestId());
+        this.setQuestion(question.getQuestion());
+        this.setType(EQuestionType.FILL_IN_BLANK);
+        this.setChoices(question.getChoices());
+        this.setmAns(question.getmAns());
+    }
+
     public void showQuestion(TextField questionTextField, TextField ansTextField) {
         questionTextField.setText(getQuestion());
         ansTextField.setText("");

@@ -306,7 +306,7 @@ public class AddQuizController implements Initializable {
         option2.setVisible(true);
         option3.setVisible(true);
         option4.setVisible(true);
-        MultipleChoice question = (MultipleChoice) quiz.getQuestions().get(indexOfQuestion);
+        MultipleChoice question = new MultipleChoice(quiz.getQuestions().get(indexOfQuestion));
         questionContent.setText(question.getQuestion());
         option1.setText(question.getChoices().get(0).getContent());
         option2.setText(question.getChoices().get(1).getContent());
@@ -327,7 +327,7 @@ public class AddQuizController implements Initializable {
         option2.setVisible(false);
         option3.setVisible(false);
         option4.setVisible(false);
-        FillQuestion question = (FillQuestion) quiz.getQuestions().get(indexOfQuestion);
+        FillQuestion question = new FillQuestion(quiz.getQuestions().get(indexOfQuestion));
         questionContent.setText(question.getQuestion());
         option1.setText(question.getChoices().get(0).getContent());
     }

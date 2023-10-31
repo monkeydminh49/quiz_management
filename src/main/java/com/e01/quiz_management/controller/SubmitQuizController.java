@@ -81,31 +81,23 @@ public class SubmitQuizController implements Initializable {
                 alert.showAndWait();
             }
         } else {
+            BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
             try {
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.registerModule(new JavaTimeModule());
-                String payload = mapper.writeValueAsString(quiz);
-                System.out.println(payload);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
+                Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
+                ShareAppData.getInstance().addTest(test);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Test ID");
+                alert.setHeaderText("Test ID");
+                alert.setContentText("Your test Code is: " + test.getCode());
+                alert.showAndWait();
+            } catch (Exception e) {
+                //popup notification if there is no test created
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText("There is no test created");
+                alert.showAndWait();
             }
-//            BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
-//            try {
-//                Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
-//                ShareAppData.getInstance().addTest(test);
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                alert.setTitle("Test ID");
-//                alert.setHeaderText("Test ID");
-//                alert.setContentText("Your test Code is: " + test.getCode());
-//                alert.showAndWait();
-//            } catch (Exception e) {
-//                //popup notification if there is no test created
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                alert.setTitle("Error");
-//                alert.setHeaderText("Error");
-//                alert.setContentText("There is no test created");
-//                alert.showAndWait();
-//            }
         }
         ShareAppData.getInstance().clearTest();
         try {

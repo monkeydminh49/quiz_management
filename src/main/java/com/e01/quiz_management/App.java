@@ -93,7 +93,7 @@ public class App extends Application {
         mapper.registerModule(new JavaTimeModule());
         try {
             String payload = mapper.writeValueAsString(ques);
-//            cast ques to MultipleChoice
+            System.out.println(payload);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
