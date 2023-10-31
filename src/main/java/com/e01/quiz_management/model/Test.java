@@ -14,7 +14,6 @@ public class Test {
     private Long userId;
     private String title;
     private LocalDateTime startTime;
-    @JsonManagedReference
     private List<Question> questions;
     private long duration;
 

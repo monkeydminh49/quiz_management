@@ -8,23 +8,6 @@ import javafx.scene.control.TextField;
 import java.util.List;
 
 public class Question {
-    private Long id;
-    private Long testId;
-    private String question;
-    private EQuestionType type;
-    private List<Choice> choices;
-    private Choice mAns = null;
-
-    public Question() {
-    }
-
-    public Question(Long id, Long testId, String question, List<Choice> choices) {
-        this.id = id;
-        this.testId = testId;
-        this.question = question;
-        this.choices = choices;
-    }
-
     public Long getId() {
         return id;
     }
@@ -49,28 +32,45 @@ public class Question {
         this.question = question;
     }
 
-    public void setChoices(List<Choice> choices) {
-        this.choices = choices;
-    }
-
-    public List<Choice> getChoices() {
-        return choices;
-    }
-
-    public void setmAns(Choice mAns) {
-        this.mAns = mAns;
-    }
-
-    public Choice getmAns() {
-        return mAns;
-    }
-
     public EQuestionType getType() {
         return type;
     }
 
     public void setType(EQuestionType type) {
         this.type = type;
+    }
+
+    public List<Choice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
+    }
+
+    public Choice getmAns() {
+        return mAns;
+    }
+
+    public void setmAns(Choice mAns) {
+        this.mAns = mAns;
+    }
+
+    private Long id;
+    private Long testId;
+    private String question;
+    private EQuestionType type;
+    private List<Choice> choices;
+    private Choice mAns = null;
+
+    public Question() {
+    }
+
+    public Question(Long id, Long testId, String question, List<Choice> choices) {
+        this.id = id;
+        this.testId = testId;
+        this.question = question;
+        this.choices = choices;
     }
 
 

@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -77,5 +78,29 @@ public class LoginView {
         } catch (Exception ie) {
             System.out.println(ie);
         }
+    }
+
+    public void username_field_onMouseEntered(){
+//        usernameTextField.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: #999999; -fx-border-radius: 5");
+    }
+
+    public void username_field_onMouseExited(){
+//        usernameTextField.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: #D4D4D4; -fx-border-radius: 5");
+    }
+
+    public void password_field_onMouseEntered(){
+//        passwordTextField.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: #999999; -fx-border-radius: 5");
+    }
+
+    public void password_field_onMouseExited(){
+//        passwordTextField.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: #D4D4D4; -fx-border-radius: 5");
+    }
+
+    public void username_field_onFocused(){
+//        usernameTextField.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: #F68E01; -fx-border-radius: 5");
+    }
+
+    public void password_field_onFocused(){
+//        passwordTextField.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: #F68E01; -fx-border-radius: 5");
     }
 }
