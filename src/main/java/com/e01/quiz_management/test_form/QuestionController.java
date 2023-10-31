@@ -1,21 +1,19 @@
 package com.e01.quiz_management.test_form;
 
-import com.e01.quiz_management.model.Choice;
-import com.e01.quiz_management.model.MultipleChoice;
-import com.e01.quiz_management.model.Question;
-import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.model.*;
 import com.e01.quiz_management.util.EQuestionType;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class QuestionController {
 
     private Test test;
-    private List<Question> questions;
-    private int currentQuestionIndex;
+    private static List<Question> questions;
+    private static int currentQuestionIndex;
     private final List<Integer> notAnsweredQuestions = new ArrayList<>();
 
     public int getCurrentQuestionIndex() {
@@ -31,13 +29,13 @@ public class QuestionController {
     }
 
     public QuestionController() {
-        this.questions = new ArrayList<>();
-        this.currentQuestionIndex = 0;
+        questions = new ArrayList<>();
+        currentQuestionIndex = 0;
     }
 
     public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-        this.currentQuestionIndex = 0;
+        QuestionController.questions = questions;
+        currentQuestionIndex = 0;
         for (int i = 0; i < questions.size(); i++) {
             notAnsweredQuestions.add(i);
         }
@@ -46,14 +44,14 @@ public class QuestionController {
 
     public QuestionController(Test test) {
         this.test = test;
-        this.questions = test.getQuestions();
-        this.currentQuestionIndex = 0;
+        questions = test.getQuestions();
+        currentQuestionIndex = 0;
         for (int i = 0; i < questions.size(); i++) {
             notAnsweredQuestions.add(i);
         }
     }
 
-    public Question getCurrentQuestion() {
+    public static Question getCurrentQuestion() {
         return questions.get(currentQuestionIndex);
     }
 
@@ -79,51 +77,42 @@ public class QuestionController {
         questionTextField.setText(question.getQuestion());
         if (question.getType().equals(EQuestionType.MULTIPLE_CHOICE)) {
             answerTextField.setVisible(false);
-            List<Choice> choices = question.getChoices();
-            for (int i = 0; i < choices.size(); i++) {
-                answerRadioButtons.get(i).setText(choices.get(i).getContent());
-                answerRadioButtons.get(i).setDisable(false);
-                answerRadioButtons.get(i).setSelected(false);
-                answerRadioButtons.get(i).setStyle("-fx-text-fill: black");
-            }
+            answerRadioButtons.forEach(radioButton -> {
+                radioButton.setVisible(true);
+                radioButton.setDisable(false);
+            });
+//            question.getMultipleChoice().showQuestion(questionTextField, answerRadioButtons);
         } else {
             answerTextField.setVisible(true);
-            answerTextField.setText("");
             answerRadioButtons.forEach(radioButton -> {
                 radioButton.setVisible(false);
                 radioButton.setDisable(true);
             });
+//            question.getFillQuestion().showQuestion(questionTextField, answerTextField);
         }
     }
 
     public void showResult(TextField questionTextField, List<RadioButton> answerRadioButtons, TextField answerTextField) {
         Question question = getCurrentQuestion();
         questionTextField.setText(question.getQuestion());
-        Choice mAns = question.getmAns();
         if (question.getType().equals(EQuestionType.MULTIPLE_CHOICE)) {
             answerTextField.setVisible(false);
-            List<Choice> choices = question.getChoices();
-            for (int i = 0; i < choices.size(); i++) {
-                answerRadioButtons.get(i).setText(choices.get(i).getContent());
-                answerRadioButtons.get(i).setDisable(true);
-                if (choices.get(i).getId().equals(mAns.getId())) {
-                    answerRadioButtons.get(i).setStyle("-fx-text-fill: green");
-                } else {
-                    answerRadioButtons.get(i).setStyle("-fx-text-fill: red");
-                }
-            }
+            answerRadioButtons.forEach(radioButton -> {
+                radioButton.setVisible(true);
+                radioButton.setDisable(true);
+            });
+//            question.getMultipleChoice().showAnswer(questionTextField, answerRadioButtons);
         } else {
             answerTextField.setVisible(true);
-            answerTextField.setText(mAns.getContent());
             answerRadioButtons.forEach(radioButton -> {
                 radioButton.setVisible(false);
                 radioButton.setDisable(true);
             });
+//            question.getFillQuestion().showAnswer(questionTextField, answerTextField);
         }
     }
 
     public Integer goToNextUnansweredQuestion(TextField questionTextField, List<RadioButton> answerRadioButtons, TextField ansTextField, int index) {
-        System.out.println("currentQuestionIndex: " + notAnsweredQuestions.size());
         for (int i = index + 1; i < questions.size(); i++) {
             if (notAnsweredQuestions.contains(i)) {
                 currentQuestionIndex = i;
@@ -141,16 +130,14 @@ public class QuestionController {
     }
 
     public void setCurrentQuestionIndex(int index) {
-        this.currentQuestionIndex = index;
+        currentQuestionIndex = index;
     }
 
     public Integer getCal() {
-        int score = 0;
+        Integer cal = 0;
         for (Question question : questions) {
-            if (question.getScore() != null) {
-                score += question.getScore();
-            }
+            cal += question.getScore();
         }
-        return score * 100 / questions.size();
+        return cal * 100 / questions.size();
     }
 }

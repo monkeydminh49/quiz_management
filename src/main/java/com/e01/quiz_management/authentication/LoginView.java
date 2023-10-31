@@ -46,20 +46,23 @@ public class LoginView {
             if (response.getCode() == 1) {
                 User user = RequestAPI.getInstance().getBaseResponseBodyObject(response, User.class);
                 ShareAppData.getInstance().setUser(user);
-                Task<List<Test>> task = new Task<List<Test>>() {
+                Task<List<Test>> task = new Task<>() {
                     @Override
                     protected List<Test> call() throws Exception {
+                        System.out.println("call");
                         return RequestAPI.getInstance().getAllUserTests();
                     }
                 };
 
                 task.setOnSucceeded(event -> {
+                    System.out.println("success");
                     Response<List<Test>> data = new Response.Success<List<Test>>(task.getValue());
                     ShareAppData.getInstance().setListTestResponse(data);
                     ShareAppData.getInstance().setTests(((Response.Success<List<Test>>) ShareAppData.getInstance().getListTestResponse()).getData());
                     ListTestView.getInstance().updateTable();
                 });
                 new Thread(task).start();
+
                 App.setRoot("menu");
             } else {
                 loginMessage.setText("Incorrect username or password");

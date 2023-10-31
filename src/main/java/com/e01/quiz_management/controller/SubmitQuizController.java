@@ -6,6 +6,9 @@ import com.e01.quiz_management.list_test.ListTestView;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -66,35 +69,43 @@ public class SubmitQuizController implements Initializable {
             quiz.setStartTime(null);
         }
         if (isEdit) {
+            RequestAPI.getInstance().putUpdateTestById(quiz.getId(), quiz);
             try {
-                RequestAPI.getInstance().putUpdateTestById(quiz.getId(), quiz);
                 ShareAppData.getInstance().updateTest(quiz);
             } catch (Exception e) {
                 //popup notification if there is no test created
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Error");
                 alert.setHeaderText("Error");
-                alert.setContentText("There is no test created");
+                alert.setContentText("There is no test updated");
                 alert.showAndWait();
             }
         } else {
             try {
-                BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
-                Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
-                ShareAppData.getInstance().addTest(test);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Test ID");
-                alert.setHeaderText("Test ID");
-                alert.setContentText("Your test Code is: " + test.getCode());
-                alert.showAndWait();
-            } catch (Exception e) {
-                //popup notification if there is no test created
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("There is no test created");
-                alert.showAndWait();
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.registerModule(new JavaTimeModule());
+                String payload = mapper.writeValueAsString(quiz);
+                System.out.println(payload);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
             }
+//            BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
+//            try {
+//                Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
+//                ShareAppData.getInstance().addTest(test);
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                alert.setTitle("Test ID");
+//                alert.setHeaderText("Test ID");
+//                alert.setContentText("Your test Code is: " + test.getCode());
+//                alert.showAndWait();
+//            } catch (Exception e) {
+//                //popup notification if there is no test created
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                alert.setTitle("Error");
+//                alert.setHeaderText("Error");
+//                alert.setContentText("There is no test created");
+//                alert.showAndWait();
+//            }
         }
         ShareAppData.getInstance().clearTest();
         try {

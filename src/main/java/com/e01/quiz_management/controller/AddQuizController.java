@@ -2,10 +2,9 @@ package com.e01.quiz_management.controller;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
-import com.e01.quiz_management.model.Choice;
-import com.e01.quiz_management.model.Question;
-import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.model.*;
 import com.e01.quiz_management.util.BaseResponse;
+import com.e01.quiz_management.util.EQuestionType;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -26,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class AddQuizController implements Initializable {
+    public ComboBox<String> typeOfQuestion = new ComboBox<>();
     @FXML
     private DatePicker selectedDate;
     @FXML
@@ -70,6 +70,10 @@ public class AddQuizController implements Initializable {
         for (int i = 0; i < 60; i++) {
             selectedMin.getItems().add(i);
         }
+        //set value for typeOfQuestion choice box
+        typeOfQuestion.getItems().add(EQuestionType.MULTIPLE_CHOICE.toString());
+        typeOfQuestion.getItems().add(EQuestionType.FILL_IN_BLANK.toString());
+        typeOfQuestion.setValue(EQuestionType.MULTIPLE_CHOICE.toString());
 
         if (importButton != null) {
             importButton.setOnAction(actionEvent -> {
@@ -78,7 +82,7 @@ public class AddQuizController implements Initializable {
                 File file = fileChooser.showOpenDialog(importButton.getScene().getWindow());
                 if (file != null) {
                     try {
-                        List<Question> questions = UploadController.getInstance().createQuestionsFromFile(file);
+                        List<MultipleChoice> questions = UploadController.getInstance().createQuestionsFromFile(file);
                         quiz.addAllQuestion(questions);
                         indexOfQuestion = quiz.getQuestions().size();
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -93,6 +97,28 @@ public class AddQuizController implements Initializable {
                         alert.setContentText("Import failed");
                         alert.showAndWait();
                     }
+                }
+            });
+        }
+
+        if (typeOfQuestion != null) {
+            typeOfQuestion.setOnAction(actionEvent -> {
+                if (typeOfQuestion.getValue().equals(EQuestionType.MULTIPLE_CHOICE.toString())) {
+                    option3.setVisible(true);
+                    option4.setVisible(true);
+                    answer3.setVisible(true);
+                    answer4.setVisible(true);
+                    option2.setVisible(true);
+                    answer2.setVisible(true);
+                    answer1.setVisible(true);
+                } else if (typeOfQuestion.getValue().equals(EQuestionType.FILL_IN_BLANK.toString())) {
+                    option3.setVisible(false);
+                    option4.setVisible(false);
+                    answer3.setVisible(false);
+                    answer4.setVisible(false);
+                    option2.setVisible(false);
+                    answer2.setVisible(false);
+                    answer1.setVisible(false);
                 }
             });
         }
@@ -142,12 +168,19 @@ public class AddQuizController implements Initializable {
     @FXML
     public void addNextQuestion(ActionEvent event) {
         indexOfQuestion = quiz.getQuestions().size();
-        save();
+        //check if the question is multiple choice or fill in the blank
+        if (typeOfQuestion.getValue().equals(EQuestionType.MULTIPLE_CHOICE.toString())) {
+            save();
+        } else {
+            saveFillInBlank();
+        }
+
     }
 
     private void save() {
         if (!questionContent.getText().isEmpty() && !option1.getText().isEmpty() && !option2.getText().isEmpty() && !option3.getText().isEmpty() && !option4.getText().isEmpty()) {
-            Question question = new Question();
+            MultipleChoice question = new MultipleChoice();
+            System.out.println(question.getType());
             question.setQuestion(questionContent.getText());
             List<Choice> choices = List.of(
                     new Choice(option1.getText(), answer1.isSelected()),
@@ -155,7 +188,6 @@ public class AddQuizController implements Initializable {
                     new Choice(option3.getText(), answer3.isSelected()),
                     new Choice(option4.getText(), answer4.isSelected())
             );
-//            thêm câu hỏi vào quiz
             question.setChoices(choices);
             boolean isExist = false;
             for (Question q : quiz.getQuestions()) {
@@ -167,7 +199,7 @@ public class AddQuizController implements Initializable {
             if (!isExist) {
                 quiz.addQuestion(question);
             }
-//            reset ui
+
             indexOfQuestion++;
             questionContent.clear();
             option1.clear();
@@ -188,6 +220,36 @@ public class AddQuizController implements Initializable {
         }
     }
 
+    private void saveFillInBlank() {
+        if (!questionContent.getText().isEmpty() && !option1.getText().isEmpty()) {
+            FillQuestion question = new FillQuestion();
+            System.out.println(question.getType());
+            question.setQuestion(questionContent.getText());
+            Choice choices = new Choice(option1.getText(), true);
+            question.setChoices(List.of(choices));
+            boolean isExist = false;
+            for (Question q : quiz.getQuestions()) {
+                if (q.getQuestion().equals(question.getQuestion())) {
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist) {
+                quiz.addQuestion(question);
+                indexOfQuestion++;
+            }
+            questionContent.clear();
+            option1.clear();
+            answer1.setSelected(false);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please enter question and answer");
+            alert.showAndWait();
+        }
+    }
+
     @FXML
     private void submitQuiz(ActionEvent event) throws IOException, InterruptedException {
         if (!questionContent.getText().isEmpty() &&
@@ -196,6 +258,10 @@ public class AddQuizController implements Initializable {
                 !option3.getText().isEmpty() &&
                 !option4.getText().isEmpty()) {
             save();
+            ShareAppData.getInstance().setTest(quiz);
+            App.setRoot("QuizInfo");
+        } else if (!questionContent.getText().isEmpty() && !option1.getText().isEmpty()) {
+            saveFillInBlank();
             ShareAppData.getInstance().setTest(quiz);
             App.setRoot("QuizInfo");
         } else {
@@ -213,7 +279,13 @@ public class AddQuizController implements Initializable {
     private void previous(ActionEvent event) throws IOException {
         indexOfQuestion--;
         if (indexOfQuestion >= 0) {
-            getAndSetQuestion(questionContent, option1, option2, option3, option4, answer1, answer2, answer4, answer3);
+            Question question = quiz.getQuestions().get(indexOfQuestion);
+            if (question.getType().equals(EQuestionType.MULTIPLE_CHOICE)) {
+                getAndSetQuestion(questionContent, option1, option2, option3, option4, answer1, answer2, answer4, answer3);
+            } else {
+                //move to previous question using indexOfQuestion if previous question type is fill in the blank
+                getAndSetQuestionOfFillInBlank(questionContent, option1);
+            }
         } else {
             //popup notification if there is no previous question
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -227,34 +299,49 @@ public class AddQuizController implements Initializable {
 
     private void getAndSetQuestion(TextArea questionContent, TextField option1, TextField option2, TextField
             option3, TextField option4, RadioButton answer1, RadioButton answer2, RadioButton answer4, RadioButton answer3) {
-        questionContent.setText(quiz.getQuestions().get(indexOfQuestion).getQuestion());
-//        option1.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getContent());
-//        option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
-//        option3.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getContent());
-//        option4.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getContent());
-//        answer1.setSelected(false);
-//        answer2.setSelected(false);
-//        answer3.setSelected(false);
-//        answer4.setSelected(false);
-//        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getCorrect()) {
-//            answer1.setSelected(true);
-//        }
-//        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getCorrect()) {
-//            answer2.setSelected(true);
-//        }
-//        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getCorrect()) {
-//            answer4.setSelected(true);
-//        }
-//        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getCorrect()) {
-//            answer3.setSelected(true);
-//        }
+        answer1.setVisible(true);
+        answer2.setVisible(true);
+        answer3.setVisible(true);
+        answer4.setVisible(true);
+        option2.setVisible(true);
+        option3.setVisible(true);
+        option4.setVisible(true);
+        MultipleChoice question = (MultipleChoice) quiz.getQuestions().get(indexOfQuestion);
+        questionContent.setText(question.getQuestion());
+        option1.setText(question.getChoices().get(0).getContent());
+        option2.setText(question.getChoices().get(1).getContent());
+        option3.setText(question.getChoices().get(2).getContent());
+        option4.setText(question.getChoices().get(3).getContent());
+        answer1.setSelected(question.getChoices().get(0).getCorrect());
+        answer2.setSelected(question.getChoices().get(1).getCorrect());
+        answer3.setSelected(question.getChoices().get(2).getCorrect());
+        answer4.setSelected(question.getChoices().get(3).getCorrect());
+    }
+
+    private void getAndSetQuestionOfFillInBlank(TextArea questionContent, TextField option1) {
+        //clear text field except questionContent and option1
+        answer1.setVisible(false);
+        answer2.setVisible(false);
+        answer3.setVisible(false);
+        answer4.setVisible(false);
+        option2.setVisible(false);
+        option3.setVisible(false);
+        option4.setVisible(false);
+        FillQuestion question = (FillQuestion) quiz.getQuestions().get(indexOfQuestion);
+        questionContent.setText(question.getQuestion());
+        option1.setText(question.getChoices().get(0).getContent());
     }
 
     @FXML
     private void next(ActionEvent event) throws IOException {
         indexOfQuestion++;
-        if (indexOfQuestion < quiz.getQuestions().size()) {//move to next question using indexOfQuestion
-            getAndSetQuestion(questionContent, option1, option2, option3, option4, answer1, answer2, answer4, answer3);
+        if (indexOfQuestion < quiz.getQuestions().size()) {
+            Question question = quiz.getQuestions().get(indexOfQuestion);
+            if (question.getType().equals(EQuestionType.MULTIPLE_CHOICE)) {
+                getAndSetQuestion(questionContent, option1, option2, option3, option4, answer1, answer2, answer4, answer3);
+            } else {
+                getAndSetQuestionOfFillInBlank(questionContent, option1);
+            }
         } else {
             try {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -269,24 +356,4 @@ public class AddQuizController implements Initializable {
         System.out.println("current question: " + indexOfQuestion);
     }
 
-    @FXML
-    public void backToFirst(ActionEvent event) throws IOException {
-        //back to 1st question
-        indexOfQuestion = 0;
-        Parent root1 = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("AddQuestion.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root1);
-        stage.setScene(scene);
-        stage.show();
-        TextArea questionContent = (TextArea) scene.lookup("#questionContent");
-        TextField option1 = (TextField) scene.lookup("#option1");
-        TextField option2 = (TextField) scene.lookup("#option2");
-        TextField option3 = (TextField) scene.lookup("#option3");
-        TextField option4 = (TextField) scene.lookup("#option4");
-        RadioButton answer1 = (RadioButton) scene.lookup("#answer1");
-        RadioButton answer2 = (RadioButton) scene.lookup("#answer2");
-        RadioButton answer3 = (RadioButton) scene.lookup("#answer3");
-        RadioButton answer4 = (RadioButton) scene.lookup("#answer4");
-        getAndSetQuestion(questionContent, option1, option2, option3, option4, answer1, answer2, answer4, answer3);
-    }
 }

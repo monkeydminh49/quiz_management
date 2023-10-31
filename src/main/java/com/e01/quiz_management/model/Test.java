@@ -1,6 +1,7 @@
 package com.e01.quiz_management.model;
 
 import com.e01.quiz_management.util.EQuestionType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javafx.beans.binding.BooleanExpression;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class Test {
     private Long userId;
     private String title;
     private LocalDateTime startTime;
+    @JsonManagedReference
     private List<Question> questions;
     private long duration;
 
@@ -66,7 +68,7 @@ public class Test {
         this.questions.add(question);
     }
 
-    public void addAllQuestion(List<Question> questions) {
+    public void addAllQuestion(List<MultipleChoice> questions) {
         this.questions.addAll(questions);
     }
 
@@ -95,6 +97,10 @@ public class Test {
     }
 
     public String getTestDescription() {
-        return "Test description:\n" + "Title: " + title + "\n" + "Code: " + code + "\n" + "Start time: " + startTime + "\n" + "Duration: " + duration;
+        return "Test description:\n" +
+                "Title: " + title + "\n" +
+                "Code: " + code + "\n" +
+                "Start time: " + startTime + "\n" +
+                "Duration: " + duration;
     }
 }

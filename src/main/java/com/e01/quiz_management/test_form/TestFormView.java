@@ -2,10 +2,8 @@ package com.e01.quiz_management.test_form;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
-import com.e01.quiz_management.model.Choice;
-import com.e01.quiz_management.model.Question;
-import com.e01.quiz_management.model.Test;
-import com.e01.quiz_management.model.TestHistory;
+import com.e01.quiz_management.model.*;
+import com.e01.quiz_management.util.EQuestionType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -43,6 +41,9 @@ public class TestFormView {
     @FXML
     private TextField ansTextField;
     private int index = -1;
+
+    public TestFormView() {
+    }
 
     @FXML
     private void initialize() {
@@ -145,6 +146,7 @@ public class TestFormView {
         answer2RadioButton.setOnAction(event -> selectAnswer(answer2RadioButton, questionController, buttons));
         answer3RadioButton.setOnAction(event -> selectAnswer(answer3RadioButton, questionController, buttons));
         answer4RadioButton.setOnAction(event -> selectAnswer(answer4RadioButton, questionController, buttons));
+        ansTextField.setOnAction(event -> fillAnswer(questionController, buttons));
         submitButton.setOnAction(event ->
                 timeController.stopTest(questionController)
         );
@@ -177,7 +179,16 @@ public class TestFormView {
             }
         }
         questionController.updateNotAnsweredQuestions(questionController.getCurrentQuestionIndex());
-//        questionController.getCurrentQuestion().setmAns(questionController.getCurrentQuestion().getChoices().get(buttons.indexOf(button)));
+        Question question = QuestionController.getCurrentQuestion();
+        Choice mChoice = question.getChoices().get(buttons.indexOf(button));
+        QuestionController.getCurrentQuestion().setmAns(mChoice);
+    }
 
+    private void fillAnswer(QuestionController questionController, List<RadioButton> buttons) {
+        Question question = QuestionController.getCurrentQuestion();
+        Choice answer = new Choice();
+        answer.setContent(ansTextField.getText());
+        question.setmAns(answer);
+        questionController.updateNotAnsweredQuestions(questionController.getCurrentQuestionIndex());
     }
 }

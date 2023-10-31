@@ -1,10 +1,11 @@
 package com.e01.quiz_management.model;
 
 import com.e01.quiz_management.util.EQuestionType;
-import org.apache.poi.ss.formula.functions.T;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Question {
     private Long id;
@@ -17,10 +18,11 @@ public class Question {
     public Question() {
     }
 
-    public Question(Long id, Long testId, String question) {
+    public Question(Long id, Long testId, String question, List<Choice> choices) {
         this.id = id;
         this.testId = testId;
         this.question = question;
+        this.choices = choices;
     }
 
     public Long getId() {
@@ -47,12 +49,12 @@ public class Question {
         this.question = question;
     }
 
-    public EQuestionType getType() {
-        return type;
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
     }
 
-    public Integer getScore() {
-        return 0;
+    public List<Choice> getChoices() {
+        return choices;
     }
 
     public void setmAns(Choice mAns) {
@@ -63,15 +65,21 @@ public class Question {
         return mAns;
     }
 
-    protected void setType(EQuestionType eQuestionType) {
-        this.type = eQuestionType;
+    public EQuestionType getType() {
+        return type;
     }
 
-    public void setChoices(List<Choice> choices) {
-        this.choices = choices;
+    public void setType(EQuestionType type) {
+        this.type = type;
     }
 
-    public List<Choice> getChoices() {
-        return choices;
+
+    public Integer getScore() {
+//        if (this.type.equals(EQuestionType.MULTIPLE_CHOICE)) {
+//            return getMultipleChoice().getScore();
+//        } else {
+//            return getFillQuestion().getScore();
+//        }
+        return 0;
     }
 }

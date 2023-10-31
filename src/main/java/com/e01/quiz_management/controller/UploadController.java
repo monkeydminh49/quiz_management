@@ -1,6 +1,7 @@
 package com.e01.quiz_management.controller;
 
 import com.e01.quiz_management.model.Choice;
+import com.e01.quiz_management.model.MultipleChoice;
 import com.e01.quiz_management.model.Question;
 
 import java.io.File;
@@ -24,7 +25,7 @@ public class UploadController {
     public UploadController() {
     }
 
-    public List<Question> createQuestionsFromFile(File file) {
+    public List<MultipleChoice> createQuestionsFromFile(File file) {
         Workbook workbook = null;
         try {
             workbook = WorkbookFactory.create(file);
@@ -32,15 +33,13 @@ public class UploadController {
             throw new RuntimeException(e);
         }
         Sheet sheet = workbook.getSheetAt(0);
-        List<Question> questions = new ArrayList<>();
+        List<MultipleChoice> questions = new ArrayList<>();
         for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-            Question question = new Question();
+            MultipleChoice question = new MultipleChoice();
             Row row = sheet.getRow(i);
             if (row == null || row.getCell(0) == null || row.getCell(0).getCellType() == CellType.BLANK) {
-                // If the first cell in the row is blank, consider it as an empty row
                 break;
             }
-
             question.setQuestion(sheet.getRow(i).getCell(0).getStringCellValue());
             List<Choice> choices = new ArrayList<>();
             for (int j = 1; j < 5; j++) {
@@ -52,6 +51,7 @@ public class UploadController {
             choices.get((int) sheet.getRow(i).getCell(5).getNumericCellValue() - 1).setCorrect(true);
             question.setChoices(choices);
             questions.add(question);
+            System.out.println(question.getQuestion() + " " + question.getType());
         }
         return questions;
     }
