@@ -2,10 +2,8 @@ package com.e01.quiz_management.test_form;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
-import com.e01.quiz_management.model.Choice;
-import com.e01.quiz_management.model.Question;
-import com.e01.quiz_management.model.Test;
-import com.e01.quiz_management.model.TestHistory;
+import com.e01.quiz_management.model.*;
+import com.e01.quiz_management.util.EQuestionType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -40,7 +38,14 @@ public class TestFormView {
     private Button checkButton;
     @FXML
     private Button xButton;
+    @FXML
+    private TextField ansTextField;
+    @FXML
+    private Button saveButton;
     private int index = -1;
+
+    public TestFormView() {
+    }
 
     @FXML
     private void initialize() {
@@ -86,9 +91,9 @@ public class TestFormView {
             }
             timeController.startTest(timeTextField, questionController);
         }
-        questionController.showQuestion(questionTextField, buttons);
+        questionController.showQuestion(questionTextField, buttons, ansTextField, saveButton);
         previousButton.setDisable(questionController.getCurrentQuestionIndex() == 0);
-        setOnClick(questionController, buttons, timeController);
+        setOnClick(questionController, buttons, timeController, saveButton);
     }
 
     private void startReview() throws Exception {
@@ -103,15 +108,16 @@ public class TestFormView {
         xButton.setVisible(true);
         SharedData sharedData = SharedData.getInstance();
         QuestionController questionController = new QuestionController(sharedData.getTest());
-        questionController.showResult(questionTextField, buttons);
+        saveButton.setVisible(false);
+        questionController.showResult(questionTextField, buttons, ansTextField);
         previousButton.setDisable(questionController.getCurrentQuestionIndex() == 0);
-        setOnClick(questionController, buttons, null);
+        setOnClick(questionController, buttons, null, saveButton);
     }
 
-    private void setOnClick(QuestionController questionController, List<RadioButton> buttons, TimeController timeController) {
+    private void setOnClick(QuestionController questionController, List<RadioButton> buttons, TimeController timeController, Button saveButton) {
         checkButton.setOnAction(event -> {
             if (questionController.getNotAnsweredQuestionSize() > 0) {
-                index = questionController.goToNextUnansweredQuestion(questionTextField, buttons, index);
+                index = questionController.goToNextUnansweredQuestion(questionTextField, buttons, ansTextField, saveButton, index);
             }
             if (questionController.getNotAnsweredQuestionSize() == 0) {
                 checkButton.setVisible(false);
@@ -123,7 +129,7 @@ public class TestFormView {
         nextButton.setOnAction(event -> {
             if (submitButton.isVisible()) {
                 questionController.nextQuestion();
-                actionS(questionController, questionTextField, buttons);
+                actionS(questionController, questionTextField, buttons, saveButton);
             } else {
                 questionController.nextQuestion();
                 actionR(questionController, questionTextField, buttons);
@@ -133,7 +139,7 @@ public class TestFormView {
         previousButton.setOnAction(event -> {
             if (submitButton.isVisible()) {
                 questionController.previousQuestion();
-                actionS(questionController, questionTextField, buttons);
+                actionS(questionController, questionTextField, buttons, saveButton);
             } else {
                 questionController.previousQuestion();
                 actionR(questionController, questionTextField, buttons);
@@ -143,6 +149,8 @@ public class TestFormView {
         answer2RadioButton.setOnAction(event -> selectAnswer(answer2RadioButton, questionController, buttons));
         answer3RadioButton.setOnAction(event -> selectAnswer(answer3RadioButton, questionController, buttons));
         answer4RadioButton.setOnAction(event -> selectAnswer(answer4RadioButton, questionController, buttons));
+        ansTextField.setOnAction(event -> fillAnswer(questionController, buttons));
+        saveButton.setOnAction(event -> fillAnswer(questionController, buttons));
         submitButton.setOnAction(event ->
                 timeController.stopTest(questionController)
         );
@@ -155,14 +163,15 @@ public class TestFormView {
         });
     }
 
-    private void actionS(QuestionController questionController, TextField questionTextField, List<RadioButton> buttons) {
-        questionController.showQuestion(questionTextField, buttons);
+    private void actionS(QuestionController questionController, TextField questionTextField, List<RadioButton> buttons, Button saveButton) {
+        questionController.showQuestion(questionTextField, buttons, ansTextField, saveButton);
         previousButton.setDisable(questionController.getCurrentQuestionIndex() == 0);
         nextButton.setDisable(questionController.getCurrentQuestionIndex() == questionController.getQuestionSize() - 1);
     }
 
     private void actionR(QuestionController questionController, TextField questionTextField, List<RadioButton> buttons) {
-        questionController.showResult(questionTextField, buttons);
+        saveButton.setVisible(false);
+        questionController.showResult(questionTextField, buttons, ansTextField);
         previousButton.setDisable(questionController.getCurrentQuestionIndex() == 0);
         nextButton.setDisable(questionController.getCurrentQuestionIndex() == questionController.getQuestionSize() - 1);
     }
@@ -175,7 +184,16 @@ public class TestFormView {
             }
         }
         questionController.updateNotAnsweredQuestions(questionController.getCurrentQuestionIndex());
-        questionController.getCurrentQuestion().setmAns(questionController.getCurrentQuestion().getChoices().get(buttons.indexOf(button)));
+        Question question = QuestionController.getCurrentQuestion();
+        Choice mChoice = question.getChoices().get(buttons.indexOf(button));
+        QuestionController.getCurrentQuestion().setmAns(mChoice);
+    }
 
+    private void fillAnswer(QuestionController questionController, List<RadioButton> buttons) {
+        Question question = QuestionController.getCurrentQuestion();
+        Choice answer = new Choice();
+        answer.setContent(ansTextField.getText());
+        question.setmAns(answer);
+        questionController.updateNotAnsweredQuestions(questionController.getCurrentQuestionIndex());
     }
 }

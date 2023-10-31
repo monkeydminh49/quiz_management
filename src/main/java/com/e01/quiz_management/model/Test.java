@@ -1,5 +1,7 @@
 package com.e01.quiz_management.model;
 
+import com.e01.quiz_management.util.EQuestionType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javafx.beans.binding.BooleanExpression;
 
 import java.time.LocalDateTime;
@@ -25,8 +27,19 @@ public class Test {
         this.userId = userId;
         this.title = title;
         this.startTime = startTime;
-        this.questions = questions;
         this.duration = duration;
+        this.questions = new ArrayList<>();
+        questions.forEach(q -> {
+            if (q.getType() == EQuestionType.MULTIPLE_CHOICE) {
+                MultipleChoice multipleChoice = new MultipleChoice(q);
+                this.questions.add(multipleChoice);
+                System.out.println("multiple choice");
+            } else {
+                FillQuestion fillQuestion = new FillQuestion(q);
+                this.questions.add(fillQuestion);
+                System.out.println("fill question");
+            }
+        });
     }
 
     public Long getId() {
@@ -65,7 +78,7 @@ public class Test {
         this.questions.add(question);
     }
 
-    public void addAllQuestion(List<Question> questions) {
+    public void addAllQuestion(List<MultipleChoice> questions) {
         this.questions.addAll(questions);
     }
 
