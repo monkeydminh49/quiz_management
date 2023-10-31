@@ -177,7 +177,7 @@ public class TestFormView {
             }
         }
         questionController.updateNotAnsweredQuestions(questionController.getCurrentQuestionIndex());
-        questionController.getCurrentQuestion().setmAns(questionController.getCurrentQuestion().getChoices().get(buttons.indexOf(button)));
+//        questionController.getCurrentQuestion().setmAns(questionController.getCurrentQuestion().getChoices().get(buttons.indexOf(button)));
 
     }
 }

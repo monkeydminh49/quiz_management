@@ -156,7 +156,7 @@ public class AddQuizController implements Initializable {
                     new Choice(option4.getText(), answer4.isSelected())
             );
 //            thêm câu hỏi vào quiz
-            question.setChoices();
+            question.setChoices(choices);
             boolean isExist = false;
             for (Question q : quiz.getQuestions()) {
                 if (q.getQuestion().equals(question.getQuestion())) {
@@ -228,26 +228,26 @@ public class AddQuizController implements Initializable {
     private void getAndSetQuestion(TextArea questionContent, TextField option1, TextField option2, TextField
             option3, TextField option4, RadioButton answer1, RadioButton answer2, RadioButton answer4, RadioButton answer3) {
         questionContent.setText(quiz.getQuestions().get(indexOfQuestion).getQuestion());
-        option1.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getContent());
-        option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
-        option3.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getContent());
-        option4.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getContent());
-        answer1.setSelected(false);
-        answer2.setSelected(false);
-        answer3.setSelected(false);
-        answer4.setSelected(false);
-        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getCorrect()) {
-            answer1.setSelected(true);
-        }
-        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getCorrect()) {
-            answer2.setSelected(true);
-        }
-        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getCorrect()) {
-            answer4.setSelected(true);
-        }
-        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getCorrect()) {
-            answer3.setSelected(true);
-        }
+//        option1.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getContent());
+//        option2.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getContent());
+//        option3.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getContent());
+//        option4.setText(quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getContent());
+//        answer1.setSelected(false);
+//        answer2.setSelected(false);
+//        answer3.setSelected(false);
+//        answer4.setSelected(false);
+//        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(0).getCorrect()) {
+//            answer1.setSelected(true);
+//        }
+//        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(1).getCorrect()) {
+//            answer2.setSelected(true);
+//        }
+//        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(3).getCorrect()) {
+//            answer4.setSelected(true);
+//        }
+//        if (quiz.getQuestions().get(indexOfQuestion).getChoices().get(2).getCorrect()) {
+//            answer3.setSelected(true);
+//        }
     }
 
     @FXML

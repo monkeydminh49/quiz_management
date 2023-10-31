@@ -2,32 +2,13 @@ package com.e01.quiz_management.model;
 
 import com.e01.quiz_management.util.EQuestionType;
 
+import java.util.List;
 import java.util.Objects;
 
-public class FillQuestion extends Question{
-    Choice choices;
+public class FillQuestion extends Question {
 
     public FillQuestion() {
-        super();
-        super.setType(EQuestionType.FILL_IN_BLANK);
-    }
-
-    public FillQuestion(Long id, Long testId, String question, Choice choice) {
-        super(id, testId, question);
-        super.setType(EQuestionType.FILL_IN_BLANK);
-        this.choices= choice;
-    }
-
-    public Choice getmAns() {
-        return choices;
-    }
-
-    public Choice getChoices() {
-        return choices;
-    }
-
-    public void setChoice(Choice choice) {
-        this.choices = choice;
+        this.setType(EQuestionType.FILL_IN_BLANK);
     }
 
     public Integer getScore() {
@@ -35,8 +16,8 @@ public class FillQuestion extends Question{
         if (mAns == null) {
             return 0;
         }
-        if (Objects.equals(choices.getContent(), mAns.getContent())) {
-            return 10;
+        if (Objects.equals(mAns.getContent(), getChoices().get(0).getContent())) {
+            return 1;
         }
         return 0;
     }

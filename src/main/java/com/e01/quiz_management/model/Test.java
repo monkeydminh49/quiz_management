@@ -1,5 +1,6 @@
 package com.e01.quiz_management.model;
 
+import com.e01.quiz_management.util.EQuestionType;
 import javafx.beans.binding.BooleanExpression;
 
 import java.time.LocalDateTime;
@@ -25,8 +26,8 @@ public class Test {
         this.userId = userId;
         this.title = title;
         this.startTime = startTime;
-        this.questions = questions;
         this.duration = duration;
+        this.questions = questions;
     }
 
     public Long getId() {
@@ -94,10 +95,6 @@ public class Test {
     }
 
     public String getTestDescription() {
-        return "Test description:\n" +
-                "Title: " + title + "\n" +
-                "Code: " + code + "\n" +
-                "Start time: " + startTime + "\n" +
-                "Duration: " + duration;
+        return "Test description:\n" + "Title: " + title + "\n" + "Code: " + code + "\n" + "Start time: " + startTime + "\n" + "Duration: " + duration;
     }
 }

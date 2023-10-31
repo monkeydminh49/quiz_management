@@ -11,6 +11,7 @@ public class Question {
     private Long testId;
     private String question;
     private EQuestionType type;
+    private List<Choice> choices;
     private Choice mAns = null;
 
     public Question() {
@@ -54,25 +55,7 @@ public class Question {
         return 0;
     }
 
-
-    public <T> T getChoices() {
-        return null;
-    }
-//
-//    public void setChoices(List<Choice> choices) {
-//        this.choices = choices;
-//    }
-//
-//    public void addChoice(Choice choice) {
-//        this.choices.add(choice);
-//    }
-//
-//    public void addAllChoices(List<Choice> choices) {
-//        this.choices.addAll(choices);
-//    }
-
     public void setmAns(Choice mAns) {
-        System.out.println("Set answer");
         this.mAns = mAns;
     }
 
@@ -84,6 +67,11 @@ public class Question {
         this.type = eQuestionType;
     }
 
-    public void setChoices() {
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
+    }
+
+    public List<Choice> getChoices() {
+        return choices;
     }
 }

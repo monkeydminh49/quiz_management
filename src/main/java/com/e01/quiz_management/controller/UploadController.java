@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.poi.ss.usermodel.*;
 
 public class UploadController {
@@ -19,8 +20,10 @@ public class UploadController {
         }
         return instance;
     }
-    public UploadController () {
+
+    public UploadController() {
     }
+
     public List<Question> createQuestionsFromFile(File file) {
         Workbook workbook = null;
         try {
@@ -46,8 +49,8 @@ public class UploadController {
                 choice.setCorrect(false);
                 choices.add(choice);
             }
-            choices.get((int)sheet.getRow(i).getCell(5).getNumericCellValue() - 1).setCorrect(true);
-            question.setChoices();
+            choices.get((int) sheet.getRow(i).getCell(5).getNumericCellValue() - 1).setCorrect(true);
+            question.setChoices(choices);
             questions.add(question);
         }
         return questions;

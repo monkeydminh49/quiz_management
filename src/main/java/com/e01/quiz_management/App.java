@@ -2,9 +2,13 @@ package com.e01.quiz_management;
 
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.list_test.ListTestView;
+import com.e01.quiz_management.model.Choice;
+import com.e01.quiz_management.model.Question;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.RequestAPI;
 import com.e01.quiz_management.util.Response;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -12,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -87,7 +92,23 @@ public class App extends Application {
 
     public static void main(String[] args) {
         RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
-        System.out.println(RequestAPI.getInstance().deleteTest(1L));
+        Question question = new Question();
+        question.setQuestion("Question 1");
+        List<Choice> choices = List.of(
+                new Choice("Choice 1", false),
+                new Choice("Choice 2", false),
+                new Choice("Choice 3", false),
+                new Choice("Choice 4", true)
+        );
+        question.setChoices(choices);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+        try {
+            String json = mapper.writeValueAsString(question);
+            System.out.println(json);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 //        RequestAPI.getInstance().getHello();
 //        Test newTest = new Test();
 //
