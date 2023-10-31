@@ -42,7 +42,7 @@ public class JoinTestView implements Initializable {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(this.joinButton);
         translateTransition.setDuration(Duration.millis(73));
-        translateTransition.setByY(4);
+        translateTransition.setByY(6);
         translateTransition.play();
     }
 
@@ -50,16 +50,8 @@ public class JoinTestView implements Initializable {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(this.joinButton);
         translateTransition.setDuration(Duration.millis(73));
-        translateTransition.setByY(-4);
+        translateTransition.setByY(-6);
         translateTransition.play();
-    }
-
-    public void onMouseEnter(){
-        joinButton.setStyle("-fx-background-color: #d79a80; -fx-background-radius: 10px");
-    }
-
-    public void onMouseExit(){
-        joinButton.setStyle("-fx-background-color: #B8846C; -fx-background-radius: 10px");
     }
 
     @FXML

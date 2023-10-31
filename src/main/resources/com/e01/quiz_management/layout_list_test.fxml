@@ -6,25 +6,20 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="960.0" style="-fx-background-color: #FFEDDF;"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.e01.quiz_management.list_test.ListTestView">
+<AnchorPane prefHeight="600.0" prefWidth="960.0" style="-fx-background-color: #FFEDDF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.list_test.ListTestView">
     <children>
-        <TextField editable="false" layoutX="413.0" layoutY="23.0" prefHeight="37.0" prefWidth="134.0"
-                   style="-fx-background-color: transparent; -fx-alignment: center; -fx-font-size: 16;"
-                   text="List of Tests"/>
-        <TableView fx:id="tableView" layoutX="36.0" layoutY="70.0" prefHeight="500.0" prefWidth="888.0">
+        <TextField editable="false" layoutX="413.0" layoutY="23.0" prefHeight="37.0" prefWidth="134.0" style="-fx-background-color: transparent; -fx-alignment: center; -fx-font-size: 16;" text="List of Tests" />
+        <TableView fx:id="tableView" layoutX="61.0" layoutY="71.0" prefHeight="500.0" prefWidth="838.0">
             <columns>
-                <TableColumn fx:id="orderColumn" editable="false" minWidth="40.0" prefWidth="40.0" resizable="false"
-                             text="No."/>
-                <TableColumn fx:id="codeColumn" editable="false" minWidth="130.0" prefWidth="130.0" text="Code"/>
-                <TableColumn fx:id="titleColumn" editable="false" minWidth="170.0" prefWidth="255.0" text="Title"/>
-                <TableColumn fx:id="startColumn" editable="false" minWidth="100.0" prefWidth="150.0" text="Start Time"/>
-                <TableColumn fx:id="durationColumn" editable="false" minWidth="80.0" text="Duration"/>
-                <TableColumn fx:id="actionColumn" editable="false" minWidth="200.0" prefWidth="200.0"/>
+                <TableColumn fx:id="orderColumn" editable="false" minWidth="40.0" prefWidth="40.0" resizable="false" text="No." />
+                <TableColumn fx:id="codeColumn" editable="false" minWidth="130.0" prefWidth="130.0" text="Code" />
+                <TableColumn fx:id="titleColumn" editable="false" minWidth="170.0" prefWidth="255.0" text="Title" />
+                <TableColumn fx:id="startColumn" editable="false" minWidth="91.199951171875" prefWidth="94.39996337890625" text="Start Time" />
+                <TableColumn fx:id="durationColumn" editable="false" minWidth="80.0" prefWidth="102.4000244140625" text="Duration" />
+                <TableColumn fx:id="actionColumn" editable="false" minWidth="200.0" prefWidth="268.0" />
             </columns>
         </TableView>
-        <Button fx:id="createTestButton" layoutX="884.0" layoutY="29.0" mnemonicParsing="false" text="New"/>
-        <Button fx:id="backButton" layoutX="36.0" layoutY="29.0" mnemonicParsing="false" text="Back"/>
+        <Button fx:id="createTestButton" layoutX="884.0" layoutY="29.0" mnemonicParsing="false" text="New" />
+        <Button fx:id="backButton" layoutX="36.0" layoutY="29.0" mnemonicParsing="false" text="Back" />
     </children>
 </AnchorPane>
