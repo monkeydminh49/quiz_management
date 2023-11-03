@@ -67,13 +67,5 @@ public class ListTestHistoryController implements Initializable {
         });
         scoreColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, Integer>("score"));
         myTable.setItems(observableArrayList);
-
-        backButton.setOnAction(actionEvent -> {
-            try {
-                App.setRoot("menu");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 }

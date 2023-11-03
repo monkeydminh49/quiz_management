@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -29,59 +30,56 @@ public class JoinTestView implements Initializable {
     @FXML
     private TextField testCodeTextField;
     @FXML
-    private Button backButton;
+    private ImageView warningIcon;
     @FXML
     private Rectangle container;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        warningIcon.setOpacity(0);
+        joinMessage.setOpacity(0);
+        // When this input field is typed
+        testCodeTextField.setOnKeyTyped(keyEvent -> {
+            warningIcon.setOpacity(0);
+            joinMessage.setOpacity(0);
+            container.setStroke(Color.web("000000"));
+        });
 
+        // When this button is clicked
+        joinButton.setOnAction(actionEvent -> {
+            getTest();
+        });
     }
 
     public void onMousePressed(){
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(this.joinButton);
-        translateTransition.setDuration(Duration.millis(73));
-        translateTransition.setByY(6);
+        translateTransition.setDuration(Duration.millis(65));
+        translateTransition.setByY(5);
         translateTransition.play();
     }
 
     public void onMouseRelease(){
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(this.joinButton);
-        translateTransition.setDuration(Duration.millis(73));
-        translateTransition.setByY(-6);
+        translateTransition.setDuration(Duration.millis(65));
+        translateTransition.setByY(-5);
         translateTransition.play();
-    }
-
-    @FXML
-    public void initialize(){
-        joinButton.setOnAction(actionEvent -> {
-            getTest();
-        });
-        backButton.setOnAction(actionEvent -> {
-            try {
-                App.setRoot("menu");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     public void getTest(){
         String testCode = testCodeTextField.getText();
         if (testCode.isBlank()){
             joinMessage.setText("Blank test code found");
-            joinMessage.setTextFill(Color.RED);
             container.setStroke(Color.web("EC0B43"));
+            warningIcon.setOpacity(1);
+            joinMessage.setOpacity(1);
         }else{
             try {
                 Test test = RequestAPI.getInstance().getTestByCode(testCode);
                 ShareAppData.getInstance().setTest(test);
                 SharedData.getInstance().setIsReview(false);
                 if (test.getStartTime() == null) {
-                    joinMessage.setText("This is a practice test");
-                    joinMessage.setStyle("-fx-text-fill: green");
                     App.setRoot("layout_test_form");
                 }else{
                     long current_millis = LocalDateTime.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
@@ -89,18 +87,21 @@ public class JoinTestView implements Initializable {
                     long duration = test.getDuration() * 60 * 1000;
                     if (current_millis < start_millis) {
                         joinMessage.setText("Test has not started yet");
-                        joinMessage.setStyle("-fx-text-fill: red");
+                        warningIcon.setOpacity(1);
+                        joinMessage.setOpacity(1);
                     } else if (current_millis > start_millis + duration) {
                         joinMessage.setText("Test has ended");
-                        joinMessage.setStyle("-fx-text-fill: red");
+                        warningIcon.setOpacity(1);
+                        joinMessage.setOpacity(1);
                     } else {
                         App.setRoot("layout_test_form");
                     }
                     container.setStroke(Color.web("EC0B43"));
                 }
             } catch (Exception e) {
+                warningIcon.setOpacity(1);
+                joinMessage.setOpacity(1);
                 joinMessage.setText("Invalid test code");
-                joinMessage.setStyle("-fx-text-fill: red");
             }
         }
     }
