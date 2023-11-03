@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ListTestView implements Initializable {
-
-
     @FXML
     TableView<Test> tableView;
     @FXML
