@@ -1,21 +1,45 @@
 package com.e01.quiz_management.model;
 
+import com.e01.quiz_management.util.EQuestionType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javafx.beans.binding.BooleanExpression;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Test {
     private Long id;
+    private String code;
     private Long userId;
     private String title;
+    private LocalDateTime startTime;
     private List<Question> questions;
+    private long duration;
 
     public Test() {
+        questions = new ArrayList<>();
     }
 
-    public Test(Long id, Long userId, String title, List<Question> questions) {
+    public Test(Long id, String code, Long userId, String title, LocalDateTime startTime, List<Question> questions, long duration) {
         this.id = id;
+        this.code = code;
         this.userId = userId;
         this.title = title;
-        this.questions = questions;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.questions = new ArrayList<>();
+        questions.forEach(q -> {
+            if (q.getType() == EQuestionType.MULTIPLE_CHOICE) {
+                MultipleChoice multipleChoice = new MultipleChoice(q);
+                this.questions.add(multipleChoice);
+                System.out.println("multiple choice");
+            } else {
+                FillQuestion fillQuestion = new FillQuestion(q);
+                this.questions.add(fillQuestion);
+                System.out.println("fill question");
+            }
+        });
     }
 
     public Long getId() {
@@ -50,11 +74,43 @@ public class Test {
         this.questions = questions;
     }
 
-    public void addQuestion(Question question){
+    public void addQuestion(Question question) {
         this.questions.add(question);
     }
 
-    public void addAllQuestion(List<Question> questions){
+    public void addAllQuestion(List<MultipleChoice> questions) {
         this.questions.addAll(questions);
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getTestDescription() {
+        return "Test description:\n" +
+                "Title: " + title + "\n" +
+                "Code: " + code + "\n" +
+                "Start time: " + startTime + "\n" +
+                "Duration: " + duration;
     }
 }

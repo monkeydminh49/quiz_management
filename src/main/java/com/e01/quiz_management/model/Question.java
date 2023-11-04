@@ -1,22 +1,20 @@
 package com.e01.quiz_management.model;
 
+import com.e01.quiz_management.util.EQuestionType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+
 import java.util.List;
 
 public class Question {
+
     private Long id;
     private Long testId;
     private String question;
+    private EQuestionType type;
     private List<Choice> choices;
-
-    public Question() {
-    }
-
-    public Question(Long id, Long testId, String question, List<Choice> choices) {
-        this.id = id;
-        this.testId = testId;
-        this.question = question;
-        this.choices = choices;
-    }
+    private Choice mAns = null;
 
     public Long getId() {
         return id;
@@ -42,6 +40,14 @@ public class Question {
         this.question = question;
     }
 
+    public EQuestionType getType() {
+        return type;
+    }
+
+    public void setType(EQuestionType type) {
+        this.type = type;
+    }
+
     public List<Choice> getChoices() {
         return choices;
     }
@@ -50,11 +56,32 @@ public class Question {
         this.choices = choices;
     }
 
-    public void addChoice(Choice choice) {
-        this.choices.add(choice);
+    public Choice getmAns() {
+        return mAns;
     }
 
-    public void addAllChoices(List<Choice> choices) {
-        this.choices.addAll(choices);
+    public void setmAns(Choice mAns) {
+        this.mAns = mAns;
+    }
+
+    public Question() {
+    }
+
+    public Question(Long id, Long testId, String question, List<Choice> choices) {
+        this.id = id;
+        this.testId = testId;
+        this.question = question;
+        this.choices = choices;
+    }
+
+
+    public Integer getScore() {
+        if (this.type == EQuestionType.MULTIPLE_CHOICE) {
+            MultipleChoice multipleChoice = new MultipleChoice(this);
+            return multipleChoice.getScore();
+        } else {
+            FillQuestion fillQuestion = new FillQuestion(this);
+            return fillQuestion.getScore();
+        }
     }
 }
