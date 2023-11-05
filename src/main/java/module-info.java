@@ -4,6 +4,10 @@ module com.e01.quiz_management {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
     requires org.apache.poi.poi;
+    requires spring.messaging;
+    requires slf4j.api;
+    requires spring.websocket;
+    requires org.apache.logging.log4j;
 
     opens com.e01.quiz_management.controller to javafx.fxml;
     opens com.e01.quiz_management to javafx.fxml;
