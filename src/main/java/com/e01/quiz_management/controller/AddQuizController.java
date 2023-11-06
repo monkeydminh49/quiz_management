@@ -241,6 +241,7 @@ public class AddQuizController implements Initializable {
             questionContent.clear();
             option1.clear();
             answer1.setSelected(false);
+            System.out.println("current question: " + indexOfQuestion);
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
