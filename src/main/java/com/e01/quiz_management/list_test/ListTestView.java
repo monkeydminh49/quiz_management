@@ -6,6 +6,7 @@ import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
 import com.e01.quiz_management.util.Response;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -15,7 +16,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.SVGPath;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,8 +28,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ListTestView implements Initializable {
-
-
     @FXML
     TableView<Test> tableView;
     @FXML
@@ -43,8 +44,6 @@ public class ListTestView implements Initializable {
     TableColumn<Test, Void> actionColumn;
     @FXML
     Button createTestButton;
-    @FXML
-    Button backButton;
     private static ListTestView instance;
 
     public ListTestView() {
@@ -56,7 +55,6 @@ public class ListTestView implements Initializable {
         actionColumn = new TableColumn<>();
         tableView = new TableView<>();
         createTestButton = new Button();
-        backButton = new Button();
 
     }
 
@@ -75,13 +73,6 @@ public class ListTestView implements Initializable {
                 ShareAppData.getInstance().setTest(new Test());
                 App.setRoot("addQuiz");
                 ShareAppData.getInstance().setIsEdit(false);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        backButton.setOnAction(actionEvent -> {
-            try {
-                App.setRoot("menu");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -239,5 +230,20 @@ public class ListTestView implements Initializable {
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
         tableView.setItems(observableArrayList);
         addButtonToTable();
+    }
+    public void onMousePressed(){
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(this.createTestButton);
+        translateTransition.setDuration(Duration.millis(65));
+        translateTransition.setByY(5);
+        translateTransition.play();
+    }
+
+    public void onMouseRelease(){
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(this.createTestButton);
+        translateTransition.setDuration(Duration.millis(65));
+        translateTransition.setByY(-5);
+        translateTransition.play();
     }
 }

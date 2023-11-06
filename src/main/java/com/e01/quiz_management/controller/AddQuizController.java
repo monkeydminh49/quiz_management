@@ -59,10 +59,19 @@ public class AddQuizController implements Initializable {
     private RadioButton answer4;
     @FXML
     private Button importButton;
+    @FXML
+    private Button back;
     private static Test quiz;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        back.setOnAction(actionEvent -> {
+            try {
+                App.setRoot("menu");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         //set hour and minute for choice box
         for (int i = 0; i < 24; i++) {
             selectedHour.getItems().add(i);
