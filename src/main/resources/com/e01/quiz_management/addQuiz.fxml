@@ -1,86 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.e01.quiz_management.controller.AddQuizController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.AddQuizController">
     <children>
-        <VBox layoutX="83.0" prefHeight="336.0" prefWidth="496.0">
-            <children>
-                <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Creating new Quiz"
-                      textAlignment="CENTER">
-                    <font>
-                        <Font size="30.0"/>
-                    </font>
-                    <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="20.0" top="20.0"/>
-                    </VBox.margin>
-                </Text>
-                <VBox alignment="CENTER_LEFT" prefHeight="198.0" prefWidth="457.0">
-                    <children>
-                        <TextField fx:id="QuizName" promptText=" Enter Quiz name">
-                            <font>
-                                <Font size="20.0"/>
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="20.0" right="40.0" top="20.0"/>
-                            </VBox.margin>
-                        </TextField>
-                        <TextField fx:id="QuizLength" prefHeight="43.0" prefWidth="429.0" promptText="Enter Duration">
-                            <VBox.margin>
-                                <Insets bottom="15.0" left="20.0" right="40.0" top="10.0"/>
-                            </VBox.margin>
-                            <font>
-                                <Font size="20.0"/>
-                            </font>
-                        </TextField>
-                    </children>
-                </VBox>
-                <HBox prefHeight="26.0" prefWidth="436.0">
-                    <children>
-                        <Label text="Start Time">
-                            <HBox.margin>
-                                <Insets left="10.0" top="5.0"/>
-                            </HBox.margin>
-                            <font>
-                                <Font size="20.0"/>
-                            </font>
-                        </Label>
-                        <ComboBox fx:id="selectedHour" prefWidth="150.0">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </HBox.margin>
-                        </ComboBox>
-                        <ComboBox fx:id="selectedMin" prefHeight="26.0" prefWidth="178.0">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </HBox.margin>
-                        </ComboBox>
-                    </children>
-                    <VBox.margin>
-                        <Insets left="10.0" top="15.0"/>
-                    </VBox.margin>
-                </HBox>
-            </children>
-        </VBox>
-        <DatePicker fx:id="selectedDate" layoutX="101.0" layoutY="251.0" prefHeight="40.0" prefWidth="436.0"
-                    promptText="Start Day"/>
-        <Button alignment="TOP_RIGHT" contentDisplay="CENTER" layoutX="234.0" layoutY="342.0" mnemonicParsing="false"
-                onAction="#createQuiz" prefHeight="44.0" prefWidth="131.0" style="-fx-background-color: #87D37C;"
-                text="Create Quiz" textAlignment="JUSTIFY" wrapText="true" AnchorPane.leftAnchor="234.0">
+      <Label layoutX="179.0" layoutY="42.0" text="Create a new Quiz!">
+         <font>
+            <Font name="Fira Sans Bold" size="29.0" />
+         </font>
+      </Label>
+            <TextField fx:id="QuizName" layoutX="85.0" layoutY="123.0" prefHeight="40.0" prefWidth="430.0" promptText=" Enter Quiz name">
+                <font>
+                    <Font name="Fira Sans Book" size="20.0" />
+                </font>
+            </TextField>
+            <TextField fx:id="QuizLength" layoutX="85.0" layoutY="184.0" prefHeight="40.0" prefWidth="430.0" promptText="Enter Duration">
+                <font>
+                    <Font name="Fira Sans Book" size="20.0" />
+                </font>
+            </TextField>
+            <Label layoutX="85.0" layoutY="238.0" text="Start Time">
+                <font>
+                    <Font name="Fira Sans Book" size="20.0" />
+                </font>
+            </Label>
+            <ComboBox fx:id="selectedHour" layoutX="366.0" layoutY="238.0" prefWidth="150.0" />
+            <ComboBox fx:id="selectedMin" layoutX="194.0" layoutY="238.0" prefHeight="26.0" prefWidth="160.0" />
+        <DatePicker fx:id="selectedDate" layoutX="85.0" layoutY="277.0" prefHeight="40.0" prefWidth="430.0" promptText="Start Day" />
+        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="385.0" layoutY="332.0" mnemonicParsing="false" onAction="#createQuiz" prefHeight="44.0" prefWidth="130.0" style="-fx-background-color: #87D37C;" text="Create Quiz" textAlignment="JUSTIFY" wrapText="true" AnchorPane.leftAnchor="385.0">
             <font>
-                <Font size="20.0"/>
+                <Font size="20.0" />
             </font>
         </Button>
+      <Button fx:id="back" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="332.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="130.0" style="-fx-background-color: #87D37C;" text="Back" textAlignment="JUSTIFY" wrapText="true">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

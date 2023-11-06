@@ -37,6 +37,16 @@ public class ShareAppData {
         tests = new ArrayList<>();
     }
 
+    private int tabNo;
+
+    public int getTabNo() {
+        return tabNo;
+    }
+
+    public void setTabNo(int tabNo) {
+        this.tabNo = tabNo;
+    }
+
     public static ShareAppData getInstance() {
         if (instance == null) {
             instance = new ShareAppData();
