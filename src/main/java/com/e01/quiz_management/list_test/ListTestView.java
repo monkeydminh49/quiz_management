@@ -1,6 +1,7 @@
 package com.e01.quiz_management.list_test;
 
 import com.e01.quiz_management.App;
+import com.e01.quiz_management.controller.QuestionDataShared;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.BaseResponse;
@@ -91,8 +92,9 @@ public class ListTestView implements Initializable {
                         btn.setOnAction((ActionEvent event) -> {
                             Test data = getTableView().getItems().get(getIndex());
                             try {
-                                App.setRoot("QuizInfo");
+                                App.setRoot("addQuiz");
                                 ShareAppData.getInstance().setTest(data);
+                                QuestionDataShared.getInstance().setQuestions(data.getQuestions());
                                 ShareAppData.getInstance().setIsEdit(true);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
@@ -164,6 +166,7 @@ public class ListTestView implements Initializable {
                             });
                         });
                     }
+
                     private final Button btn3 = new Button("Detail");
 
                     {
@@ -231,7 +234,8 @@ public class ListTestView implements Initializable {
         tableView.setItems(observableArrayList);
         addButtonToTable();
     }
-    public void onMousePressed(){
+
+    public void onMousePressed() {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(this.createTestButton);
         translateTransition.setDuration(Duration.millis(65));
@@ -239,7 +243,7 @@ public class ListTestView implements Initializable {
         translateTransition.play();
     }
 
-    public void onMouseRelease(){
+    public void onMouseRelease() {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(this.createTestButton);
         translateTransition.setDuration(Duration.millis(65));

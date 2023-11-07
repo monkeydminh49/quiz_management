@@ -14,64 +14,73 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.SubmitQuizController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.e01.quiz_management.controller.SubmitQuizController">
     <VBox layoutX="12.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="377.0" prefWidth="585.0">
         <HBox prefHeight="81.0" prefWidth="586.0">
             <Text strokeType="INSIDE" strokeWidth="0.0" text="Quiz Title:" textAlignment="CENTER">
                 <font>
-                    <Font size="31.0" />
+                    <Font size="31.0"/>
                 </font>
                 <HBox.margin>
-                    <Insets left="30.0" top="15.0" />
+                    <Insets left="30.0" top="15.0"/>
                 </HBox.margin>
             </Text>
             <TextField fx:id="quizName" prefHeight="52.0" prefWidth="248.0">
                 <HBox.margin>
-                    <Insets left="60.0" top="10.0" />
+                    <Insets left="60.0" top="10.0"/>
                 </HBox.margin>
                 <font>
-                    <Font size="25.0" />
+                    <Font size="25.0"/>
                 </font>
             </TextField>
             <Button fx:id="saveBtn" mnemonicParsing="false" text="Save" textAlignment="CENTER">
                 <HBox.margin>
-                    <Insets left="30.0" top="25.0" />
+                    <Insets left="30.0" top="25.0"/>
                 </HBox.margin>
             </Button>
         </HBox>
-        <Separator prefWidth="200.0" />
+        <Separator prefWidth="200.0"/>
         <Pane prefHeight="282.0" prefWidth="586.0">
-            <Text layoutX="28.0" layoutY="56.0" strokeType="INSIDE" strokeWidth="0.0" text="Duration:" textAlignment="CENTER">
+            <Text layoutX="28.0" layoutY="56.0" strokeType="INSIDE" strokeWidth="0.0" text="Duration:"
+                  textAlignment="CENTER">
                 <font>
-                    <Font size="31.0" />
+                    <Font size="31.0"/>
                 </font>
             </Text>
             <TextField fx:id="quizDuration" layoutX="228.0" layoutY="18.0" prefHeight="52.0" prefWidth="248.0">
                 <font>
-                    <Font size="25.0" />
+                    <Font size="25.0"/>
                 </font>
             </TextField>
-            <Text layoutX="28.0" layoutY="121.0" strokeType="INSIDE" strokeWidth="0.0" text="Type:" textAlignment="CENTER">
+            <Text layoutX="28.0" layoutY="121.0" strokeType="INSIDE" strokeWidth="0.0" text="Type:"
+                  textAlignment="CENTER">
                 <font>
-                    <Font size="31.0" />
+                    <Font size="31.0"/>
                 </font>
             </Text>
-            <TextField fx:id="practice" layoutX="228.0" layoutY="97.0" prefHeight="26.0" prefWidth="72.0" text="PRACTICE" />
-            <TextField fx:id="contest" layoutX="228.0" layoutY="97.0" prefHeight="26.0" prefWidth="72.0" text="CONTEST" />
-            <Text layoutX="28.0" layoutY="193.0" strokeType="INSIDE" strokeWidth="0.0" text="Time:" textAlignment="CENTER">
+            <TextField fx:id="practice" layoutX="228.0" layoutY="97.0" prefHeight="26.0" prefWidth="72.0"
+                       text="PRACTICE"/>
+            <TextField fx:id="contest" layoutX="228.0" layoutY="97.0" prefHeight="26.0" prefWidth="72.0"
+                       text="CONTEST"/>
+            <Text layoutX="28.0" layoutY="193.0" strokeType="INSIDE" strokeWidth="0.0" text="Time:"
+                  textAlignment="CENTER">
                 <font>
-                    <Font size="31.0" />
+                    <Font size="31.0"/>
                 </font>
             </Text>
-            <Spinner fx:id="quizHour" layoutX="228.0" layoutY="167.0" prefHeight="26.0" prefWidth="73.0" />
-            <Spinner fx:id="quizMinute" layoutX="315.0" layoutY="167.0" prefHeight="26.0" prefWidth="73.0" />
-            <Text layoutX="28.0" layoutY="260.0" strokeType="INSIDE" strokeWidth="0.0" text="Date:" textAlignment="CENTER">
+            <Spinner fx:id="quizHour" layoutX="228.0" layoutY="167.0" prefHeight="26.0" prefWidth="73.0"/>
+            <Spinner fx:id="quizMinute" layoutX="315.0" layoutY="167.0" prefHeight="26.0" prefWidth="73.0"/>
+            <Text layoutX="28.0" layoutY="260.0" strokeType="INSIDE" strokeWidth="0.0" text="Date:"
+                  textAlignment="CENTER">
                 <font>
-                    <Font size="31.0" />
+                    <Font size="31.0"/>
                 </font>
             </Text>
-            <DatePicker fx:id="quizDate" layoutX="228.0" layoutY="236.0" prefHeight="26.0" prefWidth="160.0" />
-            <ToggleButton fx:id="quizType" layoutX="308.0" layoutY="95.0" minHeight="20.0" minWidth="20.0" mnemonicParsing="false" />
+            <DatePicker fx:id="quizDate" layoutX="228.0" layoutY="236.0" prefHeight="26.0" prefWidth="160.0"/>
+            <ToggleButton fx:id="quizType" layoutX="308.0" layoutY="95.0" minHeight="20.0" minWidth="20.0"
+                          mnemonicParsing="false"/>
+            <Button fx:id="cancelBtn" layoutX="507.0" layoutY="236.0" mnemonicParsing="false" text="Cancel"/>
         </Pane>
     </VBox>
 </AnchorPane>

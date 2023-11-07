@@ -44,6 +44,12 @@ public class AddQuizController implements Initializable {
     @FXML
     private Button previousButton;
 
+    @FXML
+    private Button editButton;
+
+    @FXML
+    private Button deleteButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ansTextField.setVisible(false);
@@ -105,6 +111,31 @@ public class AddQuizController implements Initializable {
                 setQuestion(question);
             }
         });
+        editButton.setOnAction(event -> {
+            try {
+                App.setRoot("addQuestion");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        deleteButton.setOnAction(event -> {
+            finalQuestions.remove(currentQuestionIndex.get());
+            if (currentQuestionIndex.get() > 0) {
+                currentQuestionIndex.getAndDecrement();
+            }
+            if (!finalQuestions.isEmpty()) {
+                Question question = finalQuestions.get(currentQuestionIndex.get());
+                setQuestion(question);
+            } else {
+                ansTextField.setVisible(false);
+                answer1RadioButton.setVisible(false);
+                answer2RadioButton.setVisible(false);
+                answer3RadioButton.setVisible(false);
+                answer4RadioButton.setVisible(false);
+                questionTextField.setVisible(false);
+            }
+        });
     }
 
     private void setQuestion(Question question) {
@@ -139,7 +170,11 @@ public class AddQuizController implements Initializable {
             }
         } else {
             ansTextField.setVisible(true);
-            ansTextField.setText(question.getChoices().get(0).getContent());
+            try {
+                ansTextField.setText(question.getChoices().get(0).getContent());
+            } catch (Exception e) {
+                ansTextField.setText("");
+            }
         }
     }
 }

@@ -48,8 +48,14 @@ public class SubmitQuizController implements Initializable {
     @FXML
     private DatePicker quizDate;
 
+    @FXML
+    private Button cancelBtn;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        QuestionDataShared.getInstance().getQuestions().forEach(System.out::println);
+
         quizHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 0));
         quizMinute.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0));
         quizDate.setValue(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
@@ -89,11 +95,10 @@ public class SubmitQuizController implements Initializable {
                             alert.showAndWait();
                         }
                     } else {
+                        quiz.setQuestions(QuestionDataShared.getInstance().getQuestions());
                         BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
                         try {
                             Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
-                            String payload = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(test);
-                            System.out.println(payload);
                             ShareAppData.getInstance().addTest(test);
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("Test ID");
@@ -109,13 +114,20 @@ public class SubmitQuizController implements Initializable {
                             alert.showAndWait();
                         }
                     }
-                    ShareAppData.getInstance().clearTest();
                     try {
-                        App.setRoot("layout_list_test", ListTestView.getInstance());
+                        App.setRoot("menu");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    ShareAppData.getInstance().clearTest();
                 }
         );
+        cancelBtn.setOnAction(actionEvent -> {
+            try {
+                App.setRoot("menu");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

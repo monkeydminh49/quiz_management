@@ -23,4 +23,6 @@
     <Button fx:id="nextButton" layoutX="544.0" layoutY="116.0" mnemonicParsing="false" text="Next"/>
     <Button fx:id="saveButton" layoutX="544.0" layoutY="14.0" mnemonicParsing="false" text="Save"/>
     <Button fx:id="addQuestionButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="New question"/>
+    <Button fx:id="editButton" layoutX="223.0" layoutY="346.0" mnemonicParsing="false" text="Edit"/>
+    <Button fx:id="deleteButton" layoutX="325.0" layoutY="346.0" mnemonicParsing="false" text="Delete"/>
 </AnchorPane>
