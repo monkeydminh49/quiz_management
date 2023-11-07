@@ -1,5 +1,8 @@
 package com.e01.quiz_management.websocket;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -26,8 +29,8 @@ public class MyStompSessionHandler extends StompSessionHandlerAdapter {
         logger.info("New session established : " + session.getSessionId());
         session.subscribe("/topic/public", this);
         logger.info("Subscribed to /topic/public");
+        session.send("/app/chat", getSampleMessage());
 
-        session.send("/app/chat",new Message("Nicky", "Hi"));
         logger.info("Message sent to websocket server");
     }
 
@@ -43,9 +46,9 @@ public class MyStompSessionHandler extends StompSessionHandlerAdapter {
 
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
-//        String msg = (Message) payload;
-//        logger.info("Received : " + msg.getText() + " from : " + msg.getFrom());
-//        System.out.println("Received payload type: " + payload.getClass().getName());
+        Message msg = (Message) payload;
+        logger.info("Received : " + msg.getText() + " from : " + msg.getFrom());
+        System.out.println("Received : " + msg.getText() + " from : " + msg.getFrom());
 //        String msg = (String) payload;
 //        logger.info("Received : " + msg);
 //        System.out.println("Received : " + msg);
