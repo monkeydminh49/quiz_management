@@ -11,99 +11,123 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class SubmitQuizController implements Initializable {
-    @FXML
-    private TextField quiztitle;
 
     @FXML
-    private TextField quizlength;
+    private TextField quizName;
 
     @FXML
-    private TextField noquestion;
+    private TextField quizDuration;
 
     @FXML
-    public ToggleButton practice;
+    private ToggleButton quizType;
+
     @FXML
-    public Button backToFirst;
+    private TextField practice;
+
+    @FXML
+    private TextField contest;
+
+    @FXML
+    private Button saveBtn;
+
+    @FXML
+    private Spinner<Integer> quizHour;
+
+    @FXML
+    private Spinner<Integer> quizMinute;
+
+    @FXML
+    private DatePicker quizDate;
+
+    @FXML
+    private Button cancelBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        quiztitle.setText(ShareAppData.getInstance().getTest().getTitle());
-        quizlength.setText(String.valueOf(ShareAppData.getInstance().getTest().getDuration()));
-        noquestion.setText(String.valueOf(ShareAppData.getInstance().getTest().getQuestions().size()));
-        practice.setText("Contest");
-        practice.setOnAction(event -> {
-            if (practice.isSelected()) {
-                practice.setText("Practice");
-                quizlength.setDisable(true);
+
+        QuestionDataShared.getInstance().getQuestions().forEach(System.out::println);
+
+        quizHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 0));
+        quizMinute.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0));
+        quizDate.setValue(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        quizType.setSelected(true);
+        practice.setVisible(true);
+        contest.setVisible(false);
+        practice.setEditable(false);
+        contest.setEditable(false);
+        quizType.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (t1) {
+                practice.setVisible(true);
+                contest.setVisible(false);
             } else {
-                practice.setText("Contest");
-                quizlength.setDisable(false);
+                practice.setVisible(false);
+                contest.setVisible(true);
             }
         });
-
-        backToFirst.setOnAction(actionEvent -> {
+        saveBtn.setOnAction(actionEvent -> {
+                    Boolean isEdit = ShareAppData.getInstance().getIsEdit();
+                    Test quiz = ShareAppData.getInstance().getTest();
+                    quiz.setTitle(quizName.getText());
+                    quiz.setDuration(Integer.parseInt(quizDuration.getText()));
+                    quiz.setStartTime(quizDate.getValue().atTime(quizHour.getValue(), quizMinute.getValue()));
+                    if (quizType.isSelected()) {
+                        quiz.setStartTime(null);
+                    }
+                    if (isEdit) {
+                        RequestAPI.getInstance().putUpdateTestById(quiz.getId(), quiz);
+                        try {
+                            ShareAppData.getInstance().updateTest(quiz);
+                        } catch (Exception e) {
+                            //popup notification if there is no test created
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Error");
+                            alert.setContentText("There is no test updated");
+                            alert.showAndWait();
+                        }
+                    } else {
+                        quiz.setQuestions(QuestionDataShared.getInstance().getQuestions());
+                        BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
+                        try {
+                            Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
+                            ShareAppData.getInstance().addTest(test);
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Test ID");
+                            alert.setHeaderText("Test ID");
+                            alert.setContentText("Your test Code is: " + test.getCode());
+                            alert.showAndWait();
+                        } catch (Exception e) {
+                            //popup notification if there is no test created
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Error");
+                            alert.setContentText("There is no test created");
+                            alert.showAndWait();
+                        }
+                    }
+                    try {
+                        App.setRoot("menu");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    ShareAppData.getInstance().clearTest();
+                }
+        );
+        cancelBtn.setOnAction(actionEvent -> {
             try {
-                App.setRoot("addQuiz");
-            } catch (Exception e) {
+                App.setRoot("menu");
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-    }
-
-    @FXML
-    public void completeAndSend() {
-        Boolean isEdit = ShareAppData.getInstance().getIsEdit();
-        Test quiz = ShareAppData.getInstance().getTest();
-        quiz.setTitle(quiztitle.getText());
-        quiz.setDuration(Integer.parseInt(quizlength.getText()));
-        if (practice.getText().equals("Practice")) {
-            quiz.setStartTime(null);
-        }
-        if (isEdit) {
-            RequestAPI.getInstance().putUpdateTestById(quiz.getId(), quiz);
-            try {
-                ShareAppData.getInstance().updateTest(quiz);
-            } catch (Exception e) {
-                //popup notification if there is no test created
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("There is no test updated");
-                alert.showAndWait();
-            }
-        } else {
-            BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
-            try {
-                Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);
-                ShareAppData.getInstance().addTest(test);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Test ID");
-                alert.setHeaderText("Test ID");
-                alert.setContentText("Your test Code is: " + test.getCode());
-                alert.showAndWait();
-            } catch (Exception e) {
-                //popup notification if there is no test created
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("There is no test created");
-                alert.showAndWait();
-            }
-        }
-        ShareAppData.getInstance().clearTest();
-        try {
-            App.setRoot("layout_list_test", ListTestView.getInstance());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

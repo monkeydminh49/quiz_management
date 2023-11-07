@@ -84,4 +84,16 @@ public class Question {
             return fillQuestion.getScore();
         }
     }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", testId=" + testId +
+                ", question='" + question + '\'' +
+                ", type=" + type +
+                ", choices=" + choices +
+                ", mAns=" + mAns +
+                '}';
+    }
 }

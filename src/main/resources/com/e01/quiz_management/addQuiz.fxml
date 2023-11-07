@@ -1,47 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.AddQuizController">
-    <children>
-      <Label layoutX="179.0" layoutY="42.0" text="Create a new Quiz!">
-         <font>
-            <Font name="Fira Sans Bold" size="29.0" />
-         </font>
-      </Label>
-            <TextField fx:id="QuizName" layoutX="85.0" layoutY="123.0" prefHeight="40.0" prefWidth="430.0" promptText=" Enter Quiz name">
-                <font>
-                    <Font name="Fira Sans Book" size="20.0" />
-                </font>
-            </TextField>
-            <TextField fx:id="QuizLength" layoutX="85.0" layoutY="184.0" prefHeight="40.0" prefWidth="430.0" promptText="Enter Duration">
-                <font>
-                    <Font name="Fira Sans Book" size="20.0" />
-                </font>
-            </TextField>
-            <Label layoutX="85.0" layoutY="238.0" text="Start Time">
-                <font>
-                    <Font name="Fira Sans Book" size="20.0" />
-                </font>
-            </Label>
-            <ComboBox fx:id="selectedHour" layoutX="366.0" layoutY="238.0" prefWidth="150.0" />
-            <ComboBox fx:id="selectedMin" layoutX="194.0" layoutY="238.0" prefHeight="26.0" prefWidth="160.0" />
-        <DatePicker fx:id="selectedDate" layoutX="85.0" layoutY="277.0" prefHeight="40.0" prefWidth="430.0" promptText="Start Day" />
-        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="385.0" layoutY="332.0" mnemonicParsing="false" onAction="#createQuiz" prefHeight="44.0" prefWidth="130.0" style="-fx-background-color: #87D37C;" text="Create Quiz" textAlignment="JUSTIFY" wrapText="true" AnchorPane.leftAnchor="385.0">
-            <font>
-                <Font size="20.0" />
-            </font>
-        </Button>
-      <Button fx:id="back" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="332.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="130.0" style="-fx-background-color: #87D37C;" text="Back" textAlignment="JUSTIFY" wrapText="true">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-    </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.e01.quiz_management.controller.AddQuizController">
+    <TextArea fx:id="questionTextField" layoutX="89.0" layoutY="91.0" prefHeight="76.0" prefWidth="440.0">
+        <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        </padding>
+    </TextArea>
+    <RadioButton fx:id="answer1RadioButton" layoutX="74.0" layoutY="192.0" mnemonicParsing="false" text="RadioButton"/>
+    <RadioButton fx:id="answer2RadioButton" layoutX="74.0" layoutY="226.0" mnemonicParsing="false" text="RadioButton"/>
+    <RadioButton fx:id="answer3RadioButton" layoutX="74.0" layoutY="258.0" mnemonicParsing="false" text="RadioButton"/>
+    <RadioButton fx:id="answer4RadioButton" layoutX="74.0" layoutY="292.0" mnemonicParsing="false" text="RadioButton"/>
+    <TextField fx:id="ansTextField" layoutX="88.0" layoutY="239.0" prefHeight="25.0" prefWidth="422.0"/>
+    <Button fx:id="previousButton" layoutX="14.0" layoutY="116.0" mnemonicParsing="false" text="Previous"/>
+    <Button fx:id="nextButton" layoutX="544.0" layoutY="116.0" mnemonicParsing="false" text="Next"/>
+    <Button fx:id="saveButton" layoutX="544.0" layoutY="14.0" mnemonicParsing="false" text="Save"/>
+    <Button fx:id="addQuestionButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="New question"/>
+    <Button fx:id="editButton" layoutX="223.0" layoutY="346.0" mnemonicParsing="false" text="Edit"/>
+    <Button fx:id="deleteButton" layoutX="325.0" layoutY="346.0" mnemonicParsing="false" text="Delete"/>
 </AnchorPane>

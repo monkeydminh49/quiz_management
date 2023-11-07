@@ -109,7 +109,7 @@ public class RequestAPI {
         }
     }
 
-    public BaseResponse putUpdateTestById(Long id, Test test) {
+    public void putUpdateTestById(Long id, Test test) {
         BaseResponse response = new BaseResponse();
         String payload = "";
         try {
@@ -119,7 +119,7 @@ public class RequestAPI {
         }
         HttpURLConnection httpRequest = httpRequest("PUT", "/test/" + id, payload);
         try {
-            return mappingResponse(httpRequest, BaseResponse.class);
+            mappingResponse(httpRequest, BaseResponse.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
