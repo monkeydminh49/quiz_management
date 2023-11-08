@@ -24,7 +24,7 @@
                 </font>
             </Text>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9c6858" height="23.0" layoutX="26.0" layoutY="20.0" stroke="#ffffff00" strokeType="INSIDE" style="-fx-arc-width: 20; -fx-arc-height: 20; -fx-background-color: 865328; -fx-progress-color: 000000;" width="64.0" />
-         <Button fx:id="backButton" layoutX="26.0" layoutY="15.0" mnemonicParsing="false" onMousePressed="#back_onMousePressed" onMouseReleased="#back_onMouseRelease" prefHeight="23.0" prefWidth="64.0" style="-fx-background-radius: 10; -fx-background-color: B8846C;" text="Back" textFill="WHITE">
+         <Button fx:id="cancelButton" layoutX="26.0" layoutY="15.0" mnemonicParsing="false" onMousePressed="#back_onMousePressed" onMouseReleased="#back_onMouseRelease" prefHeight="23.0" prefWidth="64.0" style="-fx-background-radius: 10; -fx-background-color: B8846C;" text="Back" textFill="WHITE">
             <font>
                <Font name="Fira Sans ExtraBold" size="12.0" />
             </font>

@@ -52,8 +52,6 @@ public class AddQuizController implements Initializable {
 
     @FXML
     private Button deleteButton;
-    @FXML
-    private Label questionNo;
 
     @FXML
     private Button importButton;
@@ -66,7 +64,6 @@ public class AddQuizController implements Initializable {
         answer3RadioButton.setVisible(false);
         answer4RadioButton.setVisible(false);
         questionTextField.setVisible(false);
-        questionNo.setVisible(false);
 
         AtomicInteger currentQuestionIndex = new AtomicInteger();
         currentQuestionIndex.set(0);
@@ -109,7 +106,6 @@ public class AddQuizController implements Initializable {
             if (currentQuestionIndex.get() < finalQuestions.size() - 1) {
                 currentQuestionIndex.getAndIncrement();
                 Question question = finalQuestions.get(currentQuestionIndex.get());
-                questionNo.setText("Question " + (currentQuestionIndex.get() + 1));
                 setQuestion(question);
             }
         });
@@ -119,7 +115,6 @@ public class AddQuizController implements Initializable {
             if (currentQuestionIndex.get() > 0) {
                 currentQuestionIndex.getAndDecrement();
                 Question question = finalQuestions.get(currentQuestionIndex.get());
-                questionNo.setText("Question " + (currentQuestionIndex.get() + 1));
                 setQuestion(question);
             }
         });
@@ -142,7 +137,6 @@ public class AddQuizController implements Initializable {
                 Question question = finalQuestions.get(currentQuestionIndex.get());
                 setQuestion(question);
             } else {
-                questionNo.setVisible(false);
                 ansTextField.setVisible(false);
                 answer1RadioButton.setVisible(false);
                 answer2RadioButton.setVisible(false);
