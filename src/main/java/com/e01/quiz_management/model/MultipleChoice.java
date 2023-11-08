@@ -39,6 +39,13 @@ public class MultipleChoice extends Question {
             buttons.get(i).setText(choices.get(i).getContent());
             buttons.get(i).setSelected(false);
         }
+        if (getmAns() != null) {
+            for (int i = 0; i < buttons.size(); i++) {
+                if (choices.get(i).getId().equals(getmAns().getId())) {
+                    buttons.get(i).setSelected(true);
+                }
+            }
+        }
     }
 
     public void showAnswer(TextField question, List<RadioButton> buttons) {

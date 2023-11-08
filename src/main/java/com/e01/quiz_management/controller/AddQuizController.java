@@ -97,6 +97,14 @@ public class AddQuizController implements Initializable {
 
         saveButton.setOnAction(event -> {
             try {
+                if (QuestionDataShared.getInstance().getQuestions().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Please add at least one question");
+                    alert.showAndWait();
+                    return;
+                }
                 App.setRoot("QuizInfo");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -120,6 +128,7 @@ public class AddQuizController implements Initializable {
                 setQuestion(question);
             }
         });
+
         editButton.setOnAction(event -> {
             try {
                 App.setRoot("addQuestion");
