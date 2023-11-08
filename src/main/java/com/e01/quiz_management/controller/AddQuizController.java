@@ -1,12 +1,15 @@
 package com.e01.quiz_management.controller;
 
 import com.e01.quiz_management.App;
+import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.*;
 import com.e01.quiz_management.util.EQuestionType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -50,6 +53,9 @@ public class AddQuizController implements Initializable {
     @FXML
     private Button deleteButton;
 
+    @FXML
+    private Button importButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ansTextField.setVisible(false);
@@ -64,12 +70,11 @@ public class AddQuizController implements Initializable {
 
         List<Question> questions = QuestionDataShared.getInstance().getQuestions();
 
-        if (questions == null) {
-            questions = new ArrayList<>();
-            QuestionDataShared.getInstance().setQuestions(questions);
-        } else {
-            Question question = questions.get(currentQuestionIndex.get());
-            setQuestion(question);
+        if (questions != null) {
+            if (!questions.isEmpty()) {
+                Question question = questions.get(currentQuestionIndex.get());
+                setQuestion(question);
+            }
         }
 
         ansTextField.setEditable(false);
@@ -82,6 +87,7 @@ public class AddQuizController implements Initializable {
         addQuestionButton.setOnAction(event -> {
             try {
                 App.setRoot("addQuestion");
+                QuestionDataShared.getInstance().setIndex(null);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -95,8 +101,8 @@ public class AddQuizController implements Initializable {
             }
         });
 
-        List<Question> finalQuestions = questions;
         nextButton.setOnAction(event -> {
+            List<Question> finalQuestions = QuestionDataShared.getInstance().getQuestions();
             if (currentQuestionIndex.get() < finalQuestions.size() - 1) {
                 currentQuestionIndex.getAndIncrement();
                 Question question = finalQuestions.get(currentQuestionIndex.get());
@@ -105,6 +111,7 @@ public class AddQuizController implements Initializable {
         });
 
         previousButton.setOnAction(event -> {
+            List<Question> finalQuestions = QuestionDataShared.getInstance().getQuestions();
             if (currentQuestionIndex.get() > 0) {
                 currentQuestionIndex.getAndDecrement();
                 Question question = finalQuestions.get(currentQuestionIndex.get());
@@ -114,12 +121,14 @@ public class AddQuizController implements Initializable {
         editButton.setOnAction(event -> {
             try {
                 App.setRoot("addQuestion");
+                QuestionDataShared.getInstance().setIndex(currentQuestionIndex.get());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
         deleteButton.setOnAction(event -> {
+            List<Question> finalQuestions = QuestionDataShared.getInstance().getQuestions();
             finalQuestions.remove(currentQuestionIndex.get());
             if (currentQuestionIndex.get() > 0) {
                 currentQuestionIndex.getAndDecrement();
@@ -134,6 +143,26 @@ public class AddQuizController implements Initializable {
                 answer3RadioButton.setVisible(false);
                 answer4RadioButton.setVisible(false);
                 questionTextField.setVisible(false);
+            }
+        });
+
+        importButton.setOnAction(actionEvent -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            File file = fileChooser.showOpenDialog(importButton.getScene().getWindow());
+            if (file != null) {
+                try {
+                    List<MultipleChoice> questionsFromFile = UploadController.getInstance().createQuestionsFromFile(file);
+                    QuestionDataShared.getInstance().addQuestion(List.copyOf(questionsFromFile));
+                    Question question = QuestionDataShared.getInstance().getQuestions().get(0);
+                    setQuestion(question);
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Import failed");
+                    alert.showAndWait();
+                }
             }
         });
     }
