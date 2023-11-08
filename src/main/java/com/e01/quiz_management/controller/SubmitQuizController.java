@@ -9,9 +9,11 @@ import com.e01.quiz_management.util.RequestAPI;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -139,5 +141,26 @@ public class SubmitQuizController implements Initializable {
                 e.printStackTrace();
             }
         });
+        cancelBtn.setOnMousePressed(mouseEvent -> onMousePressed(cancelBtn));
+        cancelBtn.setOnMouseReleased(mouseEvent -> onMouseRelease(cancelBtn));
+        saveBtn.setOnMousePressed(mouseEvent -> onMousePressed(saveBtn));
+        saveBtn.setOnMouseReleased(mouseEvent -> onMouseRelease(saveBtn));
+    }
+
+    // For UI
+    public void onMouseRelease(Button btn) {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(btn);
+        translateTransition.setDuration(Duration.millis(65));
+        translateTransition.setByY(-5);
+        translateTransition.play();
+    }
+
+    public void onMousePressed(Button btn) {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(btn);
+        translateTransition.setDuration(Duration.millis(65));
+        translateTransition.setByY(5);
+        translateTransition.play();
     }
 }

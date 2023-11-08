@@ -32,7 +32,7 @@
                <SVGPath content="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z" fill="WHITE" strokeWidth="5.0" />
             </graphic>
          </Button>
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9c6858" height="23.0" layoutX="514.0" layoutY="20.0" stroke="#ffffff00" strokeType="INSIDE" style="-fx-arc-width: 20; -fx-arc-height: 20; -fx-background-color: 865328; -fx-progress-color: 000000;" width="64.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5fa136" height="23.0" layoutX="514.0" layoutY="20.0" stroke="#ffffff00" strokeType="INSIDE" style="-fx-arc-width: 20; -fx-arc-height: 20; -fx-background-color: 865328; -fx-progress-color: 000000;" width="64.0" />
          <Button fx:id="saveButton" layoutX="513.0" layoutY="15.0" mnemonicParsing="false" onMousePressed="#save_onMousePressed" onMouseReleased="#save_onMouseRelease" prefHeight="24.0" prefWidth="64.0" style="-fx-background-radius: 10; -fx-background-color: B8846C;" text="Save" textFill="WHITE">
             <font>
                <Font name="Fira Sans ExtraBold" size="12.0" />

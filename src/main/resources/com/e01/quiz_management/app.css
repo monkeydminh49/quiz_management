@@ -1,3 +1,6 @@
+.root{
+    -fx-font: 12px "Fira Sans Book";
+}
 /* For general scenes */
 .text-field{
     -fx-background-color: #FAFAFA;
@@ -87,5 +90,9 @@
 }
 
 #saveButton{
+    -fx-background-color: #4FE64A !important;
+}
+
+#saveBtn{
     -fx-background-color: #4FE64A !important;
 }

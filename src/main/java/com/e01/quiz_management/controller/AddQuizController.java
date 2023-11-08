@@ -4,10 +4,12 @@ import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.*;
 import com.e01.quiz_management.util.EQuestionType;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -165,6 +167,17 @@ public class AddQuizController implements Initializable {
                 }
             }
         });
+        addQuestionButton.setOnMousePressed(mouseEvent -> onMousePressed(addQuestionButton));
+        addQuestionButton.setOnMouseReleased(mouseEvent -> onMouseRelease(addQuestionButton));
+        saveButton.setOnMousePressed(mouseEvent -> onMousePressed(saveButton));
+        saveButton.setOnMouseReleased(mouseEvent -> onMouseRelease(saveButton));
+        editButton.setOnMousePressed(mouseEvent -> onMousePressed(editButton));
+        editButton.setOnMouseReleased(mouseEvent -> onMouseRelease(editButton));
+        deleteButton.setOnMousePressed(mouseEvent -> onMousePressed(deleteButton));
+        deleteButton.setOnMouseReleased(mouseEvent -> onMouseRelease(deleteButton));
+        importButton.setOnMousePressed(mouseEvent -> onMousePressed(importButton));
+        importButton.setOnMouseReleased(mouseEvent -> onMouseRelease(importButton));
+
     }
 
     private void setQuestion(Question question) {
@@ -205,5 +218,22 @@ public class AddQuizController implements Initializable {
                 ansTextField.setText("");
             }
         }
+    }
+
+    // For UI
+    public void onMouseRelease(Button btn) {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(btn);
+        translateTransition.setDuration(Duration.millis(65));
+        translateTransition.setByY(-5);
+        translateTransition.play();
+    }
+
+    public void onMousePressed(Button btn) {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(btn);
+        translateTransition.setDuration(Duration.millis(65));
+        translateTransition.setByY(5);
+        translateTransition.play();
     }
 }

@@ -208,6 +208,7 @@ public class AddQuestionController {
         ans4TextField.setVisible(false);
     }
 
+    // For UI
     public void back_onMousePressed() {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(this.cancelButton);
