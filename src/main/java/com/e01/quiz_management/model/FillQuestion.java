@@ -23,6 +23,9 @@ public class FillQuestion extends Question {
     public void showQuestion(TextField questionTextField, TextField ansTextField) {
         questionTextField.setText(getQuestion());
         ansTextField.setText("");
+        if (getmAns() != null) {
+            ansTextField.setText(getmAns().getContent());
+        }
     }
 
     public void showAnswer(TextField question, TextField ansTextField) {
