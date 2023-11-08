@@ -50,6 +50,11 @@ public class TestFormView {
     @FXML
     private void initialize() {
         xButton.setVisible(false);
+        ansTextField.setText("");
+        answer1RadioButton.setSelected(false);
+        answer2RadioButton.setSelected(false);
+        answer3RadioButton.setSelected(false);
+        answer4RadioButton.setSelected(false);
         try {
             SharedData sharedData = SharedData.getInstance();
             if (sharedData.getIsReview()) {
@@ -73,6 +78,7 @@ public class TestFormView {
         checkButton.setVisible(true);
         xButton.setVisible(false);
         Test test = ShareAppData.getInstance().getTest();
+        System.out.println(test);
         SharedData sharedData = SharedData.getInstance();
         sharedData.setTest(test);
         QuestionController questionController = new QuestionController(test);

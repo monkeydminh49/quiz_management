@@ -45,6 +45,10 @@ public class MultipleChoice extends Question {
                     buttons.get(i).setSelected(true);
                 }
             }
+        } else {
+            for (RadioButton button : buttons) {
+                button.setSelected(false);
+            }
         }
     }
 

@@ -8,10 +8,10 @@
     <children>
         <Pane layoutX="45.0" layoutY="39.0" prefHeight="323.0" prefWidth="511.0" style="-fx-background-color: #ffee93;">
             <children>
-                <TextField fx:id="resultTextField" editable="false" layoutX="159.0" layoutY="45.0" prefHeight="136.0" prefWidth="194.0" style="-fx-background-color: transparent; -fx-font-size: 64; -fx-text-fill: #000000; -fx-alignment: center;" />
-                <Button fx:id="redoButton" layoutX="65.0" layoutY="238.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="81.0" style="-fx-background-color: #ffc09f;" text="Redo" />
-                <Button fx:id="reviewButton" layoutX="215.0" layoutY="238.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="81.0" style="-fx-background-color: #ffc09f;" text="Review" />
-                <Button fx:id="exitButton" layoutX="365.0" layoutY="238.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="81.0" style="-fx-background-color: #ffc09f;" text="Exit" />
+                <TextField fx:id="resultTextField" editable="false" layoutX="159.0" layoutY="53.0" prefHeight="136.0" prefWidth="194.0" style="-fx-background-color: transparent; -fx-font-size: 64; -fx-text-fill: #000000; -fx-alignment: center;" />
+                <Button fx:id="redoButton" layoutX="215.0" layoutY="240.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="81.0" style="-fx-background-color: #ffc09f;" text="Redo" />
+                <Button fx:id="reviewButton" layoutX="75.0" layoutY="240.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="81.0" style="-fx-background-color: #ffc09f;" text="Review" />
+                <Button fx:id="exitButton" layoutX="355.0" layoutY="240.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="81.0" style="-fx-background-color: #ffc09f;" text="Exit" />
             </children>
         </Pane>
     </children>
