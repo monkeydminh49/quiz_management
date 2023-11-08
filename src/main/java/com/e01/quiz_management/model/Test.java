@@ -127,4 +127,10 @@ public class Test {
                 ", duration=" + duration +
                 "}\n";
     }
+
+    public void resetTest() {
+        this.questions.forEach(q -> {
+            q.setmAns(null);
+        });
+    }
 }

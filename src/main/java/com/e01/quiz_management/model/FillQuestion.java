@@ -25,6 +25,8 @@ public class FillQuestion extends Question {
         ansTextField.setText("");
         if (getmAns() != null) {
             ansTextField.setText(getmAns().getContent());
+        } else {
+            ansTextField.setText("");
         }
     }
 
