@@ -53,24 +53,32 @@ public class SubmitQuizController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        QuestionDataShared.getInstance().getQuestions().forEach(System.out::println);
-
         quizHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 0));
         quizMinute.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0));
+        quizHour.setEditable(true);
+        quizMinute.setEditable(true);
         quizDate.setValue(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         quizType.setSelected(true);
         practice.setVisible(true);
         contest.setVisible(false);
         practice.setEditable(false);
         contest.setEditable(false);
+        quizHour.setVisible(false);
+        quizMinute.setVisible(false);
+        quizDate.setVisible(false);
         quizType.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
             if (t1) {
                 practice.setVisible(true);
                 contest.setVisible(false);
+                quizHour.setVisible(false);
+                quizMinute.setVisible(false);
+                quizDate.setVisible(false);
             } else {
                 practice.setVisible(false);
                 contest.setVisible(true);
+                quizHour.setVisible(true);
+                quizMinute.setVisible(true);
+                quizDate.setVisible(true);
             }
         });
         saveBtn.setOnAction(actionEvent -> {
@@ -79,10 +87,11 @@ public class SubmitQuizController implements Initializable {
                     quiz.setTitle(quizName.getText());
                     quiz.setDuration(Integer.parseInt(quizDuration.getText()));
                     quiz.setStartTime(quizDate.getValue().atTime(quizHour.getValue(), quizMinute.getValue()));
-                    if (quizType.isSelected()) {
+                    if (practice.isVisible()) {
                         quiz.setStartTime(null);
                     }
                     if (isEdit) {
+                        System.out.println(quiz);
                         RequestAPI.getInstance().putUpdateTestById(quiz.getId(), quiz);
                         try {
                             ShareAppData.getInstance().updateTest(quiz);
@@ -96,6 +105,7 @@ public class SubmitQuizController implements Initializable {
                         }
                     } else {
                         quiz.setQuestions(QuestionDataShared.getInstance().getQuestions());
+                        System.out.println(quiz);
                         BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
                         try {
                             Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);

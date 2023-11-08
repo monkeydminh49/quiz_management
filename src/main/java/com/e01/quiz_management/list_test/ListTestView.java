@@ -71,9 +71,10 @@ public class ListTestView implements Initializable {
         updateTable();
         createTestButton.setOnAction(actionEvent -> {
             try {
-                ShareAppData.getInstance().setTest(new Test());
+                QuestionDataShared.getInstance().setQuestions(new ArrayList<>());
                 App.setRoot("addQuiz");
                 ShareAppData.getInstance().setIsEdit(false);
+                ShareAppData.getInstance().setTest(new Test());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -107,31 +108,6 @@ public class ListTestView implements Initializable {
                     {
                         btn2.setOnAction((ActionEvent event) -> {
                             Test data = getTableView().getItems().get(getIndex());
-//                            Task<Boolean> task = new Task<>() {
-//                                @Override
-//                                protected Boolean call() throws Exception {
-//                                    return RequestAPI.getInstance().deleteTest(data.getId());
-//                                }
-//                            };
-//
-//                            task.setOnSucceeded(event1 -> {
-//                                if (task.getValue()) {
-//                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                                    alert.setTitle("Delete Test");
-//                                    alert.setHeaderText("Delete Test");
-//                                    alert.setContentText("Delete Test successfully!");
-//                                    ShareAppData.getInstance().getTests().remove(data);
-//                                    alert.showAndWait();
-//                                } else {
-//                                    Alert alert = new Alert(Alert.AlertType.ERROR);
-//                                    alert.setTitle("Delete Test");
-//                                    alert.setHeaderText("Delete Test");
-//                                    alert.setContentText("Delete Test failed!");
-//                                    alert.showAndWait();
-//                                }
-//                            });
-//                            new Thread(task).start();
-//                            showAlert with button
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Delete Test");
                             alert.setHeaderText("Delete Test");
@@ -215,8 +191,7 @@ public class ListTestView implements Initializable {
         List<Test> tests = new ArrayList<>();
         tests = ShareAppData.getInstance().getTests();
         System.out.println("update");
-        ObservableList<Test> observableArrayList =
-                FXCollections.observableArrayList(tests);
+        ObservableList<Test> observableArrayList = FXCollections.observableArrayList(tests);
         orderColumn.setCellFactory(column -> {
             return new TableCell<Test, String>() {
                 @Override

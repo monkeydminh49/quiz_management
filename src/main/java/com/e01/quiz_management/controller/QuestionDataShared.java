@@ -19,6 +19,16 @@ public class QuestionDataShared {
         return instance;
     }
 
+    private Integer index = 0;
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
     private List<Question> questions;
 
     public List<Question> getQuestions() {
@@ -31,12 +41,17 @@ public class QuestionDataShared {
 
     void addMultipleChoiceQuestion(MultipleChoice multipleChoice) {
         questions.add(multipleChoice);
-        System.out.println(questions);
     }
 
     void addFillQuestion(FillQuestion fillQuestion) {
         questions.add(fillQuestion);
-        System.out.println(questions);
     }
 
+    void updateQuestion(Question question, int index) {
+        questions.set(index, question);
+    }
+
+    void addQuestion(List<MultipleChoice> multipleChoices) {
+        questions.addAll(multipleChoices);
+    }
 }

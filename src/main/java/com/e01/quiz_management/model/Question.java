@@ -94,6 +94,6 @@ public class Question {
                 ", type=" + type +
                 ", choices=" + choices +
                 ", mAns=" + mAns +
-                '}';
+                "}\n";
     }
 }

@@ -114,6 +114,8 @@ public class RequestAPI {
         String payload = "";
         try {
             payload = mapper.writeValueAsString(test);
+            System.out.println("\n********************\n");
+            System.out.println(payload);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -251,11 +253,11 @@ public class RequestAPI {
         }
 
         BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()));
-            String data = bf.readLine();
-            System.out.println("Response body: " + data);
-            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                return mapper.readValue(data, clazz);
-            }
+        String data = bf.readLine();
+        System.out.println("Response body: " + data);
+        if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            return mapper.readValue(data, clazz);
+        }
 
         return null;
     }
