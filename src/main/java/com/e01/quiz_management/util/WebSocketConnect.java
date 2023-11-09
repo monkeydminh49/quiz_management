@@ -57,7 +57,7 @@ public class WebSocketConnect {
                 super.handleTransportError(session, exception);
             }
         });
-        new Scanner(System.in).nextLine(); // Don't close immediately.
+//        new Scanner(System.in).nextLine(); // Don't close immediately.
     }
 
 }

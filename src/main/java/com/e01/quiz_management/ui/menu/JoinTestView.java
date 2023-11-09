@@ -4,7 +4,10 @@ import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.ui.test_form.SharedData;
+import com.e01.quiz_management.util.ETestStatus;
 import com.e01.quiz_management.util.RequestAPI;
+import com.e01.quiz_management.util.WebSocketConnect;
+import com.e01.quiz_management.util.WebSocketConnectHandler;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -80,15 +83,22 @@ public class JoinTestView implements Initializable {
                 SharedData.getInstance().setIsReview(false);
                 if (test.getStartTime() == null) {
                     App.setRoot("layout_test_form");
+                    WebSocketConnect.getInstance().connectToTest(test.getId(), new WebSocketConnectHandler() {
+                        @Override
+                        public void onReceived(Object payload) {
+                            System.out.println("Connected to test with id = " + test.getId());
+                        }
+                    });
                 }else{
-                    long current_millis = LocalDateTime.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
-                    long start_millis = test.getStartTime().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
-                    long duration = test.getDuration() * 60 * 1000;
-                    if (current_millis < start_millis) {
+//                    long current_millis = LocalDateTime.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
+//                    long start_millis = test.getStartTime().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
+//                    long duration = test.getDuration() * 60 * 1000;
+                    ETestStatus testStatus = test.getStatus();
+                    if (testStatus == ETestStatus.NOT_STARTED) {
                         joinMessage.setText("Test has not started yet");
                         warningIcon.setOpacity(1);
                         joinMessage.setOpacity(1);
-                    } else if (current_millis > start_millis + duration) {
+                    } else if (testStatus == ETestStatus.ENDED) {
                         joinMessage.setText("Test has ended");
                         warningIcon.setOpacity(1);
                         joinMessage.setOpacity(1);

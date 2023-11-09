@@ -146,7 +146,7 @@ public class ListTestView implements Initializable {
                         btn3.setOnAction((ActionEvent event) -> {
                             Test data = getTableView().getItems().get(getIndex());
                             try {
-                                App.setRoot("layout_list_submit");
+                                App.setRoot("layout_list_submit", ListSubmitView.getInstance());
                                 ShareAppData.getInstance().setTest(data);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);

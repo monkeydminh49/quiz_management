@@ -1,10 +1,12 @@
 package com.e01.quiz_management.model;
 
 import com.e01.quiz_management.util.EQuestionType;
+import com.e01.quiz_management.util.ETestStatus;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javafx.beans.binding.BooleanExpression;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +19,11 @@ public class Test {
     private List<Question> questions;
     private long duration;
 
+    private int numberOfLiveParticipant;
+
     public Test() {
         questions = new ArrayList<>();
+        this.numberOfLiveParticipant = 0;
     }
 
     public Test(Long id, String code, Long userId, String title, LocalDateTime startTime, List<Question> questions, long duration) {
@@ -28,6 +33,7 @@ public class Test {
         this.title = title;
         this.startTime = startTime;
         this.duration = duration;
+        this.numberOfLiveParticipant = 0;
         this.questions = new ArrayList<>();
         questions.forEach(q -> {
             if (q.getType() == EQuestionType.MULTIPLE_CHOICE) {
@@ -115,6 +121,23 @@ public class Test {
                 "Number of questions: " + questions.size();
     }
 
+    public ETestStatus getStatus(){
+        if (this.getStartTime() != null){
+            long current_millis = LocalDateTime.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
+            long start_millis = this.getStartTime().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
+            long duration = this.getDuration() * 60 * 1000;
+            if (current_millis < start_millis){
+                return ETestStatus.NOT_STARTED;
+            } else if (current_millis > start_millis + duration){
+                return ETestStatus.ENDED;
+            } else {
+                return ETestStatus.HAPPENING;
+            }
+        } else {
+            return ETestStatus.PRACTICE;
+        }
+
+    }
     @Override
     public String toString() {
         return "Test{" +
@@ -132,5 +155,13 @@ public class Test {
         this.questions.forEach(q -> {
             q.setmAns(null);
         });
+    }
+
+    public int getNumberOfLiveParticipant() {
+        return numberOfLiveParticipant;
+    }
+
+    public void setNumberOfLiveParticipant(int numberOfLiveParticipant) {
+        this.numberOfLiveParticipant = numberOfLiveParticipant;
     }
 }

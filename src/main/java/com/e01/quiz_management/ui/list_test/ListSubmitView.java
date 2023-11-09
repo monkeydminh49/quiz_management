@@ -2,7 +2,9 @@ package com.e01.quiz_management.ui.list_test;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
+import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.model.TestHistory;
+import com.e01.quiz_management.util.ETestStatus;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -37,13 +39,37 @@ public class ListSubmitView implements Initializable {
     @FXML
     private Button backButton;
 
+    private Test currentTest;
+    private List<TestHistory> testHistories;
+
+    private static ListSubmitView instance;
+    public static ListSubmitView getInstance(){
+        if (instance == null){
+            instance = new ListSubmitView();
+        }
+        return instance;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<TestHistory> tests = new ArrayList<>();
-        tests = RequestAPI.getInstance().getTestHistoriesByTestId(ShareAppData.getInstance().getTest().getId());
-        testDescription.setText(ShareAppData.getInstance().getTest().getTestDescription() + "\nNumber of submissions: " + tests.size());
+        updateData();
+        backButton.setOnAction(actionEvent -> {
+            try {
+                ShareAppData.getInstance().setTest(null);
+                App.setRoot("menu");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void updateData(){
+        testHistories = new ArrayList<>();
+        currentTest = ShareAppData.getInstance().getTest();
+        testHistories = RequestAPI.getInstance().getTestHistoriesByTestId(currentTest.getId());
+        updateTestDescription();
         ObservableList<TestHistory> observableArrayList =
-                FXCollections.observableArrayList(tests);
+                FXCollections.observableArrayList(testHistories);
         orderColumn.setCellFactory(column -> {
             return new TableCell<TestHistory, String>() {
                 @Override
@@ -67,15 +93,13 @@ public class ListSubmitView implements Initializable {
         });
         scoreColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, Integer>("score"));
         myTable.setItems(observableArrayList);
+    }
 
-        backButton.setOnAction(actionEvent -> {
-            try {
-                ShareAppData.getInstance().setTest(null);
-                App.setRoot("menu");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+    public void updateTestDescription(){
+        testDescription.setText(ShareAppData.getInstance().getTest().getTestDescription() + "\nNumber of submissions: " + testHistories.size());
+        if (currentTest.getStatus() == ETestStatus.HAPPENING){
+            testDescription.setText(testDescription.getText() + "\nNumber of live participant: " + currentTest.getNumberOfLiveParticipant() );
+        }
     }
 }
 
