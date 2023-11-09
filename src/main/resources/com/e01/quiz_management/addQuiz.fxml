@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: fff9f4;" stylesheets="@app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.AddQuizController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: fff9f4;" stylesheets="@app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.ui.test_create.AddQuizView">
     <TextArea fx:id="questionTextField" layoutX="80.0" layoutY="122.0" prefHeight="76.0" prefWidth="440.0">
         <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

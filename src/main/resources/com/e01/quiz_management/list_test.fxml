@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="457.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.ListTestHistoryController">
+<AnchorPane prefHeight="457.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.ui.menu.ListTestHistoryController">
     <children>
         <TableView fx:id="myTable" layoutX="17.0" layoutY="49.0" prefHeight="360.0" prefWidth="783.0" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="49.0">
             <columns>

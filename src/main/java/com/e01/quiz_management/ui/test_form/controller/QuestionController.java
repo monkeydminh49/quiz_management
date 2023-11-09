@@ -1,4 +1,4 @@
-package com.e01.quiz_management.test_form;
+package com.e01.quiz_management.ui.test_form.controller;
 
 import com.e01.quiz_management.model.*;
 import com.e01.quiz_management.util.EQuestionType;
@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class QuestionController {
 

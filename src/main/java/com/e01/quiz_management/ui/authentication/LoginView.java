@@ -1,9 +1,8 @@
-package com.e01.quiz_management.authentication;
+package com.e01.quiz_management.ui.authentication;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
-import com.e01.quiz_management.list_test.ListTestView;
-import com.e01.quiz_management.menu.MenuView;
+import com.e01.quiz_management.ui.list_test.ListTestView;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.model.User;
 import com.e01.quiz_management.util.BaseResponse;
@@ -12,20 +11,12 @@ import com.e01.quiz_management.util.Response;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 public class LoginView {
     @FXML

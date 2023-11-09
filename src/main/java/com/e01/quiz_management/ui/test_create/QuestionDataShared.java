@@ -1,4 +1,4 @@
-package com.e01.quiz_management.controller;
+package com.e01.quiz_management.ui.test_create;
 
 import com.e01.quiz_management.model.FillQuestion;
 import com.e01.quiz_management.model.MultipleChoice;

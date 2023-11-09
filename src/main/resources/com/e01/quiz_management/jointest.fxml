@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="457.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.menu.JoinTestView">
+<AnchorPane prefHeight="457.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.ui.menu.JoinTestView">
    <children>
       <Rectangle fx:id="container" arcHeight="5.0" arcWidth="5.0" fill="#efecec" height="67.0" layoutX="137.0" layoutY="214.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="1.5" style="-fx-arc-width: 30; -fx-arc-height: 30;" width="544.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6d4234" height="48.0" layoutX="582.0" layoutY="227.0" stroke="#ffffff00" strokeType="INSIDE" style="-fx-arc-width: 20; -fx-arc-height: 20; -fx-background-color: 865328; -fx-progress-color: 000000;" width="86.0" />

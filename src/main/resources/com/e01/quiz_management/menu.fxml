@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="615.0" prefWidth="1056.0" style="-fx-background-color: fff9f4;" stylesheets="@app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.menu.MenuView">
+<AnchorPane prefHeight="615.0" prefWidth="1056.0" style="-fx-background-color: fff9f4;" stylesheets="@app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.ui.menu.MenuView">
     <children>
       <Pane fx:id="content" layoutX="240.0" layoutY="158.0" prefHeight="457.0" prefWidth="817.0" />
       <VBox prefHeight="615.0" prefWidth="240.0" style="-fx-background-color: E9C8BC;">

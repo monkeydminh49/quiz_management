@@ -1,8 +1,8 @@
-package com.e01.quiz_management.controller;
+package com.e01.quiz_management.ui.test_create;
 
 import com.e01.quiz_management.App;
-import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.*;
+import com.e01.quiz_management.ui.test_create.controller.UploadController;
 import com.e01.quiz_management.util.EQuestionType;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class AddQuizController implements Initializable {
+public class AddQuizView implements Initializable {
 
     @FXML
     private TextArea questionTextField;
