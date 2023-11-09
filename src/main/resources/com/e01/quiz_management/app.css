@@ -1,3 +1,6 @@
+.root{
+    -fx-font: 12px "Fira Sans Book";
+}
 /* For general scenes */
 .text-field{
     -fx-background-color: #FAFAFA;
@@ -71,4 +74,25 @@
 .table-view .cell{
     -fx-cell-size: 30px;
     -fx-alignment: CENTER_LEFT;
+}
+
+.combo-box{
+    -fx-background-color: #FAFAFA;
+    -fx-background-radius: 20;
+    /*-fx-border-color: #D4D4D4;*/
+    -fx-border-radius: 20;
+    -fx-font: 12px "Fira Sans Book";
+}
+
+/* Add quiz */
+#editButton{
+    -fx-background-color: #6E9BCF !important;
+}
+
+#saveButton{
+    -fx-background-color: #4FE64A !important;
+}
+
+#saveBtn{
+    -fx-background-color: #4FE64A !important;
 }

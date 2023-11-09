@@ -109,17 +109,19 @@ public class RequestAPI {
         }
     }
 
-    public BaseResponse putUpdateTestById(Long id, Test test) {
+    public void putUpdateTestById(Long id, Test test) {
         BaseResponse response = new BaseResponse();
         String payload = "";
         try {
             payload = mapper.writeValueAsString(test);
+            System.out.println("\n********************\n");
+            System.out.println(payload);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         HttpURLConnection httpRequest = httpRequest("PUT", "/test/" + id, payload);
         try {
-            return mappingResponse(httpRequest, BaseResponse.class);
+            mappingResponse(httpRequest, BaseResponse.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -251,11 +253,11 @@ public class RequestAPI {
         }
 
         BufferedReader bf = new BufferedReader(new InputStreamReader(httpRequest.getInputStream()));
-            String data = bf.readLine();
-            System.out.println("Response body: " + data);
-            if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                return mapper.readValue(data, clazz);
-            }
+        String data = bf.readLine();
+        System.out.println("Response body: " + data);
+        if (httpRequest.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            return mapper.readValue(data, clazz);
+        }
 
         return null;
     }

@@ -13,7 +13,6 @@ public class ShareAppData {
     private Test test;
     private User user;
     private Boolean isEdit = false;
-
     private Response<List<Test>> listTestResponse = (Response<List<Test>>) Response.Loading;
 
     public Response<List<Test>> getListTestResponse() {
@@ -23,6 +22,7 @@ public class ShareAppData {
     public void setListTestResponse(Response<List<Test>> listTestResponse) {
         this.listTestResponse = listTestResponse;
     }
+
     private List<Test> tests;
 
     public List<Test> getTests() {
@@ -35,6 +35,16 @@ public class ShareAppData {
 
     private ShareAppData() {
         tests = new ArrayList<>();
+    }
+
+    private int tabNo;
+
+    public int getTabNo() {
+        return tabNo;
+    }
+
+    public void setTabNo(int tabNo) {
+        this.tabNo = tabNo;
     }
 
     public static ShareAppData getInstance() {

@@ -20,9 +20,16 @@ public class Choice {
         this.questionId = questionId;
     }
 
-    public Choice(String text, boolean selected) {
+    public Choice(String content, Boolean isCorrect) {
+        this.content = content;
+        this.isCorrect = isCorrect;
+    }
+
+    public Choice(Choice choice, String text, boolean selected) {
         this.content = text;
         this.isCorrect = selected;
+        this.questionId = choice.getQuestionId();
+        this.id = choice.getId();
     }
 
     public Long getId() {
@@ -56,5 +63,10 @@ public class Choice {
 
     public void setCorrect(Boolean isCorrect) {
         this.isCorrect = isCorrect;
+    }
+
+    @Override
+    public String toString() {
+        return "Choice{" + "id=" + id + ", content='" + content + '\'' + ", isCorrect=" + isCorrect + ", questionId=" + questionId + "}\n";
     }
 }

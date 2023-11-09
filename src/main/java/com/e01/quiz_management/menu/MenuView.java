@@ -42,19 +42,35 @@ public class MenuView implements Initializable {
     private Button historyButton;
     @FXML
     private Button testManagementButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         greetingName.setText("Hello, " + ShareAppData.getInstance().getUser().getName());
         content.getChildren().clear();
-        try {
-            menuButton.setStyle("-fx-background-color: #DFA98F");
-            content.getChildren().add(FXMLLoader.load(Objects.requireNonNull(App.class.getResource("jointest.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        int tabNo = ShareAppData.getInstance().getTabNo();
+        if (tabNo == 0) {
+            try {
+                switchToJoinTest(null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (tabNo == 1) {
+            try {
+                switchToHistory(null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (tabNo == 2) {
+            try {
+                switchToManagement(null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public void switchToJoinTest(ActionEvent e) throws IOException {
+        ShareAppData.getInstance().setTabNo(0);
         content.getChildren().clear();
         menuButton.setStyle("-fx-background-color: #DFA98F");
         historyButton.setStyle("-fx-background-color: #E9C8BC");
@@ -63,6 +79,7 @@ public class MenuView implements Initializable {
     }
 
     public void switchToHistory(ActionEvent e) throws IOException {
+        ShareAppData.getInstance().setTabNo(1);
         content.getChildren().clear();
         historyButton.setStyle("-fx-background-color: #DFA98F");
         menuButton.setStyle("-fx-background-color: #E9C8BC");
@@ -71,11 +88,7 @@ public class MenuView implements Initializable {
     }
 
     public void switchToManagement(ActionEvent e) throws IOException {
-//        try {
-//            App.setRoot("layout_list_test", ListTestView.getInstance());
-//        } catch (Exception ie) {
-//            System.out.println(ie);
-//        }
+        ShareAppData.getInstance().setTabNo(2);
         content.getChildren().clear();
         testManagementButton.setStyle("-fx-background-color: #DFA98F");
         historyButton.setStyle("-fx-background-color: #E9C8BC");

@@ -111,6 +111,26 @@ public class Test {
                 "Title: " + title + "\n" +
                 "Code: " + code + "\n" +
                 "Start time: " + startTime + "\n" +
-                "Duration: " + duration;
+                "Duration: " + duration + " minutes\n" +
+                "Number of questions: " + questions.size();
+    }
+
+    @Override
+    public String toString() {
+        return "Test{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", startTime=" + startTime +
+                ", questions=" + questions +
+                ", duration=" + duration +
+                "}\n";
+    }
+
+    public void resetTest() {
+        this.questions.forEach(q -> {
+            q.setmAns(null);
+        });
     }
 }
