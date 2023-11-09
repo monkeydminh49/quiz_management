@@ -5,6 +5,9 @@ import com.e01.quiz_management.ui.test_create.QuestionDataShared;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.RequestAPI;
+import com.e01.quiz_management.util.WebSocketConnect;
+import com.e01.quiz_management.util.WebSocketConnectHandler;
+import com.e01.quiz_management.websocket.Message;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -148,6 +151,13 @@ public class ListTestView implements Initializable {
                             try {
                                 App.setRoot("layout_list_submit", ListSubmitView.getInstance());
                                 ShareAppData.getInstance().setTest(data);
+                                WebSocketConnect.getInstance().subscribeToTest(data.getId(), new WebSocketConnectHandler() {
+                                    @Override
+                                    public void onReceived(Object payload) {
+                                        Message msg = (Message) payload;
+                                        System.out.println("User " + msg.getFrom() + " join test!");
+                                    }
+                                });
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

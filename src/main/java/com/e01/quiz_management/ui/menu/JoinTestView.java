@@ -19,9 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 public class JoinTestView implements Initializable {
@@ -82,17 +81,8 @@ public class JoinTestView implements Initializable {
                 ShareAppData.getInstance().setTest(test);
                 SharedData.getInstance().setIsReview(false);
                 if (test.getStartTime() == null) {
-                    App.setRoot("layout_test_form");
-                    WebSocketConnect.getInstance().connectToTest(test.getId(), new WebSocketConnectHandler() {
-                        @Override
-                        public void onReceived(Object payload) {
-                            System.out.println("Connected to test with id = " + test.getId());
-                        }
-                    });
+                    joinTest(test);
                 }else{
-//                    long current_millis = LocalDateTime.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
-//                    long start_millis = test.getStartTime().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
-//                    long duration = test.getDuration() * 60 * 1000;
                     ETestStatus testStatus = test.getStatus();
                     if (testStatus == ETestStatus.NOT_STARTED) {
                         joinMessage.setText("Test has not started yet");
@@ -103,7 +93,7 @@ public class JoinTestView implements Initializable {
                         warningIcon.setOpacity(1);
                         joinMessage.setOpacity(1);
                     } else {
-                        App.setRoot("layout_test_form");
+                       joinTest(test);
                     }
                     container.setStroke(Color.web("EC0B43"));
                 }
@@ -113,5 +103,10 @@ public class JoinTestView implements Initializable {
                 joinMessage.setText("Invalid test code");
             }
         }
+    }
+
+    private void joinTest(Test test) throws IOException {
+        App.setRoot("layout_test_form");
+        WebSocketConnect.getInstance().joinTest(test.getId());
     }
 }
