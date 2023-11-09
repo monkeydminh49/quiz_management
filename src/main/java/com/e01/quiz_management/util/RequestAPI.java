@@ -36,6 +36,10 @@ public class RequestAPI {
         return instance;
     }
 
+    public static User getUser() {
+        return user;
+    }
+
     public Object getHello() {
         HttpURLConnection httpRequest = httpRequest("GET", "/hello");
         try {

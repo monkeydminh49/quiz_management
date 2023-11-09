@@ -24,6 +24,9 @@ public class MyStompSessionHandler extends StompSessionHandlerAdapter {
 
     private Logger logger = LogManager.getLogger(MyStompSessionHandler.class);
 
+    private Long testId;
+
+
     @Override
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
         logger.info("New session established : " + session.getSessionId());

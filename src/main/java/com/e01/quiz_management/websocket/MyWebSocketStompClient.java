@@ -12,13 +12,15 @@ public class MyWebSocketStompClient  extends WebSocketStompClient {
         if (instance == null) {
             WebSocketClient client = new StandardWebSocketClient();
             instance = new MyWebSocketStompClient(client);
-            instance.setMessageConverter(new MappingJackson2MessageConverter());
+//            instance.setMessageConverter(new MappingJackson2MessageConverter());
         }
         return instance;
     }
 
+
     public MyWebSocketStompClient(WebSocketClient webSocketClient) {
         super(webSocketClient);
+        this.setMessageConverter(new MappingJackson2MessageConverter());
     }
 
 }
