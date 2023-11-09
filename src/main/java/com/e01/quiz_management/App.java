@@ -1,7 +1,7 @@
 package com.e01.quiz_management;
 
 import com.e01.quiz_management.model.*;
-import com.e01.quiz_management.util.EQuestionType;
+//import com.e01.quiz_management.util.EQuestionType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -72,24 +72,24 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        Question ques = new Question();
-        ques.setQuestion("Question 1");
-        ques.setType(EQuestionType.MULTIPLE_CHOICE);
-        List<Choice> choices = new ArrayList<>();
-        choices.add(new Choice("Choice 1", false));
-        choices.add(new Choice("Choice 2", false));
-        choices.add(new Choice("Choice 4", false));
-        choices.add(new Choice("Choice 5", true));
-        ques.setChoices(choices);
-        ques.setmAns(null);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        try {
-            String payload = mapper.writeValueAsString(ques);
-            System.out.println(payload);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+//        Question ques = new Question();
+//        ques.setQuestion("Question 1");
+//        ques.setType(EQuestionType.MULTIPLE_CHOICE);
+//        List<Choice> choices = new ArrayList<>();
+//        choices.add(new Choice("Choice 1", false));
+//        choices.add(new Choice("Choice 2", false));
+//        choices.add(new Choice("Choice 4", false));
+//        choices.add(new Choice("Choice 5", true));
+//        ques.setChoices(choices);
+//        ques.setmAns(null);
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.registerModule(new JavaTimeModule());
+//        try {
+//            String payload = mapper.writeValueAsString(ques);
+//            System.out.println(payload);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
 //        RequestAPI.getInstance().postLogin("admin@gmail.com", "123456");
 //        Test quiz = new Test();
 //        quiz.setTitle("Test from client");
