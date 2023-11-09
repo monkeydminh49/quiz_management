@@ -57,6 +57,8 @@ public class AddQuizView implements Initializable {
 
     @FXML
     private Button importButton;
+    @FXML
+    private Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,6 +92,14 @@ public class AddQuizView implements Initializable {
             try {
                 App.setRoot("addQuestion");
                 QuestionDataShared.getInstance().setIndex(null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        backButton.setOnAction(event -> {
+            try {
+                App.setRoot("menu");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -186,6 +196,8 @@ public class AddQuizView implements Initializable {
         deleteButton.setOnMouseReleased(mouseEvent -> onMouseRelease(deleteButton));
         importButton.setOnMousePressed(mouseEvent -> onMousePressed(importButton));
         importButton.setOnMouseReleased(mouseEvent -> onMouseRelease(importButton));
+        backButton.setOnMousePressed(mouseEvent -> onMousePressed(backButton));
+        backButton.setOnMouseReleased(mouseEvent -> onMouseRelease(backButton));
 
     }
 

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ListSubmitView implements Initializable {
+public class    ListSubmitView implements Initializable {
 
     @FXML
     private TableView<TestHistory> myTable;
