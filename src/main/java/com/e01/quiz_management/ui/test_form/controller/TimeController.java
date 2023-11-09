@@ -1,9 +1,10 @@
-package com.e01.quiz_management.test_form;
+package com.e01.quiz_management.ui.test_form.controller;
 
 import com.e01.quiz_management.App;
-import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.model.TestHistory;
+import com.e01.quiz_management.ui.test_form.SharedData;
+import com.e01.quiz_management.ui.test_form.controller.QuestionController;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.scene.control.TextField;
 

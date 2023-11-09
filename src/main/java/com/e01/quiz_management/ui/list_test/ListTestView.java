@@ -1,12 +1,10 @@
-package com.e01.quiz_management.list_test;
+package com.e01.quiz_management.ui.list_test;
 
 import com.e01.quiz_management.App;
-import com.e01.quiz_management.controller.QuestionDataShared;
+import com.e01.quiz_management.ui.test_create.QuestionDataShared;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
-import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.RequestAPI;
-import com.e01.quiz_management.util.Response;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.SVGPath;
 import javafx.util.Callback;
 import javafx.util.Duration;
 

@@ -1,4 +1,4 @@
-package com.e01.quiz_management.controller;
+package com.e01.quiz_management.ui.test_create;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.model.Choice;
@@ -16,7 +16,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.List;
 
-public class AddQuestionController {
+public class AddQuestionView {
 
     @FXML
     private TextArea questionTextField;

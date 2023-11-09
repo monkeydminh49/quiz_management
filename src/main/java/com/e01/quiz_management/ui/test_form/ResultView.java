@@ -1,4 +1,4 @@
-package com.e01.quiz_management.test_form;
+package com.e01.quiz_management.ui.test_form;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;

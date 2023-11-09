@@ -1,16 +1,16 @@
-package com.e01.quiz_management.test_form;
+package com.e01.quiz_management.ui.test_form;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.*;
-import com.e01.quiz_management.util.EQuestionType;
+import com.e01.quiz_management.ui.test_form.controller.QuestionController;
+import com.e01.quiz_management.ui.test_form.controller.TimeController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
