@@ -1,33 +1,17 @@
-package com.e01.quiz_management.menu;
+package com.e01.quiz_management.ui.menu;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
-import com.e01.quiz_management.model.Test;
-import com.e01.quiz_management.test_form.SharedData;
-import com.e01.quiz_management.util.RequestAPI;
-import javafx.animation.TranslateTransition;
-import com.e01.quiz_management.list_test.ListTestView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Objects;
 import java.util.ResourceBundle;
 

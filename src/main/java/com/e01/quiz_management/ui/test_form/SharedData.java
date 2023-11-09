@@ -1,10 +1,7 @@
-package com.e01.quiz_management.test_form;
+package com.e01.quiz_management.ui.test_form;
 
-import com.e01.quiz_management.model.Question;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.model.TestHistory;
-
-import java.util.List;
 
 public class SharedData {
     private static SharedData instance;

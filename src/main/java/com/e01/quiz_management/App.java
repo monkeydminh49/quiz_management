@@ -1,18 +1,12 @@
 package com.e01.quiz_management;
 
-import com.e01.quiz_management.data.ShareAppData;
-import com.e01.quiz_management.list_test.ListTestView;
 import com.e01.quiz_management.model.*;
-import com.e01.quiz_management.util.BaseResponse;
 import com.e01.quiz_management.util.EQuestionType;
-import com.e01.quiz_management.util.RequestAPI;
-import com.e01.quiz_management.util.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,7 +15,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * JavaFX App

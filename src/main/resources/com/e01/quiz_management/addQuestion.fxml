@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: fff9f4;" stylesheets="@app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.controller.AddQuestionController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: fff9f4;" stylesheets="@app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.ui.test_create.AddQuestionView">
    <Pane fx:id="line" prefHeight="55.0" prefWidth="600.0">
       <children>
             <ComboBox fx:id="typeComboBox" layoutX="112.0" layoutY="15.0" prefHeight="27.0" prefWidth="167.0" />

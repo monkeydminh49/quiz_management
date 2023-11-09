@@ -1,10 +1,9 @@
-package com.e01.quiz_management.menu;
+package com.e01.quiz_management.ui.menu;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
-import com.e01.quiz_management.test_form.SharedData;
-import com.e01.quiz_management.util.BaseResponse;
+import com.e01.quiz_management.ui.test_form.SharedData;
 import com.e01.quiz_management.util.RequestAPI;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
