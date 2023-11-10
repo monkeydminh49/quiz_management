@@ -87,20 +87,28 @@ public class MenuView implements Initializable {
         content.getChildren().add(FXMLLoader.load(Objects.requireNonNull(App.class.getResource("layout_list_test.fxml"))));
     }
 
-    public void logOut(){
+    public void logOut() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logging out");
         alert.setHeaderText("Log out");
         alert.setContentText("Are you sure?");
-        ButtonType buttonTypeYes = new ButtonType("Yes");
-        ButtonType buttonTypeNo = new ButtonType("No");
-        alert.showAndWait().ifPresent(type -> {
-            if (type == buttonTypeYes) {
-                try {
-                    App.setRoot("login");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                Task<Void> task = new Task<>() {
+                    @Override
+                    protected Void call() throws IOException {
+                        App.setRoot("login");
+                        return null;
+                    }
+                };
+                task.setOnSucceeded(workerStateEvent -> {
+                    try {
+                        App.setRoot("login");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                new Thread(task).start();
             }
         });
     }
