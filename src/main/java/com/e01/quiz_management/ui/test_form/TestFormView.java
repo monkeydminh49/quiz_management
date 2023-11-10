@@ -5,10 +5,12 @@ import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.*;
 import com.e01.quiz_management.ui.test_form.controller.QuestionController;
 import com.e01.quiz_management.ui.test_form.controller.TimeController;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -65,6 +67,10 @@ public class TestFormView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        submitButton.setOnMouseReleased(event -> onMouseRelease(submitButton));
+        submitButton.setOnMousePressed(event -> onMousePressed(submitButton));
+        checkButton.setOnMouseReleased(event -> onMouseRelease(checkButton));
+        checkButton.setOnMousePressed(event -> onMousePressed(checkButton));
     }
 
     private void startTest() throws Exception {
@@ -201,5 +207,22 @@ public class TestFormView {
         answer.setContent(ansTextField.getText());
         question.setmAns(answer);
         questionController.updateNotAnsweredQuestions(questionController.getCurrentQuestionIndex());
+    }
+
+    // For UI
+    public void onMouseRelease(Button btn) {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(btn);
+        translateTransition.setDuration(Duration.millis(65));
+        translateTransition.setByY(-5);
+        translateTransition.play();
+    }
+
+    public void onMousePressed(Button btn) {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(btn);
+        translateTransition.setDuration(Duration.millis(65));
+        translateTransition.setByY(5);
+        translateTransition.play();
     }
 }
