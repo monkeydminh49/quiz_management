@@ -109,4 +109,5 @@ public class TestHistory {
     public void setCandidateName(String candidateName) {
         this.candidateName = candidateName;
     }
+
 }

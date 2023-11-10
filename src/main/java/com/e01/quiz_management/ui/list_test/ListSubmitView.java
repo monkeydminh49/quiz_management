@@ -65,7 +65,7 @@ public class ListSubmitView implements Initializable {
 
     public void updateData(){
         testHistories = new ArrayList<>();
-        currentTest = ShareAppData.getInstance().getTest();
+        currentTest = ShareAppData.getInstance().getTestLive();
         testHistories = RequestAPI.getInstance().getTestHistoriesByTestId(currentTest.getId());
         updateTestDescription();
         ObservableList<TestHistory> observableArrayList =
@@ -96,7 +96,7 @@ public class ListSubmitView implements Initializable {
     }
 
     public void updateTestDescription(){
-        testDescription.setText(ShareAppData.getInstance().getTest().getTestDescription() + "\nNumber of submissions: " + testHistories.size());
+        testDescription.setText(ShareAppData.getInstance().getTestLive().getTestDescription() + "\nNumber of submissions: " + testHistories.size());
         if (currentTest.getStatus() == ETestStatus.HAPPENING){
             testDescription.setText(testDescription.getText() + "\nNumber of live participant: " + currentTest.getNumberOfLiveParticipant() );
         }

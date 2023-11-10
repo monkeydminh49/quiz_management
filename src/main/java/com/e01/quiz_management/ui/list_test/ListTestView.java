@@ -150,12 +150,16 @@ public class ListTestView implements Initializable {
                             Test data = getTableView().getItems().get(getIndex());
                             try {
                                 App.setRoot("layout_list_submit", ListSubmitView.getInstance());
-                                ShareAppData.getInstance().setTest(data);
+//                                ShareAppData.getInstance().setTest(data);
+                                ShareAppData.getInstance().setTestLive(data);
                                 WebSocketConnect.getInstance().subscribeToTest(data.getId(), new WebSocketConnectHandler() {
                                     @Override
                                     public void onReceived(Object payload) {
                                         Message msg = (Message) payload;
-                                        System.out.println("User " + msg.getFrom() + " join test!");
+                                        Test test = (Test) msg.getData();
+                                        ShareAppData.getInstance().setTestLive(test);
+                                        System.out.println("User " + msg.getFrom() + " join!");
+                                        ListSubmitView.getInstance().updateTestDescription();
                                     }
                                 });
                             } catch (IOException e) {

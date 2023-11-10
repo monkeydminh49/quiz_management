@@ -3,14 +3,14 @@ package com.e01.quiz_management.websocket;
 public class Message {
 
     private String from;
-    private String text;
+    private Object data;
 
     public Message() {
     }
 
-    public Message(String from, String text) {
+    public Message(String from, Object data) {
         this.from = from;
-        this.text = text;
+        this.data = data;
     }
 
 
@@ -22,11 +22,12 @@ public class Message {
         this.from = from;
     }
 
-    public String getText() {
-        return text;
+
+    public Object getData() {
+        return data;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setData(Object data) {
+        this.data = data;
     }
 }

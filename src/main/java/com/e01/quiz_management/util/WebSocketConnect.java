@@ -35,7 +35,7 @@ public class WebSocketConnect {
             @Override
             public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
 //                session.subscribe("/topic/test/"+testId, this);
-                session.send("/app/test/" + testId+"/join", new Message("Minh", "hello"));
+                session.send("/app/test/" + testId+"/join", new Message(RequestAPI.getInstance().getUser().getName(), "hello"));
             }
         });
 //        new Scanner(System.in).nextLine(); // Don't close immediately.
@@ -59,5 +59,7 @@ public class WebSocketConnect {
             }
         });
     }
+
+
 
 }

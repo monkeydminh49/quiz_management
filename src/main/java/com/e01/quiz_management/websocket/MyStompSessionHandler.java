@@ -50,8 +50,8 @@ public class MyStompSessionHandler extends StompSessionHandlerAdapter {
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
         Message msg = (Message) payload;
-        logger.info("Received : " + msg.getText() + " from : " + msg.getFrom());
-        System.out.println("Received : " + msg.getText() + " from : " + msg.getFrom());
+//        logger.info("Received : " + msg.getText() + " from : " + msg.getFrom());
+//        System.out.println("Received : " + msg.getText() + " from : " + msg.getFrom());
 //        String msg = (String) payload;
 //        logger.info("Received : " + msg);
 //        System.out.println("Received : " + msg);
@@ -64,7 +64,7 @@ public class MyStompSessionHandler extends StompSessionHandlerAdapter {
     private Message getSampleMessage() {
         Message msg = new Message();
         msg.setFrom("Nicky");
-        msg.setText("Howdy!!");
+//        msg.setText("Howdy!!");
         return msg;
     }
 }
