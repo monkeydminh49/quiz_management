@@ -28,11 +28,11 @@
                   </DropShadow>
                </effect>
             </Rectangle>
-                <TextField fx:id="usernameTextField" layoutX="-22.0" layoutY="272.0" onInputMethodTextChanged="#username_field_onFocused" onMouseEntered="#username_field_onMouseEntered" onMouseExited="#username_field_onMouseExited" prefHeight="35.0" prefWidth="280.0" promptText="Enter username">
+                <TextField fx:id="usernameTextField" layoutX="-22.0" layoutY="272.0" prefHeight="35.0" prefWidth="280.0" promptText="Enter username">
                <font>
                   <Font name="Fira Sans Book" size="12.0" />
                </font></TextField>
-                <PasswordField fx:id="passwordTextField" layoutX="-22.0" layoutY="340.0" onInputMethodTextChanged="#password_field_onFocused" onMouseEntered="#password_field_onMouseEntered" onMouseExited="#password_field_onMouseExited" prefHeight="35.0" prefWidth="280.0" promptText="Enter password">
+                <PasswordField fx:id="passwordTextField" layoutX="-22.0" layoutY="340.0" prefHeight="35.0" prefWidth="280.0" promptText="Enter password">
                <font>
                   <Font name="Fira Sans Book" size="12.0" />
                </font></PasswordField>
