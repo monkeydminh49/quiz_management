@@ -30,7 +30,7 @@
                 <Font name="Fira Sans Book" size="15.0"/>
             </font>
         </TextField>
-        <Button fx:id="joinButton" layoutX="582.0" layoutY="222.0" mnemonicParsing="false" onAction="#getTest"
+        <Button fx:id="joinButton" layoutX="582.0" layoutY="222.0" mnemonicParsing="false"
                 onMousePressed="#onMousePressed" onMouseReleased="#onMouseRelease" prefHeight="48.0" prefWidth="86.0"
                 style="-fx-background-radius: 10; -fx-background-color: B8846C;" text="JOIN">
             <font>
