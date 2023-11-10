@@ -96,12 +96,12 @@ public class MenuView implements Initializable {
         ButtonType buttonTypeNo = new ButtonType("No");
         alert.showAndWait().ifPresent(type -> {
             if (type == buttonTypeYes) {
-                System.out.println("hha");
                 try {
                     App.setRoot("login");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }});
+            }
+        });
     }
 }

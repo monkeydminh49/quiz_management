@@ -4,6 +4,7 @@ import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.TestHistory;
 import com.e01.quiz_management.util.RequestAPI;
+import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
@@ -75,6 +77,20 @@ public class    ListSubmitView implements Initializable {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        });
+        backButton.setOnMousePressed(event -> {
+            TranslateTransition translateTransition = new TranslateTransition();
+            translateTransition.setNode(this.backButton);
+            translateTransition.setDuration(Duration.millis(65));
+            translateTransition.setByY(5);
+            translateTransition.play();
+        });
+        backButton.setOnMouseReleased(event -> {
+            TranslateTransition translateTransition = new TranslateTransition();
+            translateTransition.setNode(this.backButton);
+            translateTransition.setDuration(Duration.millis(65));
+            translateTransition.setByY(-5);
+            translateTransition.play();
         });
     }
 }

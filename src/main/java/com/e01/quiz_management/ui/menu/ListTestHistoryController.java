@@ -29,7 +29,7 @@ public class ListTestHistoryController implements Initializable {
     private TableColumn<TestHistory, String> titleColumn;
     @FXML
     private TableColumn<TestHistory, String> codeColumn;
-    @FXML
+    @FXML 
     private TableColumn<TestHistory, Integer> scoreColumn;
     @FXML
     private TableColumn<TestHistory, String> submitTimeColumn;
