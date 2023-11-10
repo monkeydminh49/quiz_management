@@ -69,6 +69,12 @@ public class ListTestView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTable();
+        orderColumn.setResizable(false);
+        codeColumn.setResizable(false);
+        titleColumn.setResizable(false);
+        startColumn.setResizable(false);
+        durationColumn.setResizable(false);
+        actionColumn.setResizable(false);
         createTestButton.setOnAction(actionEvent -> {
             try {
                 QuestionDataShared.getInstance().setQuestions(new ArrayList<>());

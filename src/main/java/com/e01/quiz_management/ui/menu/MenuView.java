@@ -2,11 +2,15 @@ package com.e01.quiz_management.ui.menu;
 
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
+import com.e01.quiz_management.util.RequestAPI;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
@@ -26,6 +30,8 @@ public class MenuView implements Initializable {
     private Button historyButton;
     @FXML
     private Button testManagementButton;
+    @FXML
+    private Button logoutButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,6 +57,7 @@ public class MenuView implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+        logoutButton.setOnAction(actionEvent -> logOut());
     }
 
     public void switchToJoinTest(ActionEvent e) throws IOException {
@@ -78,5 +85,31 @@ public class MenuView implements Initializable {
         historyButton.setStyle("-fx-background-color: #E9C8BC");
         menuButton.setStyle("-fx-background-color: #E9C8BC");
         content.getChildren().add(FXMLLoader.load(Objects.requireNonNull(App.class.getResource("layout_list_test.fxml"))));
+    }
+
+    public void logOut() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logging out");
+        alert.setHeaderText("Log out");
+        alert.setContentText("Are you sure?");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                Task<Void> task = new Task<>() {
+                    @Override
+                    protected Void call() throws IOException {
+                        App.setRoot("login");
+                        return null;
+                    }
+                };
+                task.setOnSucceeded(workerStateEvent -> {
+                    try {
+                        App.setRoot("login");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                new Thread(task).start();
+            }
+        });
     }
 }
