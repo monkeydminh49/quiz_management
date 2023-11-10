@@ -54,7 +54,11 @@ public class AddQuestionView {
 
     @FXML
     private void initialize() {
-
+        ToggleGroup group = new ToggleGroup();
+        answer1RadioButton.setToggleGroup(group);
+        answer2RadioButton.setToggleGroup(group);
+        answer3RadioButton.setToggleGroup(group);
+        answer4RadioButton.setToggleGroup(group);
 
         ObservableList<String> typeList = FXCollections.observableArrayList(EQuestionType.MULTIPLE_CHOICE.toString(), EQuestionType.FILL_IN_BLANK.toString());
         typeComboBox.setItems(typeList);

@@ -13,6 +13,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -80,6 +81,14 @@ public class SubmitQuizView implements Initializable {
             }
         });
         saveBtn.setOnAction(actionEvent -> {
+                    if (quizName.getText().isEmpty() || quizDuration.getText().isEmpty()) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("Error");
+                        alert.setContentText("Please fill in all the fields");
+                        alert.showAndWait();
+                        return;
+                    }
                     Boolean isEdit = ShareAppData.getInstance().getIsEdit();
                     Test quiz = ShareAppData.getInstance().getTest();
                     quiz.setTitle(quizName.getText());
@@ -87,6 +96,16 @@ public class SubmitQuizView implements Initializable {
                     quiz.setStartTime(quizDate.getValue().atTime(quizHour.getValue(), quizMinute.getValue()));
                     if (practice.isVisible()) {
                         quiz.setStartTime(null);
+                    } else {
+                        LocalDateTime now = LocalDateTime.now();
+                        if (quiz.getStartTime().isBefore(now)) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Error");
+                            alert.setContentText("Please choose a time in the future");
+                            alert.showAndWait();
+                            return;
+                        }
                     }
                     if (isEdit) {
                         System.out.println(quiz);
@@ -103,7 +122,6 @@ public class SubmitQuizView implements Initializable {
                         }
                     } else {
                         quiz.setQuestions(QuestionDataShared.getInstance().getQuestions());
-                        System.out.println(quiz);
                         BaseResponse response1 = RequestAPI.getInstance().postCreateTest(quiz);
                         try {
                             Test test = RequestAPI.getInstance().getBaseResponseBodyObject(response1, Test.class);

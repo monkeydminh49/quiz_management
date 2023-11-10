@@ -21,33 +21,35 @@ public class SignUpView {
     @FXML
     private PasswordField passwordTextField;
 
-    public void signup(ActionEvent e) throws IOException{
+    public void signup(ActionEvent e) throws IOException {
         String username = usernameTextField.getText();
         String name = nameTextField.getText();
         String password = passwordTextField.getText();
-        if (username.isBlank() || password.isBlank() || name.isBlank()){
+        if (username.isBlank() || password.isBlank() || name.isBlank()) {
             signupMessage.setText("Blank field found");
             signupMessage.setStyle("-fx-text-fill: red");
-        }else{
+        } else {
             try {
                 BaseResponse response = RequestAPI.getInstance().postRegister(name, username, password);
                 System.out.println(response.getBody());
-                if (response.getCode() == 1){
+                if (response.getCode() == 1) {
                     signupMessage.setText("Successfully sign up!");
                     signupMessage.setStyle("-fx-text-fill: green");
-                }else{
+                    App.setRoot("login");
+                } else {
                     signupMessage.setText("Username existed");
                     signupMessage.setStyle("-fx-text-fill: red");
                 }
-            } catch (Exception ie){
+            } catch (Exception ie) {
                 System.out.println(ie);
             }
         }
     }
+
     public void switchToLogin(ActionEvent e) throws IOException {
-        try{
+        try {
             App.setRoot("login");
-        }catch(Exception ie){
+        } catch (Exception ie) {
             System.out.println(ie);
         }
     }
