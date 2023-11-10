@@ -9,34 +9,45 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="457.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.e01.quiz_management.ui.menu.JoinTestView">
-   <children>
-      <Rectangle fx:id="container" arcHeight="5.0" arcWidth="5.0" fill="#efecec" height="67.0" layoutX="137.0" layoutY="214.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="1.5" style="-fx-arc-width: 30; -fx-arc-height: 30;" width="544.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6d4234" height="48.0" layoutX="582.0" layoutY="227.0" stroke="#ffffff00" strokeType="INSIDE" style="-fx-arc-width: 20; -fx-arc-height: 20; -fx-background-color: 865328; -fx-progress-color: 000000;" width="86.0" />
-      <Label fx:id="message" layoutX="297.0" layoutY="132.0" text="Enter Test Code">
-         <font>
-            <Font name="Fira Sans ExtraBold" size="31.0" />
-         </font>
-      </Label>
-      <TextField fx:id="testCodeTextField" layoutX="149.0" layoutY="224.0" prefHeight="48.0" prefWidth="426.0" promptText="Code goes here" style="-fx-background-radius: 8;">
-         <font>
-            <Font name="Fira Sans Book" size="15.0" />
-         </font>
-      </TextField>
-      <Button fx:id="joinButton" layoutX="582.0" layoutY="222.0" mnemonicParsing="false" onAction="#getTest" onMousePressed="#onMousePressed" onMouseReleased="#onMouseRelease" prefHeight="48.0" prefWidth="86.0" style="-fx-background-radius: 10; -fx-background-color: B8846C;" text="JOIN">
-         <font>
-            <Font name="Fira Sans ExtraBold" size="18.0" />
-         </font>
-      </Button>
-      <Label fx:id="joinMessage" alignment="CENTER" layoutX="297.0" layoutY="296.0" prefHeight="30.0" prefWidth="224.0" style="-fx-border-radius: 50;" textFill="WHITE">
-         <font>
-            <Font name="Fira Sans ExtraBold" size="15.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="warningIcon" fitHeight="55.0" fitWidth="36.0" layoutX="533.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@img/warning_icon.png" />
-         </image>
-      </ImageView>
-   </children>
+<AnchorPane prefHeight="457.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.e01.quiz_management.ui.menu.JoinTestView">
+    <children>
+        <Rectangle fx:id="container" arcHeight="5.0" arcWidth="5.0" fill="#efecec" height="67.0" layoutX="137.0"
+                   layoutY="214.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="1.5"
+                   style="-fx-arc-width: 30; -fx-arc-height: 30;" width="544.0"/>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6d4234" height="48.0" layoutX="582.0" layoutY="227.0"
+                   stroke="#ffffff00" strokeType="INSIDE"
+                   style="-fx-arc-width: 20; -fx-arc-height: 20; -fx-background-color: 865328; -fx-progress-color: 000000;"
+                   width="86.0"/>
+        <Label fx:id="message" layoutX="297.0" layoutY="132.0" text="Enter Test Code">
+            <font>
+                <Font name="Fira Sans ExtraBold" size="31.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="testCodeTextField" layoutX="149.0" layoutY="224.0" prefHeight="48.0" prefWidth="426.0"
+                   promptText="Code goes here" style="-fx-background-radius: 8;">
+            <font>
+                <Font name="Fira Sans Book" size="15.0"/>
+            </font>
+        </TextField>
+        <Button fx:id="joinButton" layoutX="582.0" layoutY="222.0" mnemonicParsing="false" onAction="#getTest"
+                onMousePressed="#onMousePressed" onMouseReleased="#onMouseRelease" prefHeight="48.0" prefWidth="86.0"
+                style="-fx-background-radius: 10; -fx-background-color: B8846C;" text="JOIN">
+            <font>
+                <Font name="Fira Sans ExtraBold" size="18.0"/>
+            </font>
+        </Button>
+        <Label fx:id="joinMessage" alignment="CENTER" layoutX="297.0" layoutY="296.0" prefHeight="30.0"
+               prefWidth="224.0" style="-fx-border-radius: 50;" textFill="WHITE">
+            <font>
+                <Font name="Fira Sans ExtraBold" size="15.0"/>
+            </font>
+        </Label>
+        <ImageView fx:id="warningIcon" fitHeight="55.0" fitWidth="36.0" layoutX="533.0" layoutY="233.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@img/warning_icon.png"/>
+            </image>
+        </ImageView>
+    </children>
 </AnchorPane>

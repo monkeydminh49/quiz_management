@@ -37,6 +37,7 @@ public class JoinTestView implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         warningIcon.setOpacity(0);
         joinMessage.setOpacity(0);
+        joinButton.setDisable(false);
         // When this input field is typed
         testCodeTextField.setOnKeyTyped(keyEvent -> {
             warningIcon.setOpacity(0);
@@ -48,9 +49,11 @@ public class JoinTestView implements Initializable {
         joinButton.setOnAction(actionEvent -> {
             getTest();
         });
+
+
     }
 
-    public void onMousePressed(){
+    public void onMousePressed() {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(this.joinButton);
         translateTransition.setDuration(Duration.millis(65));
@@ -58,29 +61,34 @@ public class JoinTestView implements Initializable {
         translateTransition.play();
     }
 
-    public void onMouseRelease(){
+    public void onMouseRelease() {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(this.joinButton);
         translateTransition.setDuration(Duration.millis(65));
         translateTransition.setByY(-5);
         translateTransition.play();
+        joinButton.getParent().setMouseTransparent(true);
+
+        translateTransition.setOnFinished(actionEvent -> {
+            joinButton.getParent().setMouseTransparent(false);
+        });
     }
 
-    public void getTest(){
+    public void getTest() {
         String testCode = testCodeTextField.getText();
-        if (testCode.isBlank()){
+        if (testCode.isBlank()) {
             joinMessage.setText("Blank test code found");
             container.setStroke(Color.web("EC0B43"));
             warningIcon.setOpacity(1);
             joinMessage.setOpacity(1);
-        }else{
+        } else {
             try {
                 Test test = RequestAPI.getInstance().getTestByCode(testCode);
                 ShareAppData.getInstance().setTest(test);
                 SharedData.getInstance().setIsReview(false);
                 if (test.getStartTime() == null) {
                     App.setRoot("layout_test_form");
-                }else{
+                } else {
                     long current_millis = LocalDateTime.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
                     long start_millis = test.getStartTime().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant().toEpochMilli();
                     long duration = test.getDuration() * 60 * 1000;
