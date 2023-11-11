@@ -178,6 +178,7 @@ public class ListTestView implements Initializable {
 //                                            Test test = (Test) msg.getData();
                                             System.out.println("User " + msg.getFrom() + " join!");
                                             ListSubmitView.getInstance().updateTestDescription();
+                                            ListSubmitView.getInstance().newUserJoinEffect(msg.getFrom());
                                         } else if (msg.getType() == EMessageType.TEST_HISTORY) {
                                             System.out.println("User " + msg.getFrom() + " submit!");
                                             TestHistory testHistory = (TestHistory) msg.getData();

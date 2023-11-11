@@ -6,6 +6,7 @@ import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.model.TestHistory;
 import com.e01.quiz_management.util.ETestStatus;
 import com.e01.quiz_management.util.RequestAPI;
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -14,6 +15,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -40,6 +43,8 @@ public class    ListSubmitView implements Initializable {
     private TextArea testDescription;
     @FXML
     private Button backButton;
+    @FXML
+    private AnchorPane pane;
 
     private Test currentTest;
     private List<TestHistory> testHistories;
@@ -90,6 +95,34 @@ public class    ListSubmitView implements Initializable {
             translateTransition.setByY(-5);
             translateTransition.play();
         });
+    }
+
+    public void newUserJoinEffect(String name){
+        String[] colors = new String[] {"#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"};
+        Text text = new Text(name + " has joined the test!");
+        text.getStyleClass().add("button-text");
+        text.setX(50);
+        text.setY(450);
+        text.setStyle("-fx-fill: " + colors[(int) (Math.random() * colors.length)] + ";");
+
+
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(text);
+        translateTransition.setDuration(Duration.millis(1500));
+        translateTransition.setByY(-100);
+        translateTransition.play();
+
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setNode(text);
+        fadeTransition.setDuration(Duration.millis(1500));
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.setOnFinished(actionEvent -> {
+            pane.getChildren().remove(text);
+        });
+        fadeTransition.play();
+
+        pane.getChildren().add(text);
     }
 
     private void initData(){
