@@ -4,13 +4,18 @@ import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.model.TestHistory;
-import com.e01.quiz_management.util.ETestStatus;
-import com.e01.quiz_management.util.RequestAPI;
+import com.e01.quiz_management.util.*;
+import com.e01.quiz_management.websocket.Message;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -20,12 +25,13 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class    ListSubmitView implements Initializable {
+public class    ListSubmitView  implements Initializable{
 
     @FXML
     private TableView<TestHistory> myTable;
@@ -57,14 +63,76 @@ public class    ListSubmitView implements Initializable {
         return instance;
     }
 
+    public ListSubmitView(){
+        testDescription = new TextArea();
+        backButton = new Button();
+        myTable = new TableView<>();
+        orderColumn = new TableColumn<>();
+        titleColumn = new TableColumn<>();
+        codeColumn = new TableColumn<>();
+        scoreColumn = new TableColumn<>();
+        submitTimeColumn = new TableColumn<>();
+        pane = new AnchorPane();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        testHistories = new ArrayList<>();
+        currentTest = ShareAppData.getInstance().getTestLive();
+        testHistories = RequestAPI.getInstance().getTestHistoriesByTestId(currentTest.getId());
+
+        WebSocketConnect.getInstance().subscribeToTest(ShareAppData.getInstance().getTest().getId(), new WebSocketConnectHandler() {
+
+            @Override
+            public void onReceived(Object payload) {
+                Message msg = (Message) payload;
+                System.out.println("received message haha");
+                if (msg.getType() == EMessageType.NUM_LIVE_PARTICIPANT){
+                    List<Test> tests = ShareAppData.getInstance().getTests();
+                    for (Test test : tests) {
+                        if (test.getId().equals( ShareAppData.getInstance().getTest().getId())) {
+                            test.setNumberOfLiveParticipant((Integer) msg.getData());
+                            ShareAppData.getInstance().setTestLive(test);
+                            break;
+                        }
+                    }
+                    System.out.println("User " + msg.getFrom() + " join!");
+                    updateTestDescription();
+                    ListSubmitView.getInstance().newUserJoinEffect(msg.getFrom());
+                } else if (msg.getType() == EMessageType.TEST_HISTORY) {
+                    System.out.println("User " + msg.getFrom() + " submit!");
+                    ObjectMapper mapper = new ObjectMapper();
+                    mapper.registerModule(new JavaTimeModule());
+                    String data ="{}";
+                    TestHistory testHistory = null;
+                    try {
+                        data = mapper.writeValueAsString(msg.getData());
+                        System.out.println(data);
+                        testHistory = mapper.readValue(data, TestHistory.class);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println(testHistory.getCode());
+                    testHistories.add(testHistory);
+                    updateData();
+                }
+
+            }
+        });
+
         initData();
         updateData();
         initComponent();
     }
 
     private void initComponent(){
+        Button btn = new Button("Join");
+        btn.setOnAction(actionEvent -> {
+            WebSocketConnect.getInstance().joinTest(114L);
+//            newUserJoinEffect("test");
+        });
+
+
         backButton.setOnAction(actionEvent -> {
             try {
                 ShareAppData.getInstance().setTest(null);
@@ -95,9 +163,12 @@ public class    ListSubmitView implements Initializable {
             translateTransition.setByY(-5);
             translateTransition.play();
         });
+        pane.getChildren().add(btn);
+
     }
 
     public void newUserJoinEffect(String name){
+        System.out.println("Effect");
         String[] colors = new String[] {"#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"};
         Text text = new Text(name + " has joined the test!");
         text.getStyleClass().add("button-text");
@@ -108,27 +179,46 @@ public class    ListSubmitView implements Initializable {
 
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(text);
-        translateTransition.setDuration(Duration.millis(1500));
+        translateTransition.setDuration(Duration.millis(3500));
         translateTransition.setByY(-100);
         translateTransition.play();
 
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setNode(text);
-        fadeTransition.setDuration(Duration.millis(1500));
+        fadeTransition.setDuration(Duration.millis(3500));
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(actionEvent -> {
             pane.getChildren().remove(text);
         });
         fadeTransition.play();
+        try {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // Update UI here.
+                    pane.getChildren().add(text);
 
-        pane.getChildren().add(text);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("hello 123");
+
     }
 
     private void initData(){
-        testHistories = new ArrayList<>();
-        currentTest = ShareAppData.getInstance().getTestLive();
-        testHistories = RequestAPI.getInstance().getTestHistoriesByTestId(currentTest.getId());
+
+    }
+
+    public void updateData(){
+        updateTestDescription();
+        System.out.println( "Num test history: "+ testHistories.size());
+        ObservableList<TestHistory> observableArrayList =
+                FXCollections.observableArrayList(testHistories);
+
         orderColumn.setCellFactory(column -> {
             return new TableCell<TestHistory, String>() {
                 @Override
@@ -151,13 +241,6 @@ public class    ListSubmitView implements Initializable {
             }
         });
         scoreColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, Integer>("score"));
-    }
-
-    public void updateData(){
-        updateTestDescription();
-        ObservableList<TestHistory> observableArrayList =
-                FXCollections.observableArrayList(testHistories);
-
         myTable.setItems(observableArrayList);
     }
     public void updateTestDescription(){

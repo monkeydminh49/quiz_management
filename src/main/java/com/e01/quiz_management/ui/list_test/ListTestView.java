@@ -158,40 +158,15 @@ public class ListTestView implements Initializable {
                         btn3.setOnAction((ActionEvent event) -> {
                             Test data = getTableView().getItems().get(getIndex());
                             try {
-                                App.setRoot("layout_list_submit", ListSubmitView.getInstance());
+                                ListSubmitView.getInstance().newUserJoinEffect("Minh");
+
+                                ShareAppData.getInstance().setTestLive(data);
                                 ShareAppData.getInstance().setTest(data);
-                                WebSocketConnect.getInstance().subscribeToTest(data.getId(), new WebSocketConnectHandler() {
 
-                                    @Override
-                                    public void onReceived(Object payload) {
-                                        Message msg = (Message) payload;
-                                        System.out.println("received message haha");
-                                        if (msg.getType() == EMessageType.NUM_LIVE_PARTICIPANT){
-                                            List<Test> tests = ShareAppData.getInstance().getTests();
-                                            for (Test test : tests) {
-                                                if (test.getId().equals(data.getId())) {
-                                                    test.setNumberOfLiveParticipant((Integer) msg.getData());
-                                                    ShareAppData.getInstance().setTestLive(test);
-                                                    break;
-                                                }
-                                            }
-//                                            Test test = (Test) msg.getData();
-                                            System.out.println("User " + msg.getFrom() + " join!");
-                                            ListSubmitView.getInstance().updateTestDescription();
-                                            ListSubmitView.getInstance().newUserJoinEffect(msg.getFrom());
-                                        } else if (msg.getType() == EMessageType.TEST_HISTORY) {
-                                            System.out.println("User " + msg.getFrom() + " submit!");
-                                            TestHistory testHistory = (TestHistory) msg.getData();
-                                            ListSubmitView.getInstance().getTestHistories().add(testHistory);
-                                            ListSubmitView.getInstance().updateData();
-//                                            ShareAppData.getInstance().set
-                                        }
+                                App.setRoot("layout_list_submit", ListSubmitView.getInstance());
 
-                                    }
-                                });
-
-                                Test liveTest = RequestAPI.getInstance().getTestById(data.getId());
-                                ShareAppData.getInstance().setTestLive(liveTest);
+//                                Test liveTest = RequestAPI.getInstance().getTestById(data.getId());
+//                                ListSubmitView.getInstance().init();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
