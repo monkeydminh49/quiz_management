@@ -11,6 +11,7 @@ import java.util.Objects;
 public class ShareAppData {
     private static ShareAppData instance;
     private Test test;
+    private Test testLive;
     private User user;
     private Boolean isEdit = false;
     private Response<List<Test>> listTestResponse = (Response<List<Test>>) Response.Loading;
@@ -93,5 +94,13 @@ public class ShareAppData {
                 break;
             }
         }
+    }
+
+    public void setTestLive(Test test) {
+        this.testLive = test;
+    }
+
+    public Test getTestLive(){
+        return this.testLive;
     }
 }

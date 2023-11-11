@@ -19,6 +19,8 @@ import java.util.List;
 
 public class RequestAPI {
     private final static String baseURL = "http://13.212.194.205/api/v1";
+//    private final static String baseURL = "http://localhost:8080/api/v1";
+
     private final List<String> openEndpoints = List.of("/hello", "/login", "/register");
     private static User user;
     private static RequestAPI instance;
@@ -34,6 +36,10 @@ public class RequestAPI {
             instance = new RequestAPI();
         }
         return instance;
+    }
+
+    public static User getUser() {
+        return user;
     }
 
     public Object getHello() {
@@ -56,6 +62,15 @@ public class RequestAPI {
 
     public Test getTestByCode(String code) {
         HttpURLConnection httpRequest = httpRequest("GET", "/test?code=" + code);
+        try {
+            return mappingResponse(httpRequest, Test.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Test getTestById(Long id){
+        HttpURLConnection httpRequest = httpRequest("GET", "/test/" + id);
         try {
             return mappingResponse(httpRequest, Test.class);
         } catch (IOException e) {

@@ -5,6 +5,9 @@ import com.e01.quiz_management.ui.test_create.QuestionDataShared;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.util.RequestAPI;
+import com.e01.quiz_management.util.WebSocketConnect;
+import com.e01.quiz_management.util.WebSocketConnectHandler;
+import com.e01.quiz_management.websocket.Message;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +26,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ListTestView implements Initializable {
@@ -152,8 +156,30 @@ public class ListTestView implements Initializable {
                         btn3.setOnAction((ActionEvent event) -> {
                             Test data = getTableView().getItems().get(getIndex());
                             try {
-                                App.setRoot("layout_list_submit");
+                                App.setRoot("layout_list_submit", ListSubmitView.getInstance());
                                 ShareAppData.getInstance().setTest(data);
+                                WebSocketConnect.getInstance().subscribeToTest(data.getId(), new WebSocketConnectHandler() {
+
+                                    @Override
+                                    public void onReceived(Object payload) {
+                                        Message msg = (Message) payload;
+                                        List<Test> tests = ShareAppData.getInstance().getTests();
+                                        for (Test test : tests) {
+                                            if (test.getId().equals(data.getId())) {
+                                                test.setNumberOfLiveParticipant((Integer) msg.getData());
+                                                ShareAppData.getInstance().setTestLive(test);
+
+                                                break;
+                                            }
+                                        }
+//                                            Test test = (Test) msg.getData();
+                                        System.out.println("User " + msg.getFrom() + " join!");
+                                        ListSubmitView.getInstance().updateTestDescription();
+                                    }
+                                });
+
+                                Test liveTest = RequestAPI.getInstance().getTestById(data.getId());
+                                ShareAppData.getInstance().setTestLive(liveTest);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
