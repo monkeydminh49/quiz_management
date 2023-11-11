@@ -1,9 +1,11 @@
 package com.e01.quiz_management.ui.list_test;
 
 import com.e01.quiz_management.App;
+import com.e01.quiz_management.model.TestHistory;
 import com.e01.quiz_management.ui.test_create.QuestionDataShared;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.Test;
+import com.e01.quiz_management.util.EMessageType;
 import com.e01.quiz_management.util.RequestAPI;
 import com.e01.quiz_management.util.WebSocketConnect;
 import com.e01.quiz_management.util.WebSocketConnectHandler;
@@ -163,18 +165,27 @@ public class ListTestView implements Initializable {
                                     @Override
                                     public void onReceived(Object payload) {
                                         Message msg = (Message) payload;
-                                        List<Test> tests = ShareAppData.getInstance().getTests();
-                                        for (Test test : tests) {
-                                            if (test.getId().equals(data.getId())) {
-                                                test.setNumberOfLiveParticipant((Integer) msg.getData());
-                                                ShareAppData.getInstance().setTestLive(test);
-
-                                                break;
+                                        System.out.println("received message haha");
+                                        if (msg.getType() == EMessageType.NUM_LIVE_PARTICIPANT){
+                                            List<Test> tests = ShareAppData.getInstance().getTests();
+                                            for (Test test : tests) {
+                                                if (test.getId().equals(data.getId())) {
+                                                    test.setNumberOfLiveParticipant((Integer) msg.getData());
+                                                    ShareAppData.getInstance().setTestLive(test);
+                                                    break;
+                                                }
                                             }
-                                        }
 //                                            Test test = (Test) msg.getData();
-                                        System.out.println("User " + msg.getFrom() + " join!");
-                                        ListSubmitView.getInstance().updateTestDescription();
+                                            System.out.println("User " + msg.getFrom() + " join!");
+                                            ListSubmitView.getInstance().updateTestDescription();
+                                        } else if (msg.getType() == EMessageType.TEST_HISTORY) {
+                                            System.out.println("User " + msg.getFrom() + " submit!");
+                                            TestHistory testHistory = (TestHistory) msg.getData();
+                                            ListSubmitView.getInstance().getTestHistories().add(testHistory);
+                                            ListSubmitView.getInstance().updateData();
+//                                            ShareAppData.getInstance().set
+                                        }
+
                                     }
                                 });
 

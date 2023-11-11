@@ -54,7 +54,12 @@ public class    ListSubmitView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initData();
         updateData();
+        initComponent();
+    }
+
+    private void initComponent(){
         backButton.setOnAction(actionEvent -> {
             try {
                 ShareAppData.getInstance().setTest(null);
@@ -63,39 +68,6 @@ public class    ListSubmitView implements Initializable {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    public void updateData(){
-        testHistories = new ArrayList<>();
-        currentTest = ShareAppData.getInstance().getTestLive();
-        testHistories = RequestAPI.getInstance().getTestHistoriesByTestId(currentTest.getId());
-        updateTestDescription();
-        ObservableList<TestHistory> observableArrayList =
-                FXCollections.observableArrayList(testHistories);
-        orderColumn.setCellFactory(column -> {
-            return new TableCell<TestHistory, String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setText(empty ? null : getIndex() + 1 + "");
-                }
-            };
-        });
-        titleColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, String>("title"));
-        codeColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, String>("candidateName"));
-        submitTimeColumn.setCellValueFactory(cellData -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
-            if (cellData.getValue().getSubmitTime() != null) {
-                String time = cellData.getValue().getSubmitTime().format(formatter);
-
-                return new SimpleStringProperty(time);
-            } else {
-                return new SimpleStringProperty("<no data>");
-            }
-        });
-        scoreColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, Integer>("score"));
-        myTable.setItems(observableArrayList);
-
         backButton.setOnAction(actionEvent -> {
             try {
                 ShareAppData.getInstance().setTest(null);
@@ -119,12 +91,51 @@ public class    ListSubmitView implements Initializable {
             translateTransition.play();
         });
     }
+
+    private void initData(){
+        testHistories = new ArrayList<>();
+        currentTest = ShareAppData.getInstance().getTestLive();
+        testHistories = RequestAPI.getInstance().getTestHistoriesByTestId(currentTest.getId());
+        orderColumn.setCellFactory(column -> {
+            return new TableCell<TestHistory, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : getIndex() + 1 + "");
+                }
+            };
+        });
+        titleColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, String>("title"));
+        codeColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, String>("candidateName"));
+        submitTimeColumn.setCellValueFactory(cellData -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
+            if (cellData.getValue().getSubmitTime() != null) {
+                String time = cellData.getValue().getSubmitTime().format(formatter);
+
+                return new SimpleStringProperty(time);
+            } else {
+                return new SimpleStringProperty("<no data>");
+            }
+        });
+        scoreColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, Integer>("score"));
+    }
+
+    public void updateData(){
+        updateTestDescription();
+        ObservableList<TestHistory> observableArrayList =
+                FXCollections.observableArrayList(testHistories);
+
+        myTable.setItems(observableArrayList);
+    }
     public void updateTestDescription(){
         testDescription.setText(ShareAppData.getInstance().getTestLive().getTestDescription() + "\nNumber of submissions: " + testHistories.size());
         if (currentTest.getStatus() == ETestStatus.HAPPENING){
-            testDescription.setText(testDescription.getText() + "\nNumber of live participant: " + currentTest.getNumberOfLiveParticipant() );
+            testDescription.setText(testDescription.getText() + "\nNumber of live participant: " + ShareAppData.getInstance().getTestLive().getNumberOfLiveParticipant() );
         }
     }
 
+    public List<TestHistory> getTestHistories() {
+        return testHistories;
+    }
 }
 

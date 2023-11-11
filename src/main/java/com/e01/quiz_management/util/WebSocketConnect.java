@@ -15,7 +15,7 @@ public class WebSocketConnect {
 //    private final static String WEB_SOCKET_URL = "ws://localhost:8080/chat";
 
 
-    private MyWebSocketStompClient stompClient;
+    private final MyWebSocketStompClient stompClient;
 
     private WebSocketConnect() {
         stompClient = new MyWebSocketStompClient(new StandardWebSocketClient());
@@ -42,7 +42,7 @@ public class WebSocketConnect {
 //                session.subscribe("/topic/test/1", this);
 //                session.send("/app/test/" + testId+"/join", new Message(RequestAPI.getInstance().getUser().getName(), new Test()));
 //                session.subscribe("/topic/test/1", this);
-                session.send("/app/test/"+testId+"/join", new Message("hi", new Test()));
+                session.send("/app/test/"+testId+"/join", new Message(RequestAPI.getInstance().getUser().getName(), new Test()));
             }
         });
 //        new Scanner(System.in).nextLine(); // Don't close immediately.

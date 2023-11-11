@@ -113,6 +113,7 @@ public class RequestAPI {
         String payload = "";
         try {
             payload = mapper.writeValueAsString(test);
+            System.out.println("Payload: " + payload);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
