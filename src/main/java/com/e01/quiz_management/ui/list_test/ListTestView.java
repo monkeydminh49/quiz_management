@@ -26,6 +26,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ListTestView implements Initializable {
@@ -156,18 +157,29 @@ public class ListTestView implements Initializable {
                             Test data = getTableView().getItems().get(getIndex());
                             try {
                                 App.setRoot("layout_list_submit", ListSubmitView.getInstance());
-//                                ShareAppData.getInstance().setTest(data);
-                                ShareAppData.getInstance().setTestLive(data);
+                                ShareAppData.getInstance().setTest(data);
                                 WebSocketConnect.getInstance().subscribeToTest(data.getId(), new WebSocketConnectHandler() {
+
                                     @Override
                                     public void onReceived(Object payload) {
                                         Message msg = (Message) payload;
-                                        Test test = (Test) msg.getData();
-                                        ShareAppData.getInstance().setTestLive(test);
+                                        List<Test> tests = ShareAppData.getInstance().getTests();
+                                        for (Test test : tests) {
+                                            if (test.getId().equals(data.getId())) {
+                                                test.setNumberOfLiveParticipant((Integer) msg.getData());
+                                                ShareAppData.getInstance().setTestLive(test);
+
+                                                break;
+                                            }
+                                        }
+//                                            Test test = (Test) msg.getData();
                                         System.out.println("User " + msg.getFrom() + " join!");
                                         ListSubmitView.getInstance().updateTestDescription();
                                     }
                                 });
+
+                                Test liveTest = RequestAPI.getInstance().getTestById(data.getId());
+                                ShareAppData.getInstance().setTestLive(liveTest);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

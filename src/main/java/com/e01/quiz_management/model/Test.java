@@ -23,17 +23,17 @@ public class Test {
 
     public Test() {
         questions = new ArrayList<>();
-        this.numberOfLiveParticipant = 0;
+//        this.numberOfLiveParticipant = 0;
     }
 
-    public Test(Long id, String code, Long userId, String title, LocalDateTime startTime, List<Question> questions, long duration) {
+    public Test(Long id, String code, Long userId, String title, LocalDateTime startTime, List<Question> questions, long duration, int numberOfLiveParticipant) {
         this.id = id;
         this.code = code;
         this.userId = userId;
         this.title = title;
         this.startTime = startTime;
         this.duration = duration;
-        this.numberOfLiveParticipant = 0;
+        this.numberOfLiveParticipant = numberOfLiveParticipant;
         this.questions = new ArrayList<>();
         questions.forEach(q -> {
             if (q.getType() == EQuestionType.MULTIPLE_CHOICE) {

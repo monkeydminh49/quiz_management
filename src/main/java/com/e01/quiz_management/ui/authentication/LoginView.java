@@ -3,12 +3,12 @@ package com.e01.quiz_management.ui.authentication;
 import com.e01.quiz_management.App;
 import com.e01.quiz_management.data.ShareAppData;
 import com.e01.quiz_management.model.TestHistory;
+import com.e01.quiz_management.ui.list_test.ListSubmitView;
 import com.e01.quiz_management.ui.list_test.ListTestView;
 import com.e01.quiz_management.model.Test;
 import com.e01.quiz_management.model.User;
-import com.e01.quiz_management.util.BaseResponse;
-import com.e01.quiz_management.util.RequestAPI;
-import com.e01.quiz_management.util.Response;
+import com.e01.quiz_management.util.*;
+import com.e01.quiz_management.websocket.Message;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,6 +53,8 @@ public class LoginView {
                     ShareAppData.getInstance().setListTestResponse(data);
                     ShareAppData.getInstance().setTests(((Response.Success<List<Test>>) ShareAppData.getInstance().getListTestResponse()).getData());
                     ListTestView.getInstance().updateTable();
+
+
                 });
                 new Thread(task).start();
 
