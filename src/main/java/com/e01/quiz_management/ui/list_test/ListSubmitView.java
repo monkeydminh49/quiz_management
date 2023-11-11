@@ -156,7 +156,6 @@ public class    ListSubmitView  implements Initializable{
             translateTransition.setByY(-5);
             translateTransition.play();
         });
-
     }
 
     public void newUserJoinEffect(String name){
@@ -197,7 +196,6 @@ public class    ListSubmitView  implements Initializable{
             e.printStackTrace();
         }
 
-        System.out.println("hello 123");
 
     }
 
