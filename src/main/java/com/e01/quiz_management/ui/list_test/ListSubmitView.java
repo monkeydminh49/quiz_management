@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class    ListSubmitView  implements Initializable{
+public class ListSubmitView implements Initializable {
 
     @FXML
     private TableView<TestHistory> myTable;
@@ -56,14 +56,15 @@ public class    ListSubmitView  implements Initializable{
     private List<TestHistory> testHistories;
 
     private static ListSubmitView instance;
-    public static ListSubmitView getInstance(){
-        if (instance == null){
+
+    public static ListSubmitView getInstance() {
+        if (instance == null) {
             instance = new ListSubmitView();
         }
         return instance;
     }
 
-    public ListSubmitView(){
+    public ListSubmitView() {
         testDescription = new TextArea();
         backButton = new Button();
         myTable = new TableView<>();
@@ -87,10 +88,10 @@ public class    ListSubmitView  implements Initializable{
             public void onReceived(Object payload) {
                 Message msg = (Message) payload;
                 System.out.println("received message haha");
-                if (msg.getType() == EMessageType.NUM_LIVE_PARTICIPANT){
+                if (msg.getType() == EMessageType.NUM_LIVE_PARTICIPANT) {
                     List<Test> tests = ShareAppData.getInstance().getTests();
                     for (Test test : tests) {
-                        if (test.getId().equals( ShareAppData.getInstance().getTest().getId())) {
+                        if (test.getId().equals(ShareAppData.getInstance().getTest().getId())) {
                             test.setNumberOfLiveParticipant((Integer) msg.getData());
                             ShareAppData.getInstance().setTestLive(test);
                             break;
@@ -103,7 +104,7 @@ public class    ListSubmitView  implements Initializable{
                     System.out.println("User " + msg.getFrom() + " submit!");
                     ObjectMapper mapper = new ObjectMapper();
                     mapper.registerModule(new JavaTimeModule());
-                    String data ="{}";
+                    String data = "{}";
                     TestHistory testHistory = null;
                     try {
                         data = mapper.writeValueAsString(msg.getData());
@@ -112,8 +113,8 @@ public class    ListSubmitView  implements Initializable{
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
-                    System.out.println("Candidate name: "+ testHistory.getCandidateName());
-                    testHistories.add(testHistory);
+                    System.out.println("Candidate name: " + testHistory.getCandidateName());
+                    testHistories = RequestAPI.getInstance().getTestHistoriesByTestId(currentTest.getId());
                     updateData();
                 }
 
@@ -125,7 +126,7 @@ public class    ListSubmitView  implements Initializable{
         initComponent();
     }
 
-    private void initComponent(){
+    private void initComponent() {
         backButton.setOnAction(actionEvent -> {
             try {
                 ShareAppData.getInstance().setTest(null);
@@ -158,9 +159,9 @@ public class    ListSubmitView  implements Initializable{
         });
     }
 
-    public void newUserJoinEffect(String name){
+    public void newUserJoinEffect(String name) {
         System.out.println("Effect");
-        String[] colors = new String[] {"#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"};
+        String[] colors = new String[]{"#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"};
         Text text = new Text(name + " has joined the test!");
         text.getStyleClass().add("button-text");
         text.setX(50);
@@ -199,13 +200,13 @@ public class    ListSubmitView  implements Initializable{
 
     }
 
-    private void initData(){
+    private void initData() {
 
     }
 
-    public void updateData(){
+    public void updateData() {
         updateTestDescription();
-        System.out.println( "Num test history: "+ testHistories.size());
+        System.out.println("Num test history: " + testHistories.size());
         ObservableList<TestHistory> observableArrayList =
                 FXCollections.observableArrayList(testHistories);
 
@@ -233,10 +234,11 @@ public class    ListSubmitView  implements Initializable{
         scoreColumn.setCellValueFactory(new PropertyValueFactory<TestHistory, Integer>("score"));
         myTable.setItems(observableArrayList);
     }
-    public void updateTestDescription(){
+
+    public void updateTestDescription() {
         testDescription.setText(ShareAppData.getInstance().getTestLive().getTestDescription() + "\nNumber of submissions: " + testHistories.size());
-        if (currentTest.getStatus() == ETestStatus.HAPPENING){
-            testDescription.setText(testDescription.getText() + "\nNumber of live participant: " + ShareAppData.getInstance().getTestLive().getNumberOfLiveParticipant() );
+        if (currentTest.getStatus() == ETestStatus.HAPPENING) {
+            testDescription.setText(testDescription.getText() + "\nNumber of live participant: " + ShareAppData.getInstance().getTestLive().getNumberOfLiveParticipant());
         }
     }
 

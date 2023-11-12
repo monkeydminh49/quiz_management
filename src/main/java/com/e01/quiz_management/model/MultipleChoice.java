@@ -55,6 +55,7 @@ public class MultipleChoice extends Question {
     public void showAnswer(TextField question, List<RadioButton> buttons) {
         Choice mAns = getmAns();
         question.setText(getQuestion());
+        question.setStyle("-fx-text-fill: black");
         List<Choice> choices = getChoices();
         if (mAns == null) {
             for (int i = 0; i < buttons.size(); i++) {
