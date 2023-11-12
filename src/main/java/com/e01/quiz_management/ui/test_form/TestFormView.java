@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -44,6 +45,8 @@ public class TestFormView {
     private TextField ansTextField;
     @FXML
     private Button saveButton;
+    @FXML
+    private Rectangle rectangle;
     private int index = -1;
 
     public TestFormView() {
@@ -81,6 +84,7 @@ public class TestFormView {
         buttons.add(answer4RadioButton);
         timeTextField.setVisible(true);
         submitButton.setVisible(true);
+        rectangle.setVisible(true);
         checkButton.setVisible(true);
         xButton.setVisible(false);
         Test test = ShareAppData.getInstance().getTest();
@@ -116,6 +120,7 @@ public class TestFormView {
         buttons.add(answer4RadioButton);
         timeTextField.setVisible(false);
         submitButton.setVisible(false);
+        rectangle.setVisible(false);
         checkButton.setVisible(false);
         xButton.setVisible(true);
         SharedData sharedData = SharedData.getInstance();

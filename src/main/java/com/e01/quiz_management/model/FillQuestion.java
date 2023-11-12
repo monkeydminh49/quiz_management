@@ -22,6 +22,7 @@ public class FillQuestion extends Question {
 
     public void showQuestion(TextField questionTextField, TextField ansTextField) {
         questionTextField.setText(getQuestion());
+        questionTextField.setEditable(false);
         ansTextField.setText("");
         if (getmAns() != null) {
             ansTextField.setText(getmAns().getContent());
@@ -32,7 +33,9 @@ public class FillQuestion extends Question {
 
     public void showAnswer(TextField question, TextField ansTextField) {
         Choice mAns = getmAns();
+        question.setStyle("-fx-text-fill: black");
         question.setText(getQuestion());
+        question.setEditable(false);
         if (mAns == null) {
             ansTextField.setText("");
         } else {

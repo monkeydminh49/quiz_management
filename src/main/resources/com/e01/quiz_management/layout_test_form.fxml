@@ -66,7 +66,7 @@
                <Font name="Fira Sans Book" size="16.0" />
             </font>
          </Label>
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39c05e" height="40.0" layoutX="922.0" layoutY="20.0" stroke="#ffffff00" strokeType="INSIDE" style="-fx-arc-width: 20; -fx-arc-height: 20; -fx-background-color: 865328; -fx-progress-color: 000000;" width="121.0" />
+         <Rectangle fx:id="rectangle" arcHeight="5.0" arcWidth="5.0" fill="#39c05e" height="40.0" layoutX="922.0" layoutY="20.0" stroke="#ffffff00" strokeType="INSIDE" style="-fx-arc-width: 20; -fx-arc-height: 20; -fx-background-color: 865328; -fx-progress-color: 000000;" width="121.0" />
          <Button fx:id="submitButton" layoutX="922.0" layoutY="15.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="121.0" style="-fx-background-radius: 10;" stylesheets="@app.css" text="Submit" textFill="WHITE">
             <font>
                <Font name="Fira Sans ExtraBold" size="20.0" />

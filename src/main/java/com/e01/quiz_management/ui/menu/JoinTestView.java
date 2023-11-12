@@ -103,12 +103,12 @@ public class JoinTestView implements Initializable {
                 if (test.getStartTime() == null) {
                     joinTest(test);
                 }else{
-//                    if (testCodes.contains(testCode)) {
-//                        joinMessage.setText("You have already taken this test");
-//                        warningIcon.setOpacity(1);
-//                        joinMessage.setOpacity(1);
-//                        return;
-//                    }
+                    if (testCodes.contains(testCode)) {
+                        joinMessage.setText("You have already taken this test");
+                        warningIcon.setOpacity(1);
+                        joinMessage.setOpacity(1);
+                        return;
+                    }
                     ETestStatus testStatus = test.getStatus();
                     if (testStatus == ETestStatus.NOT_STARTED) {
                         joinMessage.setText("Test has not started yet");
