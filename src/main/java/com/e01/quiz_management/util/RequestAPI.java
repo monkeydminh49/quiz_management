@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class RequestAPI {
-//    private final static String baseURL = "http://13.212.194.205/api/v1";
-    private final static String baseURL = "http://localhost:8080/api/v1";
+    private final static String baseURL = "http://13.212.194.205/api/v1";
+//    private final static String baseURL = "http://localhost:8080/api/v1";
 
     private final List<String> openEndpoints = List.of("/hello", "/login", "/register");
     private static User user;

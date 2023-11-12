@@ -112,7 +112,7 @@ public class    ListSubmitView  implements Initializable{
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
-                    System.out.println(testHistory.getCode());
+                    System.out.println("Candidate name: "+ testHistory.getCandidateName());
                     testHistories.add(testHistory);
                     updateData();
                 }

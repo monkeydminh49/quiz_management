@@ -11,8 +11,8 @@ import java.lang.reflect.Type;
 public class WebSocketConnect {
 
     private static WebSocketConnect instance;
-//    private final static String WEB_SOCKET_URL = "ws://13.212.194.205/chat";
-    private final static String WEB_SOCKET_URL = "ws://localhost:8080/chat";
+    private final static String WEB_SOCKET_URL = "ws://13.212.194.205/chat";
+//    private final static String WEB_SOCKET_URL = "ws://localhost:8080/chat";
 
 
     private final MyWebSocketStompClient stompClient;
