@@ -1,0 +1,110 @@
+/* For general scenes */
+.text-field{
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #D4D4D4;
+    -fx-border-radius: 5
+}
+
+.text-field:hover{
+    -fx-border-color: #999999;
+}
+
+.text-field:focused{
+    -fx-border-color: #F68E01;
+}
+
+/* Login and Signup scenes */
+#signupButton:hover{
+    -fx-background-color: #DFA98F !important;
+}
+
+#loginButton {
+    -fx-background-color: #E9C8BC;
+}
+
+#loginButton:hover{
+    -fx-background-color: #DFA98F !important;
+}
+
+/* Menu UI */
+#menuButton:hover{
+    -fx-background-color: #D69D70 !important;
+}
+
+#historyButton:hover{
+    -fx-background-color: #D69D70 !important;
+}
+
+#testManagementButton:hover{
+    -fx-background-color: #D69D70 !important;
+}
+
+#logoutButton:hover{
+    -fx-background-color: #D69D70 !important;
+}
+
+#line{
+    -fx-background-color: #88583B;
+}
+
+/* Join Test */
+#testCodeTextField{
+    -fx-border-radius: 8;
+}
+
+#joinMessage{
+    -fx-background-color: #EC0B43;
+    -fx-background-radius: 10;
+}
+
+/* History scene */
+.table-view .column-header{
+    -fx-background-color: #E9C8BC;
+}
+
+.table-view .column-header .label{
+    -fx-text-fill: #FFFFFF;
+    -fx-alignment: CENTER;
+    -fx-font: 15px "Fira Sans";
+}
+
+.table-view .cell{
+    -fx-cell-size: 30px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font: 12px "Fira Sans Book";
+}
+
+.combo-box{
+    -fx-background-color: #FAFAFA;
+    -fx-background-radius: 20;
+    /*-fx-border-color: #D4D4D4;*/
+    -fx-border-radius: 20;
+    -fx-font: 12px "Fira Sans Book";
+}
+
+/* Add quiz */
+#editButton{
+    -fx-background-color: #6E9BCF !important;
+}
+
+#saveButton{
+    -fx-background-color: #4FE64A !important;
+}
+
+#saveBtn{
+    -fx-background-color: #4FE64A !important;
+}
+
+/* Submit Result Form */
+#redoButton{
+    -fx-background-color: #6E9BCF !important;
+}
+
+#reviewButton{
+    -fx-background-color: #4FE64A !important;
+}
+
+/* Submit quiz Scene */
+#submitButton{
+    -fx-background-color: #4FE64A !important;
+}
