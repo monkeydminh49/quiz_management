@@ -207,6 +207,15 @@ public class ListSubmitView implements Initializable {
     public void updateData() {
         updateTestDescription();
         System.out.println("Num test history: " + testHistories.size());
+        testHistories.sort((o1, o2) -> {
+            if (o1.getSubmitTime() == null) {
+                return 1;
+            }
+            if (o2.getSubmitTime() == null) {
+                return -1;
+            }
+            return -o2.getSubmitTime().compareTo(o1.getSubmitTime());
+        });
         ObservableList<TestHistory> observableArrayList =
                 FXCollections.observableArrayList(testHistories);
 
